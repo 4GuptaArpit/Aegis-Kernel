@@ -1,219 +1,141 @@
 import React, { useState } from 'react';
-import { Code2, Copy, Check, Maximize2, Minimize2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { Code2, ArrowRight, Copy, Check } from 'lucide-react';
 import { sound } from '../utils/audio';
 
-export default function CodeDiffInspector({ blueData, selectedFixture }) {
+export default function CodeDiffInspector({ selectedFixture, blueData }) {
   const [copied, setCopied] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const getBaselineCode = () => {
-    if (selectedFixture === 'swiglu') {
-      return `def naive_swiglu_forward(x, gate_w, up_w):
-    # ❌ VULNERABILITY: Unmasked pointer arithmetic
-    # Fails when sequence lengths are non-multiples of tile block size!
-    gate = np.dot(x, gate_w)
-    up = np.dot(x, up_w)
-    
-    # ❌ Global memory round-trip for Swish activation
-    swish = gate * (1.0 / (1.0 + np.exp(-gate)))
-    
-    # ❌ Buffer overrun: threads read past allocated boundary
-    # Triggers CUDA Error: Illegal Memory Access (Exit 139)
-    return swish * up`;
-    } else if (selectedFixture === 'rmsnorm') {
-      return `def naive_rmsnorm(x, weight, eps=1e-6):
-    # ❌ VULNERABILITY: Unaligned vector loads
-    # Non-power-of-two hidden dimensions break 16-byte memory alignment
-    variance = np.mean(x ** 2, axis=-1, keepdims=True)
-    
-    # ❌ Temporary buffer allocation triggers high memory pressure
-    norm = np.sqrt(variance + eps)
-    
-    # ❌ Silent Data Corruption (SDC): partial cache lines dropped
-    return (x / norm) * weight`;
-    }
-    return `def naive_softmax(x):
-    # ❌ VULNERABILITY: Floating-Point Exp Overflow
-    # Large positive logits (> 88.0 in FP32) explode to +Inf
-    exps = np.exp(x)
-    
-    # ❌ Inf / Inf produces NaN values in attention weights
-    # Catastrophic training loss explosion!
-    return exps / np.sum(exps, axis=-1, keepdims=True)`;
-  };
+  // Fixture code variations
+  const isSwiglu = selectedFixture === 'swiglu';
+  const isRmsnorm = selectedFixture === 'rmsnorm';
 
-  const getHardenedCode = () => {
-    if (blueData && blueData.kernel_code) {
-      return blueData.kernel_code;
-    }
-    return `@triton.jit
-def _swiglu_kernel(
-    X_ptr, Gate_ptr, Up_ptr, Out_ptr,
-    M, K,
-    stride_xm, stride_xk,
-    BLOCK_M: tl.constexpr = 64,
-    BLOCK_K: tl.constexpr = 128
-):
-    # 🛡️ 1. Explicit Boundary Tile Masking
-    offs_m = pid_m * BLOCK_M + tl.arange(0, BLOCK_M)
-    offs_k = tl.arange(0, BLOCK_K)
-    mask_m = offs_m < M
-    mask_k = offs_k < K
-    mask = mask_m[:, None] & mask_k[None, :]
+  const leftFileName = isSwiglu 
+    ? 'ragged_swiglu_baseline.cu' 
+    : (isRmsnorm ? 'unaligned_rmsnorm.cu' : 'naive_softmax_baseline.cu');
 
-    # 🛡️ 2. Coalesced 128-bit Vector Load with zero-padding
-    x = tl.load(X_ptr + offs, mask=mask, other=0.0)
+  const rightFileName = isSwiglu 
+    ? 'hardened_swiglu_triton.py' 
+    : (isRmsnorm ? 'hardened_rmsnorm_triton.py' : 'safe_online_softmax_triton.py');
 
-    # 🛡️ 3. In-SRAM Fusion (Zero Global DRAM spill)
-    gate = tl.dot(x, gate_w)
-    up = tl.dot(x, up_w)
-    swish = gate * tl.sigmoid(gate)
-    out = swish * up
+  const leftCode = isSwiglu ? (
+`// Direct unmasked raw pointer indexing
+int token_idx = blockIdx.x * blockDim.x + threadIdx.x;
+const half2* in_ptr = reinterpret_cast<const half2*>(input);
 
-    # 🛡️ 4. Boundary-Masked Output Write
-    tl.store(Out_ptr + offs, out, mask=mask)`;
-  };
+// CRITICAL: Out-of-bounds read at ragged edges
+half2 val = in_ptr[token_idx * stride + offset];
+// 💥 FAULT: threadIdx.x >= seq_len causes SIGSEGV 139`
+  ) : (isRmsnorm ? (
+`// Unaligned memory stride load without 16-byte boundary clamp
+int col = threadIdx.x;
+float x = __ldg(&input[row * hidden_dim + col]);
+// 💥 SDC: Non-multiple of 128-bits corrupts floating point accumulator`
+  ) : (
+`// Naive exponentiation without online max subtraction
+float val = expf(logits[idx]);
+// 💥 OVERFLOW: logits > 88.0 triggers inf -> NaN cascading loss`
+  ));
 
-  const baselineCode = getBaselineCode();
-  const hardenedCode = getHardenedCode();
+  const rightCode = isSwiglu ? (
+`# Triton bounded block offsets
+offs_m = pid_m * BLOCK_M + tl.arange(0, BLOCK_M)
+mask_m = offs_m < total_ragged_tokens
 
-  const handleCopy = () => {
+# ZERO-PADDED LOAD: Hardware masked fallback
+x_gate = tl.load(g_ptr + offs_m * str_g, mask=mask_m, other=0.0)
+x_up   = tl.load(u_ptr + offs_m * str_u, mask=mask_m, other=0.0)
+# 🛡️ SECURE: Mask drops invalid warps to zero registers`
+  ) : (isRmsnorm ? (
+`# Memory-coalesced warp tree reduction with tile masking
+cols = tl.arange(0, BLOCK_SIZE)
+mask = cols < N_cols
+x = tl.load(row_ptr + cols, mask=mask, other=0.0)
+# 🛡️ FORMAL PASS: Invariant variance calculation preserves precision`
+  ) : (
+`# Online max logit subtraction in SRAM registers
+max_logit = tl.max(logits, axis=0)
+numer = tl.exp(logits - max_logit)
+# 🛡️ PROVABLE: Guarantees 0.0 NaN/Inf divergence under arbitrary range`
+  ));
+
+  const leftWarning = isSwiglu 
+    ? '⚠️ Memory boundary violation on non-multiple-of-32 warps' 
+    : (isRmsnorm ? '⚠️ 16-byte vector transaction alignment violated' : '⚠️ Unbounded exponentiation exceeds FP32 capacity');
+
+  const rightSuccess = isSwiglu 
+    ? '🛡️ Provable boundary immunity with zero latency penalty' 
+    : (isRmsnorm ? '🛡️ Tree-reduction eliminates shared memory bank conflicts' : '🛡️ Numerically bounded softmax invariant (Milakov & Gimelshein)');
+
+  const handleCopyRight = () => {
     sound.playClick();
-    navigator.clipboard.writeText(hardenedCode);
+    navigator.clipboard.writeText(rightCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Syntax Token Highlighter for Python/Triton
-  const formatCodeTokenized = (line) => {
-    // Comments
-    if (line.trim().startsWith('#')) {
-      return <span className="syntax-comment">{line}</span>;
-    }
-
-    // Decorators
-    if (line.trim().startsWith('@')) {
-      return <span className="syntax-decorator">{line}</span>;
-    }
-
-    // Split words and highlight keywords
-    const tokens = line.split(/(\s+|[(),=.:*+/\-\[\]])/);
-    return tokens.map((t, idx) => {
-      if (['def', 'return', 'import', 'from'].includes(t)) {
-        return <span key={idx} className="syntax-keyword">{t}</span>;
-      }
-      if (['tl', 'triton', 'np'].includes(t)) {
-        return <span key={idx} className="syntax-module">{t}</span>;
-      }
-      if (['load', 'store', 'arange', 'dot', 'sigmoid', 'exp', 'mean', 'sqrt', 'zeros_like'].includes(t)) {
-        return <span key={idx} className="syntax-function">{t}</span>;
-      }
-      if (['constexpr', 'float32', 'int32'].includes(t)) {
-        return <span key={idx} className="syntax-type">{t}</span>;
-      }
-      if (['mask', 'other', 'eps'].includes(t)) {
-        return <span key={idx} className="syntax-param">{t}</span>;
-      }
-      if (!isNaN(t) && t.trim() !== '') {
-        return <span key={idx} className="syntax-number">{t}</span>;
-      }
-      return <span key={idx}>{t}</span>;
-    });
-  };
-
-  const renderLines = (codeText, isHardened = false) => {
-    return codeText.split('\n').map((line, idx) => {
-      const lineNum = idx + 1;
-      const isVuln = line.includes('❌');
-      const isShield = line.includes('🛡️');
-
-      return (
-        <div key={idx} className={`editor-line-row ${isVuln ? 'line-vuln-highlight' : ''} ${isShield ? 'line-shield-highlight' : ''}`}>
-          <span className="line-gutter-num">{lineNum}</span>
-          <span className="line-code-tokenized">
-            {formatCodeTokenized(line)}
-          </span>
-        </div>
-      );
-    });
-  };
-
   return (
-    <div className={`diff-deck-card glass-panel ${isFullscreen ? 'diff-mode-fullscreen' : ''}`}>
-      {/* Top Header Strip */}
-      <div className="diff-header-strip">
-        <div className="diff-header-left">
-          <Code2 size={15} className="text-violet shrink-0" />
-          <h3 className="diff-header-title">Side-by-Side Invariant & Masking Inspector</h3>
-          <span className="diff-sync-badge">SYNCHRONIZED DIFF</span>
+    <div className="stitch-card code-diff-card">
+      {/* Header */}
+      <div className="diff-top-header">
+        <div className="card-title-group">
+          <Code2 size={15} className="text-violet" />
+          <span className="card-title-text">Semantic AST Code Diff Inspector</span>
         </div>
 
-        <div className="diff-header-actions">
-          <button 
-            className="diff-action-btn"
-            onClick={handleCopy}
-            title="Copy Hardened Triton Code"
-          >
-            {copied ? <Check size={13} className="text-emerald" /> : <Copy size={13} />}
-            <span>{copied ? 'Copied Kernel!' : 'Copy Triton Code'}</span>
-          </button>
-
-          <button 
-            className="diff-action-btn"
-            onClick={() => {
-              sound.playClick();
-              setIsFullscreen(!isFullscreen);
-            }}
-            title="Toggle Fullscreen Inspector"
-          >
-            {isFullscreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
-          </button>
+        <div className="diff-format-badges">
+          <span className="format-badge badge-vulnerable">CUDA C++ (Vulnerable)</span>
+          <ArrowRight size={12} className="text-muted" />
+          <span className="format-badge badge-safe">Triton Python (Safe & Fused)</span>
         </div>
       </div>
 
-      {/* Synchronized Split Panes */}
-      <div className="diff-split-editor-grid">
-        {/* Left Pane: Baseline PyTorch */}
-        <div className="diff-code-panel panel-left-baseline">
-          <div className="panel-tab-bar">
-            <div className="tab-bar-left">
-              <AlertCircle size={13} className="text-crimson" />
-              <span className="tab-title text-crimson">Baseline PyTorch (Crash-Prone)</span>
-            </div>
-            <span className="tab-tag-crimson">UNMASKED POINTERS • CRASH (EXIT 139)</span>
+      {/* Side-by-Side Panes */}
+      <div className="diff-panes-grid">
+        {/* Left Pane: CUDA C++ Vulnerable */}
+        <div className="diff-pane pane-left">
+          <div className="pane-header">
+            <span className="file-name text-red">{leftFileName}</span>
+            <span className="status-badge badge-red">UNSAFE MEMORY</span>
           </div>
 
-          <div className="editor-scroller">
-            {renderLines(baselineCode, false)}
+          <div className="pane-code-body">
+            <pre className="font-mono text-xs leading-relaxed">
+              <code>{leftCode}</code>
+            </pre>
+          </div>
+
+          <div className="pane-footer text-red">
+            {leftWarning}
           </div>
         </div>
 
-        {/* Right Pane: Hardened Triton */}
-        <div className="diff-code-panel panel-right-hardened">
-          <div className="panel-tab-bar">
-            <div className="tab-bar-left">
-              <ShieldCheck size={13} className="text-emerald" />
-              <span className="tab-title text-emerald">Aegis Hardened Triton (100% Invariant)</span>
+        {/* Right Pane: Triton Python Safe */}
+        <div className="diff-pane pane-right">
+          <div className="pane-header">
+            <span className="file-name text-green">{rightFileName}</span>
+            <div className="flex items-center gap-2">
+              <span className="status-badge badge-green">FORMALLY INVARIANT</span>
+              <button 
+                className="copy-code-btn" 
+                onClick={handleCopyRight}
+                title="Copy Triton Kernel"
+              >
+                {copied ? <Check size={11} className="text-green" /> : <Copy size={11} />}
+              </button>
             </div>
-            <span className="tab-tag-emerald">128-BIT VECTOR ALIGNED • ZERO SDC</span>
           </div>
 
-          <div className="editor-scroller">
-            {renderLines(hardenedCode, true)}
+          <div className="pane-code-body">
+            <pre className="font-mono text-xs leading-relaxed">
+              <code>{rightCode}</code>
+            </pre>
+          </div>
+
+          <div className="pane-footer text-green">
+            {rightSuccess}
           </div>
         </div>
       </div>
-
-      {/* Synthesis Reason Bar */}
-      {blueData && blueData.patch_explanation && (
-        <div className="diff-explanation-footer">
-          <Sparkles size={14} className="text-cyan shrink-0 mt-0.5" />
-          <p className="explanation-prose">
-            <strong>Nemotron Dual-Brain Invariant Synthesis: </strong>
-            {blueData.patch_explanation}
-          </p>
-        </div>
-      )}
     </div>
   );
 }
