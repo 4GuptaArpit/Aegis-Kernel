@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Production build artifacts
+dist/
+frontend/dist/
+build/
+
+# Python cache & virtual environments
+__pycache__/
+backend/**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+backend/.pytest_cache/
+venv/
+.venv/
+env/
+
+# Databases & local state
+*.db
+*.sqlite
+*.sqlite3
+aegis_kernel.db
+backend/aegis_kernel.db
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Internal audit reports
+BRUTAL_AUDIT_REPORT.md
