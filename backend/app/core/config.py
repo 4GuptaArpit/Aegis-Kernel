@@ -1,4 +1,11 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Automatically load .env from backend directory or project root
+env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
+load_dotenv() # Fallback to standard local .env
 
 class Settings:
     PROJECT_NAME: str = "Aegis-Kernel"
