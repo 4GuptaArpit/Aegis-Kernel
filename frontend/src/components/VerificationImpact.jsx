@@ -43,7 +43,7 @@ export default function VerificationImpact({
       {
         label: 'Hopper H100 Roofline (TFLOPS)',
         data: [100, 200, 400, 800, 989, 989, 989],
-        borderColor: '#64748B',
+        borderColor: '#94A3B8',
         borderDash: [4, 4],
         fill: false,
         pointRadius: 0
@@ -51,8 +51,8 @@ export default function VerificationImpact({
       {
         label: 'Aegis Hardened Triton',
         data: [null, null, null, null, 418.5, null, null],
-        backgroundColor: '#76B900',
-        borderColor: '#76B900',
+        backgroundColor: '#059669',
+        borderColor: '#059669',
         pointRadius: 6,
         pointHoverRadius: 8
       }
@@ -215,8 +215,8 @@ export default function VerificationImpact({
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                  x: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                  y: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                  x: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(15, 23, 42, 0.06)' } },
+                  y: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(15, 23, 42, 0.06)' } }
                 },
                 plugins: {
                   legend: { display: false }

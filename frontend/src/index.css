@@ -1,35 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Obsidian Titanium & NVIDIA Emerald Palette */
-  --bg-canvas: #0A0D14;
-  --bg-surface: #10141F;
-  --bg-surface-raised: #151A28;
-  --bg-surface-glass: rgba(16, 20, 31, 0.85);
-  --bg-editor: #080A10;
+  /* ==========================================================================
+     CLEANROOM TITANIUM LABORATORY PALETTE (Dieter Rams & Stripe Press Inspired)
+     ========================================================================== */
+  --bg-canvas: #F4F6F9;
+  --bg-surface: #FFFFFF;
+  --bg-surface-raised: #F8FAFC;
+  --bg-surface-glass: rgba(255, 255, 255, 0.92);
+  --bg-editor: #0A0F1D;
+  --bg-editor-subtle: #F1F5F9;
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.14);
-  --border-focus: rgba(118, 185, 0, 0.45);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-medium: rgba(15, 23, 42, 0.16);
+  --border-focus: rgba(5, 150, 105, 0.5);
 
-  /* Brand Accents */
-  --accent-nvidia: #76B900;
-  --accent-nvidia-light: #00E575;
-  --accent-nvidia-glow: rgba(118, 185, 0, 0.25);
-  --accent-azure: #38BDF8;
-  --accent-azure-glow: rgba(56, 189, 248, 0.25);
-  --accent-coral: #F43F5E;
-  --accent-coral-glow: rgba(244, 63, 94, 0.25);
-  --accent-amber: #F59E0B;
-  --accent-obsidian: #0A0D14;
+  /* Surgical Laboratory Accents */
+  --accent-nvidia: #059669;
+  --accent-nvidia-light: #10B981;
+  --accent-nvidia-glow: rgba(5, 150, 105, 0.15);
+  --accent-azure: #2563EB;
+  --accent-azure-glow: rgba(37, 99, 235, 0.15);
+  --accent-coral: #E11D48;
+  --accent-coral-glow: rgba(225, 29, 72, 0.15);
+  --accent-amber: #D97706;
+  --accent-obsidian: #0A0F1D;
 
-  /* Typography */
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
+  /* High-Contrast Laboratory Typography */
+  --text-primary: #0A0F1D;
+  --text-secondary: #334155;
   --text-tertiary: #64748B;
+  --text-white: #FFFFFF;
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace, Consolas, Courier;
+
+  --shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03);
+  --shadow-elevated: 0 8px 24px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 * {
@@ -44,16 +51,18 @@ body {
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
   -webkit-font-smoothing: antialiased;
 }
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.25); }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.14); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.28); }
+::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.04); }
+::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.18); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(15, 23, 42, 0.32); }
 
 /* Utility Classes */
 .text-nvidia { color: var(--accent-nvidia); }
@@ -68,872 +77,849 @@ body {
 .font-bold { font-weight: 700; }
 .font-semibold { font-weight: 600; }
 
-/* Base App Wrapper */
 .aegis-app-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.aegis-container {
-  max-width: 1440px;
+.aegis-workbench-container {
+  max-width: 1560px;
   margin: 0 auto;
   width: 100%;
-  padding: 24px;
+  padding: 16px 24px 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
+}
+
+.workbench-grid-layout {
+  display: grid;
+  grid-template-columns: 53% 47%;
+  gap: 16px;
+  align-items: start;
+}
+
+.workbench-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.workbench-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* ==========================================================================
-   1. HEADER NAVIGATION
+   1. EXECUTIVE COMMAND BAR (CLEANROOM INSTRUMENT HEADER)
    ========================================================================== */
-.aegis-header {
+.exec-cockpit-header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 80;
   background: var(--bg-surface-glass);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 14px 28px;
+  border-bottom: 1px solid var(--border-medium);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.exec-top-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  padding: 10px 24px;
+  gap: 14px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.header-brand-group {
+.exec-brand-lockup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.brand-logo-gem {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(118, 185, 0, 0.12);
-  border: 1px solid rgba(118, 185, 0, 0.3);
+.exec-brand-shield {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  background: rgba(5, 150, 105, 0.1);
+  border: 1px solid var(--accent-nvidia);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.15);
 }
 
-.brand-name-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.brand-title {
-  font-size: 15px;
+.exec-brand-title {
+  font-size: 14.5px;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
-.hackathon-tag {
-  font-size: 10px;
-  font-weight: 700;
-  background: rgba(118, 185, 0, 0.15);
+.exec-brand-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  background: rgba(5, 150, 105, 0.1);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.3);
-  padding: 2px 7px;
+  border: 1px solid rgba(5, 150, 105, 0.3);
+  padding: 2px 6px;
   border-radius: 4px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
-.brand-sub {
-  font-size: 11.5px;
-  color: var(--text-secondary);
+.exec-brand-sub {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
   display: block;
-  margin-top: 2px;
 }
 
-/* Center Hardware & Cloud Hub */
-.header-center-hub {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.hw-selector-dropdown-wrap {
+/* Hardware Dropdown */
+.exec-hw-dropdown-container {
   position: relative;
 }
 
-.hw-selector-trigger {
+.exec-hw-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-medium);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 5px 10px;
   cursor: pointer;
   color: var(--text-primary);
-  transition: all 0.2s ease;
+  font-size: 11px;
+  transition: all 0.15s ease;
 }
 
-.hw-selector-trigger:hover {
-  border-color: var(--border-focus);
-  background: rgba(21, 26, 40, 0.95);
+.exec-hw-btn:hover {
+  border-color: var(--border-medium);
+  background: #FFFFFF;
 }
 
-.hw-info-text {
-  text-align: left;
-}
-
-.hw-name {
-  font-size: 12px;
-  font-weight: 700;
-  display: block;
-}
-
-.hw-spec {
-  font-size: 10px;
-  color: var(--accent-azure);
-  font-family: var(--font-mono);
-}
-
-.hw-chevron {
+.chevron-icon {
   color: var(--text-tertiary);
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
-.hw-chevron.open {
+.chevron-icon.open {
   transform: rotate(180deg);
 }
 
-.hw-dropdown-menu {
+.exec-hw-menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 4px);
   left: 0;
-  width: 260px;
-  background: var(--bg-surface-raised);
+  width: 250px;
+  background: #FFFFFF;
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
-  padding: 6px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
-  z-index: 60;
+  border-radius: 6px;
+  padding: 5px;
+  box-shadow: var(--shadow-elevated);
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
-.hw-dropdown-item {
-  padding: 8px 12px;
-  border-radius: 6px;
+.exec-hw-menu-item {
+  padding: 6px 10px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 
-.hw-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+.exec-hw-menu-item:hover {
+  background: var(--bg-surface-raised);
 }
 
-.hw-dropdown-item.selected {
-  background: rgba(118, 185, 0, 0.12);
-  border: 1px solid rgba(118, 185, 0, 0.25);
+.exec-hw-menu-item.selected {
+  background: rgba(5, 150, 105, 0.08);
+  border: 1px solid rgba(5, 150, 105, 0.25);
 }
 
-.hw-item-title {
-  font-size: 12px;
+/* Operator Tabs */
+.exec-workload-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.exec-tab-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.exec-tab-btn:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-raised);
+}
+
+.exec-tab-btn.active {
+  background: rgba(5, 150, 105, 0.06);
+  border-color: var(--accent-nvidia);
+  box-shadow: 0 0 0 1px var(--accent-nvidia);
+}
+
+.tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+}
+
+.tab-dot.dot-active {
+  background: var(--accent-nvidia);
+  box-shadow: 0 0 6px var(--accent-nvidia);
+}
+
+.tab-name {
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.hw-item-spec {
+.tab-speedup {
   font-size: 10px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
+  margin-left: 2px;
 }
 
-/* Cloud Status Strip */
-.cloud-status-strip {
+.tab-fault-sub {
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+}
+
+/* Right Actions */
+.exec-action-strip {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.cloud-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
+.exec-icon-btn {
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 11px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.pulse-indicator {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.bg-nvidia { background-color: var(--accent-nvidia); }
-.bg-azure { background-color: var(--accent-azure); }
-.bg-amber { background-color: var(--accent-amber); }
-
-/* Right Actions */
-.header-right-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.audio-btn {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  border-radius: 8px;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-.audio-btn:hover {
+.exec-icon-btn:hover {
   border-color: var(--border-medium);
   color: var(--text-primary);
 }
 
-.btn-header-secondary {
+.exec-btn-ghost {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-header-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.btn-header-primary {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(118, 185, 0, 0.15);
-  border: 1px solid rgba(118, 185, 0, 0.4);
-  color: var(--accent-nvidia);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 7px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-header-primary:hover {
-  background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
-}
-
-/* ==========================================================================
-   2. HERO NARRATIVE BANNER
-   ========================================================================== */
-.aegis-hero-banner {
-  text-align: center;
-  padding: 16px 20px 8px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.hero-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(118, 185, 0, 0.08);
-  border: 1px solid rgba(118, 185, 0, 0.25);
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--accent-nvidia);
-  letter-spacing: 0.8px;
-}
-
-.hero-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-nvidia);
-  box-shadow: 0 0 8px var(--accent-nvidia);
-}
-
-.hero-main-title {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  max-width: 880px;
-  line-height: 1.2;
-}
-
-.hero-sub-title {
-  font-size: 14.5px;
-  color: var(--text-secondary);
-  max-width: 760px;
-  line-height: 1.5;
-}
-
-/* ==========================================================================
-   3. WORKLOAD SELECTOR RAIL (TOP PLACEMENT)
-   ========================================================================== */
-.workload-rail-container {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 18px 20px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.workload-rail-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.rail-title-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.rail-title {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
   color: var(--text-primary);
-}
-
-.rail-sub {
-  font-size: 12px;
-  color: var(--text-tertiary);
-}
-
-.workload-cards-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.workload-card {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 16px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
-
-.workload-card:hover {
-  border-color: var(--border-medium);
-  transform: translateY(-2px);
-  background: rgba(25, 32, 48, 0.9);
-}
-
-.workload-card.card-selected {
-  border-color: var(--accent-nvidia);
-  background: rgba(118, 185, 0, 0.06);
-  box-shadow: 0 0 0 1px var(--accent-nvidia), 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.card-top-status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.badge-active {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--accent-nvidia);
-  letter-spacing: 0.5px;
-}
-
-.status-dot-active {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-nvidia);
-  box-shadow: 0 0 8px var(--accent-nvidia);
-}
-
-.badge-idle {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-tertiary);
-  letter-spacing: 0.5px;
-}
-
-.speedup-pill {
-  font-size: 11px;
-  font-weight: 700;
-  font-family: var(--font-mono);
-  color: var(--accent-nvidia);
-  background: rgba(118, 185, 0, 0.12);
-  border: 1px solid rgba(118, 185, 0, 0.25);
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.card-operator-title {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.card-model-family {
   font-size: 11.5px;
-  color: var(--text-secondary);
-}
-
-.card-fault-box {
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
-  padding: 8px 10px;
-}
-
-.fault-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
   font-weight: 700;
-  color: var(--accent-coral);
-  margin-bottom: 3px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.fault-desc {
-  font-size: 10.5px;
-  color: var(--text-tertiary);
-  line-height: 1.4;
+.exec-btn-ghost:hover {
+  background: var(--bg-surface-raised);
+  border-color: var(--border-medium);
 }
 
-.card-footer-metric {
+.exec-run-cta {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  margin-top: auto;
-}
-
-/* ==========================================================================
-   4. PIPELINE NARRATIVE TIMELINE & MASTER RUN BUTTON
-   ========================================================================== */
-.pipeline-master-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.pipeline-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.pipeline-badge {
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--accent-azure);
-  margin-bottom: 2px;
-}
-
-.pipeline-heading {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.master-cta-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
+  color: #FFFFFF;
   border: none;
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 800;
-  padding: 10px 22px;
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
   letter-spacing: 0.4px;
-  box-shadow: 0 4px 18px rgba(118, 185, 0, 0.35);
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
+  transition: all 0.15s ease;
 }
 
-.master-cta-btn:hover:not(:disabled) {
+.exec-run-cta:hover:not(:disabled) {
+  background: #047857;
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(118, 185, 0, 0.45);
-  background: #84cf00;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.45);
 }
 
-.master-cta-btn.running {
+.exec-run-cta.running {
   background: var(--bg-surface-raised);
   color: var(--text-primary);
   border: 1px solid var(--accent-nvidia);
   box-shadow: none;
 }
 
-.proving-progress-track {
+/* Bottom Control Ribbon */
+.exec-control-ribbon {
+  display: grid;
+  grid-template-columns: 46% 54%;
+  gap: 16px;
+  align-items: center;
+  padding: 7px 24px;
+  background: #F8FAFC;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ribbon-slider-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.slider-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.badge-boundary-alert {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.alert-ragged {
+  background: rgba(225, 29, 72, 0.1);
+  color: var(--accent-coral);
+  border: 1px solid rgba(225, 29, 72, 0.25);
+}
+
+.alert-clean {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(5, 150, 105, 0.25);
+}
+
+.slider-track-wrap {
+  width: 100%;
+}
+
+.exec-hardware-slider {
+  -webkit-appearance: none;
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #E2E8F0;
   border-radius: 2px;
-  overflow: hidden;
+  outline: none;
+  cursor: pointer;
 }
 
-.proving-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent-azure), var(--accent-nvidia));
-  transition: width 0.3s ease;
-}
-
-/* 5-Stage Stepper Grid */
-.pipeline-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  position: relative;
-}
-
-.pipeline-step-node {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.node-active {
-  border-color: var(--accent-azure);
-  background: rgba(56, 189, 248, 0.08);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
-}
-
-.node-completed {
-  border-color: rgba(118, 185, 0, 0.4);
-  background: rgba(118, 185, 0, 0.05);
-}
-
-.step-node-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.step-num {
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--text-tertiary);
-  font-family: var(--font-mono);
-}
-
-.step-status-chip {
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.4px;
-}
-
-.chip-active {
-  background: rgba(56, 189, 248, 0.2);
-  color: var(--accent-azure);
-}
-
-.chip-completed {
-  background: rgba(118, 185, 0, 0.2);
-  color: var(--accent-nvidia);
-}
-
-.chip-pending, .chip-idle {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-tertiary);
-}
-
-.step-body {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.step-icon-wrap {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-primary);
-}
-
-.node-active .step-icon-wrap {
-  background: var(--accent-azure);
-  color: var(--accent-obsidian);
-}
-
-.node-completed .step-icon-wrap {
+.exec-hardware-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
   background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.4);
+  border: 2px solid #FFFFFF;
 }
 
-.step-name {
-  font-size: 12px;
+/* Stepper Section in Ribbon */
+.ribbon-stepper-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.ribbon-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
   font-weight: 700;
-  color: var(--text-primary);
 }
 
-.step-desc {
-  font-size: 10.5px;
-  color: var(--text-secondary);
+.step-badge {
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.step-active .step-badge {
+  background: var(--accent-azure);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.step-completed .step-badge {
+  background: rgba(5, 150, 105, 0.12);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(5, 150, 105, 0.25);
+}
+
+.step-pending .step-badge,
+.step-idle .step-badge {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-tertiary);
+}
+
+.step-laser-arrow {
+  color: rgba(15, 23, 42, 0.2);
+  font-size: 8px;
 }
 
 /* ==========================================================================
-   5. MAIN PROVING ARENA (2 COLUMNS)
+   2. SILICON DIE TOPOLOGY (CLEANROOM TSMC 4N SUBSTRATE)
    ========================================================================== */
-.aegis-proving-arena {
-  display: grid;
-  grid-template-columns: 58% 42%;
-  gap: 20px;
-  align-items: start;
-}
-
-.arena-left-column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.arena-right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ==========================================================================
-   6. MIC-DROP DELTA
-   ========================================================================== */
-.delta-master-card {
+.die-topology-chassis {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 18px 20px;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-subtle);
 }
 
-.delta-header-row {
+.die-header-strip {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
 }
 
-.delta-title-lockup {
+.die-title-lockup {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.delta-title {
-  font-size: 12px;
+.die-title {
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--text-primary);
 }
 
-.delta-pill {
-  font-size: 10.5px;
-  font-weight: 700;
-  background: rgba(118, 185, 0, 0.12);
-  color: var(--accent-nvidia);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-}
-
-.delta-comparison-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 14px;
-  align-items: center;
-}
-
-.delta-pane {
-  background: var(--bg-surface-raised);
-  border-radius: 10px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.pane-vulnerable {
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  background: rgba(244, 63, 94, 0.03);
-}
-
-.pane-hardened {
-  border: 1px solid rgba(118, 185, 0, 0.25);
-  background: rgba(118, 185, 0, 0.03);
-}
-
-.pane-top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.pane-title {
-  font-size: 12.5px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-}
-
-.pane-sub {
-  font-size: 10.5px;
+.die-gpc-tag {
+  font-size: 9.5px;
   color: var(--text-tertiary);
-  margin-top: 2px;
 }
 
-.badge-coral {
-  font-size: 10px;
-  font-weight: 800;
-  background: rgba(244, 63, 94, 0.15);
-  color: var(--accent-coral);
-  padding: 2px 7px;
-  border-radius: 4px;
-}
-
-.badge-nvidia {
-  font-size: 10px;
-  font-weight: 800;
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-  padding: 2px 7px;
-  border-radius: 4px;
-}
-
-.pane-metrics-table {
+.die-status-pills {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 6px;
 }
 
-.metric-row {
+.die-pill {
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
   display: flex;
-  justify-content: space-between;
-  font-size: 11.5px;
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  align-items: center;
+  gap: 5px;
 }
 
-.metric-label {
+.pill-fault {
+  background: rgba(225, 29, 72, 0.1);
+  color: var(--accent-coral);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+}
+
+.pill-healed {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+.pill-idle {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent-azure);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.pulse-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.bg-coral { background-color: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral); }
+.bg-nvidia { background-color: var(--accent-nvidia); box-shadow: 0 0 6px var(--accent-nvidia); }
+.bg-azure { background-color: var(--accent-azure); box-shadow: 0 0 6px var(--accent-azure); }
+
+/* HBM3e Interconnect Ribbon */
+.hbm-bus-interconnect {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 9px;
+}
+
+.hbm-stack {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 2px 6px;
+  border-radius: 3px;
   color: var(--text-tertiary);
 }
 
-.pane-verdict-box {
+.hbm-crossbar {
+  flex: 1;
+  text-align: center;
+}
+
+.bus-flow-text {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+/* 132 SM Physical Die Grid */
+.sm-die-grid {
+  display: grid;
+  grid-template-columns: repeat(22, 1fr);
+  gap: 3px;
+  background: #F1F5F9;
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 11px;
-  line-height: 1.4;
+  padding: 8px;
 }
 
-.verdict-coral {
-  background: rgba(244, 63, 94, 0.1);
-  color: #FDA4AF;
-}
-
-.verdict-nvidia {
-  background: rgba(118, 185, 0, 0.1);
-  color: #A7F3D0;
-}
-
-.delta-center-divider {
+.sm-die-unit {
+  aspect-ratio: 1;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 7.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
 }
 
-.speedup-circle {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: rgba(118, 185, 0, 0.12);
+.sm-die-unit:hover {
+  transform: scale(1.2);
+  z-index: 5;
+}
+
+.sm-idle {
+  background: #FFFFFF;
+  color: var(--text-tertiary);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.sm-fault {
+  background: var(--accent-coral);
+  color: #FFFFFF;
+  font-weight: 800;
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.5);
+  animation: pulse-sm-fault 1.2s infinite;
+}
+
+.sm-healed {
+  background: rgba(5, 150, 105, 0.18);
   border: 1px solid var(--accent-nvidia);
+  color: var(--accent-nvidia);
+  font-weight: 700;
+}
+
+.sm-selected {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 1px;
+}
+
+@keyframes pulse-sm-fault {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.die-footer-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.die-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.die-box-sample {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.bg-die-idle { background: #FFFFFF; border: 1px solid var(--border-subtle); }
+.bg-die-fault { background: var(--accent-coral); }
+.bg-die-healed { background: var(--accent-nvidia); }
+
+/* ==========================================================================
+   3. SIMT WARP 0 MATRIX VISUALIZER
+   ========================================================================== */
+.warp-visualizer-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.warp-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.warp-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.warp-title-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.warp-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+
+.warp-sub {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.warp-mode-toggle {
+  display: flex;
+  gap: 5px;
+}
+
+.warp-mode-btn {
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.warp-mode-btn.active.btn-mode-vuln {
+  background: rgba(225, 29, 72, 0.1);
+  border-color: var(--accent-coral);
+  color: var(--accent-coral);
+}
+
+.warp-mode-btn.active.btn-mode-safe {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: var(--accent-nvidia);
+  color: var(--accent-nvidia);
+}
+
+/* 32-Lane Thread Matrix */
+.warp-lanes-matrix {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 4px;
+}
+
+.lane-cell {
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  padding: 6px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(118, 185, 0, 0.25);
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
 }
 
-.speedup-val {
-  font-size: 15px;
-  font-weight: 800;
+.lane-cell:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-medium);
+}
+
+.lane-valid {
+  background: rgba(5, 150, 105, 0.08);
+  border-color: rgba(5, 150, 105, 0.25);
   color: var(--accent-nvidia);
-  font-family: var(--font-mono);
 }
 
-.speedup-unit {
-  font-size: 8.5px;
+.lane-fault {
+  background: rgba(225, 29, 72, 0.12);
+  border-color: var(--accent-coral);
+  color: var(--accent-coral);
+  animation: pulse-coral 1.5s infinite;
+}
+
+.lane-masked {
+  background: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.3);
+  color: var(--accent-amber);
+}
+
+.lane-selected {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 1px;
+}
+
+.lane-id-text {
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.lane-status-indicator {
+  font-size: 10px;
+}
+
+.warp-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+.swatch-valid { background: var(--accent-nvidia); }
+.swatch-fault { background: var(--accent-coral); }
+.swatch-masked { background: var(--accent-amber); }
+
+.warp-boundary-tag {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--accent-azure);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Lane Inspector Detail Panel */
+.lane-inspector-panel {
+  background: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inspector-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inspector-lane-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+}
+
+.status-pill-lane {
+  font-size: 9px;
   font-weight: 800;
-  color: var(--text-secondary);
-  letter-spacing: 0.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.pill-valid { background: rgba(5, 150, 105, 0.15); color: var(--accent-nvidia); }
+.pill-fault { background: rgba(225, 29, 72, 0.15); color: var(--accent-coral); }
+.pill-masked { background: rgba(217, 119, 6, 0.15); color: var(--accent-amber); }
+
+.inspector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 14px;
+}
+
+.inspector-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.item-label {
+  font-size: 9px;
+  color: var(--text-tertiary);
+}
+
+.item-val {
+  font-size: 10.5px;
 }
 
 /* ==========================================================================
-   7. SEMANTIC CODE DIFF INSPECTOR
+   4. SEMANTIC CODE & PTX DISASSEMBLY INSPECTOR
    ========================================================================== */
 .diff-master-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: var(--shadow-subtle);
 }
 
 .diff-header-bar {
   background: var(--bg-surface-raised);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 12px 18px;
+  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -946,17 +932,41 @@ body {
 }
 
 .diff-title {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--text-primary);
+}
+
+.diff-mode-tabs {
+  display: flex;
+  gap: 3px;
+}
+
+.diff-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-tertiary);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.diff-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--accent-nvidia);
+  border-color: var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
 }
 
 .diff-badges-group {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
+  gap: 6px;
+  font-size: 10.5px;
 }
 
 .badge-lang-vulnerable {
@@ -982,86 +992,86 @@ body {
 }
 
 .pane-filename-strip {
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 7px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 11px;
+  font-size: 10.5px;
 }
 
 .pane-tag {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 5px;
+  border-radius: 3px;
 }
 
 .tag-coral {
-  background: rgba(244, 63, 94, 0.15);
-  color: var(--accent-coral);
+  background: rgba(225, 29, 72, 0.2);
+  color: #FDA4AF;
 }
 
 .tag-nvidia {
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
+  background: rgba(5, 150, 105, 0.25);
+  color: #6EE7B7;
 }
 
 .pane-right-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-copy-code {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  font-size: 10.5px;
-  padding: 2px 7px;
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #CBD5E1;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .btn-copy-code:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .code-editor-viewport {
-  padding: 10px 0;
+  padding: 8px 0;
   font-family: var(--font-mono);
-  font-size: 11.5px;
-  line-height: 1.6;
+  font-size: 11px;
+  line-height: 1.55;
   overflow-x: auto;
 }
 
 .code-line-row {
   display: flex;
-  padding: 2px 14px;
-  gap: 12px;
+  padding: 2px 12px;
+  gap: 10px;
 }
 
 .line-vuln-highlight {
-  background: rgba(244, 63, 94, 0.12);
+  background: rgba(225, 29, 72, 0.15);
   border-left: 2px solid var(--accent-coral);
 }
 
 .line-secure-highlight {
-  background: rgba(118, 185, 0, 0.12);
+  background: rgba(5, 150, 105, 0.18);
   border-left: 2px solid var(--accent-nvidia);
 }
 
 .line-num {
-  color: var(--text-tertiary);
-  width: 18px;
+  color: #64748B;
+  width: 16px;
   text-align: right;
   user-select: none;
-  font-size: 10.5px;
+  font-size: 10px;
 }
 
 .line-content {
@@ -1069,121 +1079,123 @@ body {
 }
 
 .code-text.comment { color: #64748B; font-style: italic; }
-.code-text.code { color: #CBD5E1; }
+.code-text.code { color: #E2E8F0; }
 .code-text.vuln { color: #FDA4AF; font-weight: 600; }
-.code-text.secure { color: #A7F3D0; font-weight: 600; }
+.code-text.secure { color: #6EE7B7; font-weight: 600; }
 
 .line-annotation {
-  font-size: 10.5px;
-  padding: 3px 6px;
-  border-radius: 4px;
-  margin-top: 4px;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-top: 3px;
   display: inline-block;
 }
 
 .vuln-annotation {
-  background: rgba(244, 63, 94, 0.2);
+  background: rgba(225, 29, 72, 0.25);
   color: #FFE4E6;
 }
 
 .secure-annotation {
-  background: rgba(118, 185, 0, 0.2);
+  background: rgba(5, 150, 105, 0.3);
   color: #D1FAE5;
 }
 
 /* ==========================================================================
-   8. STUDIO TERMINAL WINDOW
+   5. STUDIO TERMINAL WINDOW
    ========================================================================== */
 .terminal-master-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: var(--shadow-subtle);
 }
 
 .terminal-header-strip {
   background: var(--bg-surface-raised);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 10px 16px;
+  padding: 8px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .terminal-title-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .terminal-title {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--text-primary);
 }
 
 .terminal-host-tag {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--accent-azure);
   font-family: var(--font-mono);
 }
 
 .terminal-filters-row {
   display: flex;
-  gap: 4px;
+  gap: 3px;
 }
 
 .term-filter-pill {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-tertiary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .term-filter-pill.pill-active {
-  background: rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
   border-color: var(--border-subtle);
   color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .terminal-actions-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .terminal-search-box {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.3);
+  gap: 5px;
+  background: #FFFFFF;
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 3px 8px;
+  border-radius: 4px;
+  padding: 2px 6px;
 }
 
 .term-search-input {
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 11px;
+  font-size: 10.5px;
   outline: none;
-  width: 110px;
+  width: 95px;
 }
 
 .term-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: #FFFFFF;
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
-  border-radius: 6px;
-  width: 26px;
-  height: 26px;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1192,27 +1204,27 @@ body {
 
 .term-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-medium);
 }
 
 .terminal-viewport {
   background: var(--bg-editor);
-  padding: 12px 16px;
-  min-height: 180px;
-  max-height: 260px;
+  padding: 10px 14px;
+  min-height: 150px;
+  max-height: 220px;
   overflow-y: auto;
   font-family: var(--font-mono);
-  font-size: 11.5px;
-  line-height: 1.6;
+  font-size: 11px;
+  line-height: 1.55;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .terminal-empty-state {
   display: flex;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .terminal-line {
@@ -1222,63 +1234,450 @@ body {
 
 .line-alert {
   color: #FDA4AF;
-  background: rgba(244, 63, 94, 0.08);
-  padding: 2px 6px;
-  border-radius: 4px;
+  background: rgba(225, 29, 72, 0.12);
+  padding: 2px 5px;
+  border-radius: 3px;
 }
 
 .line-success {
-  color: #86EFAC;
+  color: #6EE7B7;
 }
 
 /* ==========================================================================
-   9. VERIFICATION & IMPACT SIDEBAR (RIGHT COLUMN)
+   6. NSIGHT TELEMETRY HUD
+   ========================================================================== */
+.nsight-hud-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.hud-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hud-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+
+.hud-arch-pill {
+  font-size: 9.5px;
+  font-weight: 700;
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.hud-live-tag {
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+}
+
+.hud-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.hud-metric-box {
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hud-metric-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hud-metric-label {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.hud-metric-status {
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: 0.3px;
+}
+
+.status-nvidia {
+  background: rgba(5, 150, 105, 0.12);
+  color: var(--accent-nvidia);
+}
+
+.status-azure {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--accent-azure);
+}
+
+.hud-metric-val {
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+.hud-metric-sub {
+  font-size: 8.5px;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   7. HOPPER SILICON MEMORY HIERARCHY WATERFALL
+   ========================================================================== */
+.silicon-waterfall-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.waterfall-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.waterfall-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.waterfall-title-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.waterfall-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+
+.waterfall-sub {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.waterfall-tiers-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tier-row-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.tier-box {
+  width: 100%;
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tier-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tier-name {
+  font-size: 11px;
+}
+
+.tier-specs {
+  font-size: 9.5px;
+}
+
+.tier-comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.tier-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 5px 7px;
+  border-radius: 4px;
+}
+
+.tier-arrow-connector {
+  color: var(--accent-nvidia);
+  opacity: 0.6;
+}
+
+.waterfall-footer-summary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   8. MIC-DROP HARDENING DELTA
+   ========================================================================== */
+.delta-master-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.delta-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delta-title-lockup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.delta-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+
+.delta-pill {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--accent-nvidia);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+.delta-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.delta-pane {
+  background: var(--bg-surface-raised);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pane-vulnerable {
+  border: 1px solid rgba(225, 29, 72, 0.2);
+  background: rgba(225, 29, 72, 0.02);
+}
+
+.pane-hardened {
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  background: rgba(5, 150, 105, 0.02);
+}
+
+.pane-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pane-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.pane-sub {
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+  margin-top: 1px;
+}
+
+.badge-coral {
+  font-size: 9.5px;
+  font-weight: 800;
+  background: rgba(225, 29, 72, 0.1);
+  color: var(--accent-coral);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.badge-nvidia {
+  font-size: 9.5px;
+  font-weight: 800;
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--accent-nvidia);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.pane-metrics-table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 2px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.metric-label {
+  color: var(--text-tertiary);
+}
+
+.pane-verdict-box {
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.verdict-coral {
+  background: rgba(225, 29, 72, 0.08);
+  color: #BE123C;
+}
+
+.verdict-nvidia {
+  background: rgba(5, 150, 105, 0.08);
+  color: #047857;
+}
+
+.delta-center-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speedup-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--accent-nvidia);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(5, 150, 105, 0.2);
+}
+
+.speedup-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-nvidia);
+  font-family: var(--font-mono);
+}
+
+.speedup-unit {
+  font-size: 8px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+}
+
+/* ==========================================================================
+   9. VERIFICATION & IMPACT SIDEBAR
    ========================================================================== */
 .verification-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .sidebar-top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 2px;
+  padding-bottom: 1px;
 }
 
 .sidebar-title-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .sidebar-title {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--accent-nvidia);
 }
 
 .btn-judges-badge {
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.25);
   color: var(--accent-amber);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .impact-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 18px;
+  border-radius: 10px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
+  box-shadow: var(--shadow-subtle);
 }
 
 .impact-card-header {
@@ -1288,19 +1687,19 @@ body {
 }
 
 .impact-card-title {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--text-primary);
 }
 
 .badge-nvidia-sm {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
-  background: rgba(118, 185, 0, 0.12);
+  background: rgba(5, 150, 105, 0.1);
   color: var(--accent-nvidia);
-  padding: 2px 7px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
   font-family: var(--font-mono);
 }
 
@@ -1308,13 +1707,13 @@ body {
 .invariant-visual-row {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
 .radial-donut-box {
   position: relative;
-  width: 86px;
-  height: 86px;
+  width: 76px;
+  height: 76px;
 }
 
 .donut-center-text {
@@ -1327,44 +1726,43 @@ body {
 }
 
 .donut-val {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   font-family: var(--font-mono);
 }
 
 .donut-sub {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 800;
   color: var(--text-tertiary);
-  letter-spacing: 0.5px;
 }
 
 .invariant-stats-column {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .stat-big-number {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--text-primary);
   font-family: var(--font-mono);
 }
 
 .stat-label {
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
 .stat-tags-row {
   display: flex;
-  gap: 10px;
-  margin-top: 4px;
+  gap: 8px;
+  margin-top: 2px;
 }
 
 .tag-check {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--accent-nvidia);
   font-family: var(--font-mono);
@@ -1373,25 +1771,26 @@ body {
 .invariant-sub-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .sub-box {
   background: var(--bg-surface-raised);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  padding: 6px 8px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .sub-box-label {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--text-tertiary);
 }
 
 .sub-box-val {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   font-family: var(--font-mono);
 }
@@ -1400,18 +1799,18 @@ body {
 .perf-tabs-bar {
   display: flex;
   border-bottom: 1px solid var(--border-subtle);
-  gap: 6px;
-  padding-bottom: 8px;
+  gap: 4px;
+  padding-bottom: 6px;
 }
 
 .perf-tab-btn {
   background: transparent;
   border: none;
   color: var(--text-tertiary);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -1425,50 +1824,50 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .speedup-digits {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   font-family: var(--font-mono);
 }
 
 .speedup-label {
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 800;
   color: var(--text-secondary);
-  letter-spacing: 0.8px;
-  margin-left: 8px;
+  letter-spacing: 0.6px;
+  margin-left: 6px;
 }
 
 .badge-nvidia-solid {
   background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
-  font-size: 11px;
+  color: #FFFFFF;
+  font-size: 10.5px;
   font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 2px 7px;
+  border-radius: 3px;
   font-family: var(--font-mono);
 }
 
 .latency-bars-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .bar-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 11.5px;
-  margin-bottom: 4px;
+  font-size: 11px;
+  margin-bottom: 3px;
 }
 
 .bar-bg {
   width: 100%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #E2E8F0;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -1486,36 +1885,36 @@ body {
 .sram-metric-strip {
   display: flex;
   justify-content: space-between;
-  font-size: 11.5px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .roofline-graph-wrapper {
-  height: 160px;
+  height: 145px;
   position: relative;
 }
 
 /* Attestation Card */
 .attestation-meta-box {
-  background: var(--bg-editor);
+  background: #F8FAFC;
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 10px 12px;
+  border-radius: 5px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
+  gap: 3px;
+  font-size: 10.5px;
 }
 
 .meta-line {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .meta-key {
   color: var(--text-tertiary);
-  width: 65px;
+  width: 60px;
 }
 
 .btn-export-verified-pr {
@@ -1523,27 +1922,27 @@ body {
   align-items: center;
   justify-content: center;
   background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
+  color: #FFFFFF;
   border: none;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 800;
-  padding: 11px;
-  border-radius: 8px;
+  padding: 9px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(118, 185, 0, 0.3);
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
 }
 
 .btn-export-verified-pr:hover {
-  background: #84cf00;
+  background: #047857;
   transform: translateY(-1px);
 }
 
 .attestation-footer-note {
-  font-size: 10.5px;
+  font-size: 10px;
   color: var(--text-tertiary);
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 /* ==========================================================================
@@ -1552,29 +1951,29 @@ body {
 .aegis-footer {
   margin-top: auto;
   border-top: 1px solid var(--border-subtle);
-  background: var(--bg-surface);
-  padding: 14px 28px;
+  background: #FFFFFF;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .footer-cluster-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: var(--text-tertiary);
 }
 
 .footer-sep {
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(15, 23, 42, 0.15);
 }
 
 .footer-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .footer-link {
@@ -1597,9 +1996,9 @@ body {
 .modal-overlay-scrim {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -1608,20 +2007,20 @@ body {
 }
 
 .modal-dialog-box {
-  background: var(--bg-surface);
+  background: #FFFFFF;
   border: 1px solid var(--border-medium);
-  border-radius: 14px;
+  border-radius: 12px;
   width: 100%;
   max-width: 820px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.2);
   overflow: hidden;
 }
 
 .modal-header-strip {
-  padding: 16px 20px;
+  padding: 14px 18px;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
@@ -1635,13 +2034,13 @@ body {
 }
 
 .modal-heading {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .modal-subheading {
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
@@ -1659,8 +2058,8 @@ body {
 
 .modal-tab-bar {
   display: flex;
-  padding: 8px 16px;
-  gap: 8px;
+  padding: 6px 14px;
+  gap: 6px;
   background: var(--bg-surface-raised);
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -1672,1257 +2071,89 @@ body {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .modal-segment-btn.segment-active {
-  background: var(--bg-surface);
+  background: #FFFFFF;
   color: var(--text-primary);
   border-color: var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
 }
 
 .modal-body-scroll {
-  padding: 16px 20px;
+  padding: 14px 18px;
   overflow-y: auto;
   flex: 1;
 }
 
 .pr-markdown-preview {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1.6;
   white-space: pre-wrap;
-  color: #CBD5E1;
-  background: var(--bg-editor);
-  padding: 14px;
-  border-radius: 8px;
+  color: #0F172A;
+  background: #F8FAFC;
+  padding: 12px;
+  border-radius: 6px;
   border: 1px solid var(--border-subtle);
 }
 
 .cert-json-preview {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1.5;
   color: var(--accent-azure);
-  background: var(--bg-editor);
-  padding: 14px;
-  border-radius: 8px;
+  background: #F8FAFC;
+  padding: 12px;
+  border-radius: 6px;
   border: 1px solid var(--border-subtle);
   overflow-x: auto;
 }
 
 .modal-actions-footer {
-  padding: 12px 20px;
+  padding: 10px 18px;
   background: var(--bg-surface-raised);
   border-top: 1px solid var(--border-subtle);
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
 }
 
 .btn-modal-action {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 5px;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .btn-action-copy {
-  background: rgba(255, 255, 255, 0.06);
+  background: #FFFFFF;
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
 }
 
 .btn-action-copy:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: #F1F5F9;
 }
 
 .btn-action-download {
   background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
+  color: #FFFFFF;
   border: none;
 }
 
 .btn-action-download:hover {
-  background: #84cf00;
-}
-
-/* ==========================================================================
-   12. NVIDIA NSIGHT TELEMETRY HUD
-   ========================================================================== */
-.nsight-hud-container {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.hud-title-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hud-title-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hud-title {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-primary);
-}
-
-.hud-arch-pill {
-  font-size: 10px;
-  font-weight: 700;
-  background: rgba(118, 185, 0, 0.12);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.25);
-  padding: 2px 7px;
-  border-radius: 4px;
-}
-
-.hud-live-tag {
-  font-size: 10px;
-  color: var(--text-secondary);
-}
-
-.hud-metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-}
-
-.hud-metric-box {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.hud-metric-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hud-metric-label {
-  font-size: 10px;
-  color: var(--text-tertiary);
-  font-weight: 600;
-}
-
-.hud-metric-status {
-  font-size: 8.5px;
-  font-weight: 800;
-  padding: 1px 5px;
-  border-radius: 3px;
-  letter-spacing: 0.4px;
-}
-
-.status-nvidia {
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-}
-
-.status-azure {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-azure);
-}
-
-.hud-metric-val {
-  font-size: 14.5px;
-  font-weight: 800;
-}
-
-.hud-metric-sub {
-  font-size: 9.5px;
-  color: var(--text-secondary);
-}
-
-/* ==========================================================================
-   13. SIMT WARP 0 MATRIX VISUALIZER
-   ========================================================================== */
-.warp-visualizer-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.warp-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.warp-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.warp-title-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.warp-title {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-primary);
-}
-
-.warp-sub {
-  font-size: 10.5px;
-  color: var(--text-tertiary);
-}
-
-.warp-mode-toggle {
-  display: flex;
-  gap: 6px;
-}
-
-.warp-mode-btn {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.warp-mode-btn.active.btn-mode-vuln {
-  background: rgba(244, 63, 94, 0.15);
-  border-color: var(--accent-coral);
-  color: var(--accent-coral);
-}
-
-.warp-mode-btn.active.btn-mode-safe {
-  background: rgba(118, 185, 0, 0.15);
-  border-color: var(--accent-nvidia);
-  color: var(--accent-nvidia);
-}
-
-/* 32-Lane Thread Matrix */
-.warp-lanes-matrix {
-  display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  gap: 6px;
-}
-
-.lane-cell {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 8px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  user-select: none;
-}
-
-.lane-cell:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-medium);
-}
-
-.lane-valid {
-  background: rgba(118, 185, 0, 0.08);
-  border-color: rgba(118, 185, 0, 0.3);
-  color: var(--accent-nvidia);
-}
-
-.lane-fault {
-  background: rgba(244, 63, 94, 0.18);
-  border-color: var(--accent-coral);
-  color: var(--accent-coral);
-  animation: pulse-coral 1.5s infinite;
-}
-
-.lane-masked {
-  background: rgba(245, 158, 11, 0.1);
-  border-color: rgba(245, 158, 11, 0.35);
-  color: var(--accent-amber);
-}
-
-.lane-selected {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 1px;
-  z-index: 2;
-}
-
-.lane-id-text {
-  font-size: 10px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-}
-
-.lane-status-indicator {
-  font-size: 11px;
-}
-
-@keyframes pulse-coral {
-  0%, 100% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
-  50% { box-shadow: 0 0 10px rgba(244, 63, 94, 0.5); }
-}
-
-.warp-legend-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.legend-swatch {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-}
-
-.swatch-valid { background: var(--accent-nvidia); }
-.swatch-fault { background: var(--accent-coral); }
-.swatch-masked { background: var(--accent-amber); }
-
-.warp-boundary-tag {
-  margin-left: auto;
-  font-size: 10.5px;
-  color: var(--accent-azure);
-  background: rgba(56, 189, 248, 0.1);
-  padding: 2px 7px;
-  border-radius: 4px;
-}
-
-/* Lane Inspector Detail Panel */
-.lane-inspector-panel {
-  background: var(--bg-editor);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.inspector-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.inspector-lane-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-}
-
-.status-pill-lane {
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-}
-
-.pill-valid { background: rgba(118, 185, 0, 0.2); color: var(--accent-nvidia); }
-.pill-fault { background: rgba(244, 63, 94, 0.2); color: var(--accent-coral); }
-.pill-masked { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); }
-
-.inspector-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px 16px;
-}
-
-.inspector-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.item-label {
-  font-size: 9.5px;
-  color: var(--text-tertiary);
-}
-
-.item-val {
-  font-size: 11px;
-}
-
-/* ==========================================================================
-   14. HOPPER SILICON MEMORY HIERARCHY WATERFALL
-   ========================================================================== */
-.silicon-waterfall-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.waterfall-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.waterfall-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.waterfall-title-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.waterfall-title {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-primary);
-}
-
-.waterfall-sub {
-  font-size: 10.5px;
-  color: var(--text-tertiary);
-}
-
-.waterfall-tiers-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.tier-row-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.tier-box {
-  width: 100%;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tier-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tier-name {
-  font-size: 11.5px;
-}
-
-.tier-comparison-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  font-size: 10.5px;
-}
-
-.tier-side {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 6px 8px;
-  border-radius: 5px;
-}
-
-.tier-arrow-connector {
-  color: var(--accent-nvidia);
-  opacity: 0.6;
-}
-
-.waterfall-footer-summary {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Diff Mode Tabs (Source vs PTX) */
-.diff-mode-tabs {
-  display: flex;
-  gap: 4px;
-}
-
-.diff-tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-tertiary);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.diff-tab-btn.active {
-  background: var(--bg-surface);
-  color: var(--accent-nvidia);
-  border-color: rgba(118, 185, 0, 0.3);
-}
-
-/* ==========================================================================
-   15. SILICON DIE TOPOLOGY (132 SMs & HBM3e INTERCONNECTS)
-   ========================================================================== */
-.die-topology-chassis {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.die-header-strip {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.die-title-lockup {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.die-title {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-primary);
-}
-
-.die-gpc-tag {
-  font-size: 10px;
-  color: var(--text-tertiary);
-}
-
-.die-status-pills {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.die-pill {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pill-fault {
-  background: rgba(244, 63, 94, 0.15);
-  color: var(--accent-coral);
-  border: 1px solid var(--accent-coral);
-}
-
-.pill-healed {
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-  border: 1px solid var(--accent-nvidia);
-}
-
-.pill-idle {
-  background: rgba(56, 189, 248, 0.12);
-  color: var(--accent-azure);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-}
-
-.pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.bg-coral { background-color: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral); }
-
-/* HBM3e Interconnect Ribbon */
-.hbm-bus-interconnect {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 9.5px;
-}
-
-.hbm-stack {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--text-tertiary);
-}
-
-.hbm-crossbar {
-  flex: 1;
-  text-align: center;
-}
-
-.bus-flow-text {
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* 132 SM Physical Die Grid */
-.sm-die-grid {
-  display: grid;
-  grid-template-columns: repeat(22, 1fr);
-  gap: 4px;
-  background: var(--bg-editor);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px;
-}
-
-.sm-die-unit {
-  aspect-ratio: 1;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 8px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  user-select: none;
-}
-
-.sm-die-unit:hover {
-  transform: scale(1.15);
-  z-index: 5;
-}
-
-.sm-idle {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-tertiary);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.sm-fault {
-  background: var(--accent-coral);
-  color: #FFFFFF;
-  font-weight: 800;
-  box-shadow: 0 0 12px var(--accent-coral);
-  animation: pulse-sm-fault 1.2s infinite;
-}
-
-.sm-healed {
-  background: rgba(118, 185, 0, 0.25);
-  border: 1px solid var(--accent-nvidia);
-  color: var(--accent-nvidia);
-}
-
-.sm-selected {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 1px;
-}
-
-@keyframes pulse-sm-fault {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.die-footer-strip {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-top: 4px;
-}
-
-.die-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.die-box-sample {
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-}
-
-.bg-die-idle { background: rgba(255, 255, 255, 0.1); }
-.bg-die-fault { background: var(--accent-coral); }
-.bg-die-healed { background: var(--accent-nvidia); }
-
-/* ==========================================================================
-   16. TENSOR STRESS & RAGGED BOUNDARY CONTROLLER
-   ========================================================================== */
-.tensor-stress-chassis {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.stress-top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stress-title-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stress-title {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: var(--text-primary);
-}
-
-.stress-pill {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 4px;
-}
-
-.pill-ragged {
-  background: rgba(244, 63, 94, 0.15);
-  color: var(--accent-coral);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-}
-
-.pill-aligned {
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.3);
-}
-
-.stress-controls-grid {
-  display: grid;
-  grid-template-columns: 55% 45%;
-  gap: 18px;
-  align-items: center;
-}
-
-.slider-control-box {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.slider-label-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hardware-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-}
-
-.hardware-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--accent-nvidia);
-  cursor: pointer;
-  box-shadow: 0 0 10px var(--accent-nvidia);
-  border: 2px solid #FFFFFF;
-}
-
-.slider-ticks {
-  display: flex;
-  justify-content: space-between;
-}
-
-.stress-stats-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.stress-stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.stat-k {
-  font-size: 9.5px;
-}
-
-.stat-v {
-  font-size: 11px;
-}
-
-/* ==========================================================================
-   18. EXECUTIVE COMMAND BAR COCKPIT HEADER
-   ========================================================================== */
-.exec-cockpit-header {
-  position: sticky;
-  top: 0;
-  z-index: 80;
-  background: rgba(8, 11, 18, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-medium);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-}
-
-.exec-top-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 24px;
-  gap: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.exec-brand-lockup {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.exec-brand-shield {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: rgba(118, 185, 0, 0.12);
-  border: 1px solid var(--accent-nvidia);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 14px rgba(118, 185, 0, 0.25);
-}
-
-.exec-brand-title {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-}
-
-.exec-brand-badge {
-  font-size: 9.5px;
-  font-weight: 800;
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.35);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.exec-brand-sub {
-  font-size: 10.5px;
-  color: var(--text-secondary);
-  display: block;
-}
-
-/* Hardware Dropdown */
-.exec-hw-dropdown-container {
-  position: relative;
-}
-
-.exec-hw-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-medium);
-  border-radius: 6px;
-  padding: 5px 10px;
-  cursor: pointer;
-  color: var(--text-primary);
-  font-size: 11px;
-}
-
-.exec-hw-btn:hover {
-  border-color: var(--accent-nvidia);
-}
-
-.chevron-icon {
-  color: var(--text-tertiary);
-  transition: transform 0.15s ease;
-}
-
-.chevron-icon.open {
-  transform: rotate(180deg);
-}
-
-.exec-hw-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  width: 240px;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-medium);
-  border-radius: 6px;
-  padding: 4px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.exec-hw-menu-item {
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.exec-hw-menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.exec-hw-menu-item.selected {
-  background: rgba(118, 185, 0, 0.15);
-  border: 1px solid rgba(118, 185, 0, 0.3);
-}
-
-/* Operator Tabs */
-.exec-workload-tabs {
-  display: flex;
-  gap: 6px;
-}
-
-.exec-tab-btn {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 6px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.exec-tab-btn:hover {
-  border-color: var(--border-medium);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.exec-tab-btn.active {
-  background: rgba(118, 185, 0, 0.08);
-  border-color: var(--accent-nvidia);
-  box-shadow: 0 0 14px rgba(118, 185, 0, 0.2);
-}
-
-.tab-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-tertiary);
-}
-
-.tab-dot.dot-active {
-  background: var(--accent-nvidia);
-  box-shadow: 0 0 8px var(--accent-nvidia);
-}
-
-.tab-name {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.tab-speedup {
-  font-size: 10px;
-  margin-left: 2px;
-}
-
-.tab-fault-sub {
-  font-size: 9.5px;
-}
-
-/* Right Actions */
-.exec-action-strip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.exec-icon-btn {
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  border-radius: 6px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.exec-icon-btn:hover {
-  border-color: var(--border-medium);
-  color: var(--text-primary);
-}
-
-.exec-btn-ghost {
-  display: flex;
-  align-items: center;
-  background: var(--bg-surface-raised);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  font-size: 11.5px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.exec-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.exec-run-cta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--accent-nvidia);
-  color: var(--accent-obsidian);
-  border: none;
-  font-size: 12.5px;
-  font-weight: 800;
-  padding: 8px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 18px rgba(118, 185, 0, 0.4);
-  transition: all 0.15s ease;
-}
-
-.exec-run-cta:hover:not(:disabled) {
-  background: #84cf00;
-  transform: translateY(-1px);
-  box-shadow: 0 0 24px rgba(118, 185, 0, 0.6);
-}
-
-.exec-run-cta.running {
-  background: var(--bg-surface-raised);
-  color: var(--text-primary);
-  border: 1px solid var(--accent-nvidia);
-  box-shadow: none;
-}
-
-/* Bottom Control Ribbon */
-.exec-control-ribbon {
-  display: grid;
-  grid-template-columns: 46% 54%;
-  gap: 16px;
-  align-items: center;
-  padding: 7px 24px;
-  background: rgba(0, 0, 0, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.ribbon-slider-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.slider-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10.5px;
-}
-
-.badge-boundary-alert {
-  margin-left: auto;
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
-.alert-ragged {
-  background: rgba(244, 63, 94, 0.15);
-  color: var(--accent-coral);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-}
-
-.alert-clean {
-  background: rgba(118, 185, 0, 0.15);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.3);
-}
-
-.slider-track-wrap {
-  width: 100%;
-}
-
-.exec-hardware-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-}
-
-.exec-hardware-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--accent-nvidia);
-  cursor: pointer;
-  box-shadow: 0 0 10px var(--accent-nvidia);
-  border: 2px solid #FFFFFF;
-}
-
-/* Stepper Section in Ribbon */
-.ribbon-stepper-section {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.ribbon-step-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.step-badge {
-  padding: 3px 8px;
-  border-radius: 4px;
-}
-
-.step-active .step-badge {
-  background: var(--accent-azure);
-  color: var(--accent-obsidian);
-  box-shadow: 0 0 10px var(--accent-azure);
-}
-
-.step-completed .step-badge {
-  background: rgba(118, 185, 0, 0.2);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(118, 185, 0, 0.3);
-}
-
-.step-pending .step-badge,
-.step-idle .step-badge {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-tertiary);
-}
-
-.step-laser-arrow {
-  color: rgba(255, 255, 255, 0.15);
-  font-size: 8px;
-}
-
-.aegis-workbench-container {
-  max-width: 1560px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.workbench-grid-layout {
-  display: grid;
-  grid-template-columns: 54% 46%;
-  gap: 18px;
-  align-items: start;
-}
-
-.workbench-col-left {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.workbench-col-right {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  background: #047857;
 }
 
 /* ==========================================================================
@@ -2932,19 +2163,13 @@ body {
   .workbench-grid-layout {
     grid-template-columns: 1fr;
   }
-  .stress-controls-grid {
-    grid-template-columns: 1fr;
-  }
   .sm-die-grid {
     grid-template-columns: repeat(11, 1fr);
   }
 }
 
 @media (max-width: 860px) {
-  .workload-cards-row {
-    grid-template-columns: 1fr;
-  }
-  .pipeline-steps-grid {
+  .exec-control-ribbon {
     grid-template-columns: 1fr;
   }
   .diff-panes-split {
@@ -2953,7 +2178,7 @@ body {
   .delta-comparison-grid {
     grid-template-columns: 1fr;
   }
-  .header-center-hub {
+  .exec-workload-tabs {
     display: none;
   }
   .hud-metrics-grid {
