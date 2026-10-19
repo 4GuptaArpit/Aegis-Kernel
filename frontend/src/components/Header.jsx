@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Sparkles, Search, Zap, Volume2, VolumeX } from 'lucide-react';
+import { Shield, Sparkles, Cpu, Zap, Volume2, VolumeX, GitPullRequest, ChevronDown } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function Header({ 
-  onRun, 
-  isRunning, 
+  selectedHardware,
+  onSelectHardware,
   onOpenPitch, 
-  onOpenInspector 
+  onOpenPrModal 
 }) {
   const [isMuted, setIsMuted] = useState(false);
+  const [hwDropdownOpen, setHwDropdownOpen] = useState(false);
+
+  const hardwareOptions = [
+    { id: 'NVIDIA Hopper H100 SXM5', label: 'Hopper H100 SXM5', spec: '80GB · SM_90a · 3.35 TB/s' },
+    { id: 'NVIDIA Ada Lovelace L40S', label: 'Ada Lovelace L40S', spec: '48GB · SM_89 · 864 GB/s' },
+    { id: 'NVIDIA Blackwell B200', label: 'Blackwell B200', spec: '192GB · SM_100 · 8.0 TB/s' }
+  ];
 
   const handleToggleSound = () => {
     const muted = sound.toggleMute();
@@ -16,100 +23,106 @@ export default function Header({
     if (!muted) sound.playClick();
   };
 
+  const handleSelectHw = (hwId) => {
+    sound.playClick();
+    onSelectHardware(hwId);
+    setHwDropdownOpen(false);
+  };
+
+  const currentHw = hardwareOptions.find(h => h.id === selectedHardware) || hardwareOptions[0];
+
   return (
-    <header className="stitch-header">
-      {/* Left: Brand & Subtitle */}
-      <div className="header-left">
-        <div className="stitch-logo-lockup">
-          <div className="logo-shield-icon">
-            <svg width="22" height="24" viewBox="0 0 24 28" fill="none">
-              <path d="M12 0L0 4.5V14C0 21.5 5.1 26.8 12 28C18.9 26.8 24 21.5 24 14V4.5L12 0Z" fill="url(#stitch-logo-grad)" />
-              <path d="M12 3L2.5 6.5V13.5C2.5 19.5 6.5 24 12 25C17.5 24 21.5 19.5 21.5 13.5V6.5L12 3Z" fill="#090D16" />
-              <path d="M12 7L7 12H10.5V19L17 11H13.5L15 7H12Z" fill="#00F29B" />
-              <defs>
-                <linearGradient id="stitch-logo-grad" x1="0" y1="0" x2="24" y2="28" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#8B5CF6" />
-                  <stop offset="1" stopColor="#00F29B" />
-                </linearGradient>
-              </defs>
-            </svg>
+    <header className="aegis-header">
+      {/* Brand & Identity */}
+      <div className="header-brand-group">
+        <div className="brand-logo-gem">
+          <Shield size={18} className="text-nvidia" />
+        </div>
+        <div className="brand-title-wrap">
+          <div className="brand-name-row">
+            <span className="brand-title">AEGIS // KERNEL</span>
+            <span className="hackathon-tag">NEBIUS × NVIDIA GLOBAL '26</span>
           </div>
-          <div className="logo-text-block">
-            <div className="logo-title-row">
-              <span className="logo-title">AEGIS · KERNEL</span>
-              <span className="stitch-pill pill-purple-sm">v2.5 LIVE</span>
+          <span className="brand-sub">Autonomous Adversarial GPU Invariant & Kernel Proving Ground</span>
+        </div>
+      </div>
+
+      {/* Center: Hardware Selector & Cloud Hub */}
+      <div className="header-center-hub">
+        {/* Hardware Selector Dropdown */}
+        <div className="hw-selector-dropdown-wrap">
+          <button 
+            className="hw-selector-trigger" 
+            onClick={() => setHwDropdownOpen(!hwDropdownOpen)}
+            title="Switch Target GPU Architecture"
+          >
+            <Cpu size={14} className="text-nvidia" />
+            <div className="hw-info-text">
+              <span className="hw-name">{currentHw.label}</span>
+              <span className="hw-spec">{currentHw.spec}</span>
             </div>
-            <p className="logo-subtitle">
-              Autonomous GPU Invariant Proving Ground · Nebius AI × NVIDIA Hackathon
-            </p>
-          </div>
+            <ChevronDown size={13} className={`hw-chevron ${hwDropdownOpen ? 'open' : ''}`} />
+          </button>
+
+          {hwDropdownOpen && (
+            <div className="hw-dropdown-menu">
+              {hardwareOptions.map((opt) => (
+                <div 
+                  key={opt.id}
+                  className={`hw-dropdown-item ${opt.id === selectedHardware ? 'selected' : ''}`}
+                  onClick={() => handleSelectHw(opt.id)}
+                >
+                  <div className="hw-item-title">{opt.label}</div>
+                  <div className="hw-item-spec">{opt.spec}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Center-Left Action Buttons */}
-        <div className="header-actions">
-          <button 
-            className="stitch-btn btn-pitch" 
-            onClick={onOpenPitch}
-            title="Pitch Mode Presentation"
-          >
-            <Sparkles size={13} className="text-white" />
-            <span>Pitch Mode</span>
-          </button>
-
-          <button 
-            className="stitch-btn btn-glass"
-            onClick={onOpenInspector}
-            title="Systems & Memory Inspector"
-          >
-            <Search size={13} className="text-muted" />
-            <span>Systems Inspector</span>
-          </button>
+        {/* Live Cloud Status Telemetry */}
+        <div className="cloud-status-strip">
+          <div className="cloud-pill pill-nebius" title="Nebius Token Factory Sandbox Active">
+            <span className="pulse-indicator bg-azure"></span>
+            <span>Nebius Token Factory</span>
+          </div>
+          <div className="cloud-pill pill-nemotron" title="Nemotron 70B Ultra Dual-Brain Healer">
+            <span className="pulse-indicator bg-nvidia"></span>
+            <span>Nemotron 70B Ultra</span>
+          </div>
+          <div className="cloud-pill pill-tavily" title="Tavily Hardware & Compiler Oracle Online">
+            <span className="pulse-indicator bg-amber"></span>
+            <span>Tavily Oracle</span>
+          </div>
         </div>
       </div>
 
-      {/* Center-Right Hardware & Cloud Status Chips */}
-      <div className="header-center-chips">
-        <div className="hw-chip">
-          <span className="hw-chip-title">NVIDIA Hopper H100 SXM5</span>
-          <span className="hw-chip-sub text-cyan">80GB · SM_90a</span>
-        </div>
-
-        <div className="hw-chip">
-          <span className="hw-chip-title">NVLink 4 900 GB/s</span>
-          <span className="hw-chip-sub text-muted">· 1.2ms</span>
-        </div>
-
-        <div className="status-chip chip-green">
-          <span className="stitch-dot dot-green"></span>
-          <span>Nebius: Ready</span>
-        </div>
-
-        <div className="status-chip chip-purple">
-          <span className="stitch-dot dot-purple"></span>
-          <span>Nemotron 70B: Active</span>
-        </div>
-
+      {/* Right: Actions & Sound Toggle */}
+      <div className="header-right-actions">
         <button 
-          className="sound-toggle-btn"
+          className="audio-btn" 
           onClick={handleToggleSound}
-          title={isMuted ? "Unmute Sound" : "Mute Sound"}
+          title={isMuted ? "Unmute Audio Synthesis" : "Mute Audio Synthesis"}
         >
-          {isMuted ? <VolumeX size={14} className="text-dim" /> : <Volume2 size={14} className="text-green" />}
+          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-nvidia" />}
         </button>
-      </div>
 
-      {/* Far Right: Huge Primary Run Button */}
-      <div className="header-right">
         <button 
-          className={`stitch-run-btn ${isRunning ? 'running' : ''}`}
-          onClick={onRun}
-          disabled={isRunning}
+          className="btn-header-secondary"
+          onClick={onOpenPitch}
+          title="Open Hackathon Judges Presentation"
         >
-          <Zap size={16} className="text-white fill-current" />
-          <div className="run-btn-text">
-            <span>{isRunning ? 'Running Proving Ground...' : 'Run Autonomous Proving Ground'}</span>
-          </div>
-          <span className="kbd-shortcut">⌘R</span>
+          <Sparkles size={14} className="text-amber" />
+          <span>Judges Pitch</span>
+        </button>
+
+        <button 
+          className="btn-header-primary"
+          onClick={onOpenPrModal}
+          title="Export Verified Upstream PR"
+        >
+          <GitPullRequest size={14} />
+          <span>Export PR</span>
         </button>
       </div>
     </header>

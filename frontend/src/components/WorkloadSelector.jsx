@@ -1,32 +1,38 @@
 import React from 'react';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function WorkloadSelector({ selectedFixture, onSelectFixture, isRunning }) {
   const workloads = [
     {
       id: 'swiglu',
-      title: 'Ragged Fused SwiGLU',
-      targetSpeedup: '2.35x Target',
-      description: 'Transformer MLP Feed-Forward block in LLaMA-3 & Mistral.',
-      tag: '🔴 CUDA 139 Crash · -42% VRAM',
-      tagColor: 'text-red'
+      name: 'Fused Ragged SwiGLU',
+      modelFamily: 'LLaMA-3 · Mistral 7B · Gemma',
+      faultType: 'SIGSEGV 139 (Warp OOB)',
+      faultDetail: 'Ragged sequences (seq_len % 32 != 0) trigger invalid global memory loads.',
+      targetSpeedup: '2.35x Speedup',
+      reduction: '-42% SRAM Footprint',
+      accentColor: 'nvidia'
     },
     {
       id: 'rmsnorm',
-      title: 'Unaligned RMSNorm',
-      targetSpeedup: '2.33x Target',
-      description: 'Pre-attention LayerNorm with silent non-16B stride corruption.',
-      tag: '🟡 SDC Divergence · -31% Warp Penalty',
-      tagColor: 'text-amber'
+      name: 'Unaligned Vectorized RMSNorm',
+      modelFamily: 'Qwen-2.5 · DeepSeek-V3',
+      faultType: 'Silent Data Corruption (SDC)',
+      faultDetail: 'Non-16B stride loads cause accumulator drift without hardware fault.',
+      targetSpeedup: '2.33x Speedup',
+      reduction: '-31% Memory Stalls',
+      accentColor: 'amber'
     },
     {
       id: 'softmax',
-      title: 'Safe Scaled Softmax',
-      targetSpeedup: '2.27x Target',
-      description: 'FlashAttention-v3 long context with NaN/Inf numerical drift.',
-      tag: '🔵 Underflow Trap · 128k Tokens',
-      tagColor: 'text-cyan'
+      name: 'Safe Scaled Online Softmax',
+      modelFamily: 'FlashAttention-v3 · 128k Context',
+      faultType: 'NaN / Inf Underflow Trap',
+      faultDetail: 'Unbounded exp(x) in FP16 causes numerical loss spikes and NaN gradients.',
+      targetSpeedup: '2.27x Speedup',
+      reduction: '0.0 Numerical Divergence',
+      accentColor: 'azure'
     }
   ];
 
@@ -37,34 +43,56 @@ export default function WorkloadSelector({ selectedFixture, onSelectFixture, isR
   };
 
   return (
-    <div className="stitch-card workload-selector-card">
-      <div className="workload-header-row">
-        <div className="card-title-group">
-          <SlidersHorizontal size={14} className="text-cyan" />
-          <span className="card-title-text">SELECT TARGET NEURAL NET WORKLOAD</span>
+    <div className="workload-rail-container">
+      <div className="workload-rail-header">
+        <div className="rail-title-group">
+          <SlidersHorizontal size={14} className="text-nvidia" />
+          <span className="rail-title">TARGET NEURAL OPERATOR BENCHMARKS</span>
         </div>
-        <span className="text-xs text-dim">Click card to live-switch fuzzer & AST target</span>
+        <span className="rail-sub">Select a production PyTorch kernel to prove vulnerability and synthesize hardened Triton replacement</span>
       </div>
 
-      <div className="workload-cards-grid">
+      <div className="workload-cards-row">
         {workloads.map((wl) => {
           const isActive = selectedFixture === wl.id;
           return (
             <div
               key={wl.id}
-              className={`workload-item-card ${isActive ? 'active-workload' : ''}`}
+              className={`workload-card ${isActive ? 'card-selected' : ''} ${isRunning ? 'disabled' : ''}`}
               onClick={() => handleSelect(wl.id)}
             >
-              <div className="workload-item-top">
-                <span className={`status-pill ${isActive ? 'pill-active' : 'pill-queued'}`}>
-                  {isActive ? 'ACTIVE WORKLOAD' : 'QUEUED'}
-                </span>
-                <span className="target-pill">{wl.targetSpeedup}</span>
+              <div className="card-top-status">
+                <div className="selection-badge">
+                  {isActive ? (
+                    <span className="badge-active">
+                      <span className="status-dot-active"></span>
+                      ACTIVE TARGET
+                    </span>
+                  ) : (
+                    <span className="badge-idle">STANDBY</span>
+                  )}
+                </div>
+                <div className="speedup-pill">
+                  <Zap size={12} className="inline mr-1" />
+                  {wl.targetSpeedup}
+                </div>
               </div>
 
-              <div className="workload-item-title">{wl.title}</div>
-              <div className="workload-item-desc">{wl.description}</div>
-              <div className={`workload-item-footer ${wl.tagColor}`}>{wl.tag}</div>
+              <div className="card-operator-title">{wl.name}</div>
+              <div className="card-model-family">{wl.modelFamily}</div>
+
+              <div className="card-fault-box">
+                <div className="fault-title">
+                  <AlertTriangle size={12} className="text-coral" />
+                  <span>{wl.faultType}</span>
+                </div>
+                <p className="fault-desc">{wl.faultDetail}</p>
+              </div>
+
+              <div className="card-footer-metric">
+                <CheckCircle2 size={12} className="text-nvidia" />
+                <span>{wl.reduction}</span>
+              </div>
             </div>
           );
         })}

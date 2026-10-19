@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Copy, Check, Download, GitPullRequest, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { X, Copy, Check, Download, GitPullRequest, ShieldCheck, CheckCircle2, Shield } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function AttestationModal({ 
@@ -64,18 +64,18 @@ export default function AttestationModal({
 
   return (
     <div className="modal-overlay-scrim" onClick={onClose}>
-      <div className="modal-dialog-box glass-panel" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-dialog-box" onClick={(e) => e.stopPropagation()}>
         {/* Modal Header */}
         <div className="modal-header-strip">
           <div className="modal-header-left">
-            <ShieldCheck size={20} className="text-emerald" />
+            <Shield size={20} className="text-nvidia" />
             <div>
-              <h3 className="modal-heading">Aegis-Kernel Verification & GitHub PR Export</h3>
-              <span className="modal-subheading">Cryptographically Signed Proof of Memory Safety</span>
+              <h3 className="modal-heading">Aegis-Kernel Verification & Upstream PR Export</h3>
+              <span className="modal-subheading">Cryptographically Signed Proof of GPU Memory Safety & Speedup</span>
             </div>
           </div>
           <button className="modal-dismiss-btn" onClick={onClose}>
-            <X size={16} />
+            <X size={18} />
           </button>
         </div>
 
@@ -88,7 +88,7 @@ export default function AttestationModal({
               setActiveTab('pr');
             }}
           >
-            <GitPullRequest size={13} className="text-violet" />
+            <GitPullRequest size={14} className="text-azure" />
             <span>GitHub Pull Request Markdown</span>
           </button>
           <button 
@@ -98,53 +98,46 @@ export default function AttestationModal({
               setActiveTab('cert');
             }}
           >
-            <CheckCircle2 size={13} className="text-emerald" />
+            <CheckCircle2 size={14} className="text-nvidia" />
             <span>Cryptographic Audit Certificate</span>
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="modal-scroll-body">
+        <div className="modal-body-scroll">
           {loading ? (
-            <div className="modal-loading-pane">
-              <div className="spinning-ring"></div>
-              <p>Fetching signed audit records from Nebius Token Factory Sandbox...</p>
+            <div style={{ textAlign: 'center', padding: '40px 0', color: '#94A3B8', fontFamily: 'monospace' }}>
+              Fetching signed audit telemetry from Nebius Token Factory Sandbox...
             </div>
           ) : (
             <>
               {activeTab === 'pr' && prData && (
-                <div className="pr-layout-stack">
-                  <div className="pr-meta-ribbon">
-                    <span className="pr-badge-branch">
-                      Branch: <code>{prData.branch}</code>
+                <div>
+                  <div style={{ display: 'flex', gap: '10px', marginBottom: '12px', fontSize: '11.5px' }}>
+                    <span style={{ background: 'rgba(255,255,255,0.06)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'monospace' }}>
+                      Branch: <strong className="text-azure">{prData.branch}</strong>
                     </span>
-                    <span className="pr-badge-title">
-                      Title: <strong>{prData.title}</strong>
+                    <span style={{ background: 'rgba(255,255,255,0.06)', padding: '3px 8px', borderRadius: '4px' }}>
+                      Title: <strong className="text-primary">{prData.title}</strong>
                     </span>
                   </div>
-
-                  <div className="pr-preview-editor">
-                    <pre className="pr-pre-tag"><code>{prData.body}</code></pre>
-                  </div>
+                  <pre className="pr-markdown-preview"><code>{prData.body}</code></pre>
                 </div>
               )}
 
               {activeTab === 'cert' && attestationData && (
-                <div className="cert-layout-stack">
-                  <div className="cert-banner-box">
-                    <ShieldCheck size={24} className="text-emerald shrink-0" />
-                    <div>
-                      <h4 className="cert-banner-heading">IMMUTABLE PROOF OF INVARIANT</h4>
-                      <p className="cert-banner-text">
-                        This operation has been mathematically proven safe against out-of-bounds buffer overruns,
-                        Silent Data Corruption (SDC), and floating-point overflow on {hardwareTarget}.
-                      </p>
+                <div>
+                  <div style={{ background: 'rgba(118, 185, 0, 0.1)', border: '1px solid rgba(118, 185, 0, 0.25)', borderRadius: '8px', padding: '12px 14px', marginBottom: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#76B900', fontWeight: '800', fontSize: '12px', marginBottom: '4px' }}>
+                      <ShieldCheck size={16} />
+                      <span>IMMUTABLE PROOF OF INVARIANT ATTESTATION</span>
                     </div>
+                    <p style={{ fontSize: '11px', color: '#94A3B8', margin: 0 }}>
+                      This operation has been mathematically proven safe against out-of-bounds buffer overruns,
+                      Silent Data Corruption (SDC), and floating-point overflow on {hardwareTarget}.
+                    </p>
                   </div>
-
-                  <div className="cert-json-editor">
-                    <pre className="cert-pre-tag"><code>{JSON.stringify(attestationData, null, 2)}</code></pre>
-                  </div>
+                  <pre className="cert-json-preview"><code>{JSON.stringify(attestationData, null, 2)}</code></pre>
                 </div>
               )}
             </>
@@ -152,14 +145,14 @@ export default function AttestationModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="modal-footer-strip">
-          <button className="modal-btn btn-outline" onClick={handleDownloadJson}>
+        <div className="modal-actions-footer">
+          <button className="btn-modal-action btn-action-copy" onClick={handleDownloadJson}>
             <Download size={13} />
             <span>Download .audit.json</span>
           </button>
 
-          <button className="modal-btn btn-gradient" onClick={handleCopy}>
-            {copied ? <Check size={13} className="text-emerald" /> : <Copy size={13} />}
+          <button className="btn-modal-action btn-action-download" onClick={handleCopy}>
+            {copied ? <Check size={13} /> : <Copy size={13} />}
             <span>{copied ? 'Copied to Clipboard!' : 'Copy to Clipboard'}</span>
           </button>
         </div>

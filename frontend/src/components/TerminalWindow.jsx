@@ -1,115 +1,110 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, FileCode, Copy, Trash2, ArrowDownCircle } from 'lucide-react';
+import { Terminal, Copy, Trash2, Search, Check, ShieldAlert } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function TerminalWindow({ logs, onClear }) {
-  const [activeTab, setActiveTab] = useState('live');
-  const [autoScroll, setAutoScroll] = useState(true);
+  const [filterQuery, setFilterQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [copied, setCopied] = useState(false);
   const terminalEndRef = useRef(null);
 
   useEffect(() => {
-    if (autoScroll) {
-      terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [logs, autoScroll]);
+    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [logs]);
 
   const handleCopyLogs = () => {
     sound.playClick();
     const text = logs.map(l => l.text).join('\n');
     navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
+  const filteredLogs = logs.filter(log => {
+    const matchesQuery = filterQuery === '' || log.text.toLowerCase().includes(filterQuery.toLowerCase());
+    if (!matchesQuery) return false;
+    if (activeFilter === 'alert') return log.type === 'alert' || log.text.includes('SIGSEGV') || log.text.includes('Exit');
+    if (activeFilter === 'success') return log.type === 'success' || log.text.includes('Verified') || log.text.includes('Hardened');
+    return true;
+  });
+
   return (
-    <div className="stitch-card terminal-card">
+    <div className="terminal-master-card">
       {/* Terminal Title Bar */}
-      <div className="terminal-top-bar">
-        <div className="terminal-controls-group">
-          {/* macOS window control dots */}
-          <div className="mac-dots">
-            <span className="mac-dot dot-close"></span>
-            <span className="mac-dot dot-min"></span>
-            <span className="mac-dot dot-max"></span>
-          </div>
-
-          {/* Terminal Tabs */}
-          <div className="terminal-tabs">
-            <button 
-              className={`terminal-tab ${activeTab === 'live' ? 'active' : ''}`}
-              onClick={() => setActiveTab('live')}
-            >
-              <FileCode size={12} className="tab-icon" />
-              <span>live_run.sh</span>
-            </button>
-
-            <button 
-              className={`terminal-tab ${activeTab === 'crash' ? 'active' : ''}`}
-              onClick={() => setActiveTab('crash')}
-            >
-              <span>crash_dump.log</span>
-            </button>
-          </div>
+      <div className="terminal-header-strip">
+        <div className="terminal-title-left">
+          <Terminal size={14} className="text-nvidia" />
+          <span className="terminal-title">LIVE SANDBOX & ADVERSARIAL TELEMETRY</span>
+          <span className="terminal-host-tag">nebius-h100-node-04 (TTY)</span>
         </div>
 
-        {/* Right Status Indicator */}
-        <div className="terminal-status-strip">
-          <span className="tty-indicator">
-            <span className="stitch-dot dot-green"></span>
-            nebius-h100-node-04 (LIVE TTY)
-          </span>
+        {/* Filter Pills */}
+        <div className="terminal-filters-row">
+          <button 
+            className={`term-filter-pill ${activeFilter === 'all' ? 'pill-active' : ''}`}
+            onClick={() => setActiveFilter('all')}
+          >
+            All Logs ({logs.length})
+          </button>
+          <button 
+            className={`term-filter-pill ${activeFilter === 'alert' ? 'pill-active' : ''}`}
+            onClick={() => setActiveFilter('alert')}
+          >
+            Adversary Alerts
+          </button>
+          <button 
+            className={`term-filter-pill ${activeFilter === 'success' ? 'pill-active' : ''}`}
+            onClick={() => setActiveFilter('success')}
+          >
+            Verification
+          </button>
+        </div>
 
-          <div className="terminal-btn-group">
-            <button 
-              className="term-mini-btn" 
-              onClick={handleCopyLogs} 
-              title="Copy Output"
-            >
-              <Copy size={12} />
-            </button>
-            <button 
-              className="term-mini-btn" 
-              onClick={onClear} 
-              title="Clear Terminal"
-            >
-              <Trash2 size={12} />
-            </button>
+        {/* Search & Actions */}
+        <div className="terminal-actions-group">
+          <div className="terminal-search-box">
+            <Search size={12} className="text-tertiary" />
+            <input 
+              type="text" 
+              placeholder="Filter telemetry..." 
+              value={filterQuery}
+              onChange={(e) => setFilterQuery(e.target.value)}
+              className="term-search-input"
+            />
           </div>
+
+          <button className="term-btn" onClick={handleCopyLogs} title="Copy All Terminal Output">
+            {copied ? <Check size={13} className="text-nvidia" /> : <Copy size={13} />}
+          </button>
+          <button className="term-btn" onClick={onClear} title="Clear Terminal Logs">
+            <Trash2 size={13} />
+          </button>
         </div>
       </div>
 
       {/* Terminal Viewport */}
       <div className="terminal-viewport">
-        {activeTab === 'live' ? (
-          <>
-            <div className="term-line line-info">
-              <span className="term-ts">[00:00.012]</span> <span className="term-tag text-cyan">[PROVING-GROUND]</span> Initializing isolated Nebius Container Pod on NVIDIA H100 SXM5 80GB...
-            </div>
-            <div className="term-line line-info">
-              <span className="term-ts">[00:00.180]</span> <span className="term-tag text-purple">[ADVERSARY-FUZZ]</span> Generating jagged token stream: <span className="text-amber">tokens=[17, 3, 4099, 1]</span> (Warp size 32 misalignment)
-            </div>
-
-            {/* Glowing Crimson Exception Box from Stitch */}
-            <div className="term-crimson-box">
-              <span className="term-ts">[00:00.412]</span> <span className="text-red font-bold">❌ CUDA EXCEPTION</span> <span className="text-white font-bold">SIGSEGV (139):</span> Invalid Global Memory Address at offset +128B (SM 14, Warp 4)
-            </div>
-
-            <div className="term-line line-info">
-              <span className="term-ts">[00:00.640]</span> <span className="term-tag text-violet">[NEMOTRON-70B]</span> Fault localized: Tail warp execution lacks bounds
-            </div>
-
-            {/* Dynamic Real-Time Appended Logs */}
-            {logs.map((log, idx) => (
-              <div key={idx} className={`term-line line-${log.type}`}>
-                {log.text}
-              </div>
-            ))}
-          </>
-        ) : (
-          <div className="term-crash-view">
-            <div className="term-line text-red">*** HARDWARE CORE DUMP (NVIDIA H100 SXM5 - CUDA 12.4) ***</div>
-            <div className="term-line text-dim">Thread 31 in Warp 4 of Block 127 faulted on address 0x7f8b4a200000</div>
-            <div className="term-line text-dim">MMU Translation Fault: Address not mapped in active virtual memory tables.</div>
-            <div className="term-line text-dim">Active Registers: R0=0x00000011 R1=0x7f8b4a1fffc0 R2=0x00000040</div>
+        {filteredLogs.length === 0 ? (
+          <div className="terminal-empty-state">
+            <span className="text-nvidia font-mono">[READY]</span>
+            <span className="text-secondary ml-2 font-mono">
+              Aegis-Kernel Proving Ground initialized. Ready for execution. Click 'RUN PROVING GROUND' above to initiate red-blue loop.
+            </span>
           </div>
+        ) : (
+          filteredLogs.map((log, idx) => {
+            const isAlert = log.type === 'alert' || log.text.includes('SIGSEGV') || log.text.includes('139') || log.text.includes('CRIMSON');
+            const isSuccess = log.type === 'success' || log.text.includes('Verified') || log.text.includes('100%');
+            return (
+              <div 
+                key={idx} 
+                className={`terminal-line ${isAlert ? 'line-alert' : ''} ${isSuccess ? 'line-success' : ''}`}
+              >
+                {isAlert && <ShieldAlert size={13} className="inline mr-1 text-coral" />}
+                <span className="log-text font-mono">{log.text}</span>
+              </div>
+            );
+          })
         )}
         <div ref={terminalEndRef} />
       </div>

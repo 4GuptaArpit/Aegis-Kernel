@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Check, Cpu, Zap, Lock, Sparkles, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Check, Cpu, Zap, Lock, Sparkles, ExternalLink, Activity } from 'lucide-react';
 import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
 import { sound } from '../utils/audio';
+
+// Register Chart.js elements
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function VerificationImpact({ 
   metrics, 
@@ -15,7 +36,7 @@ export default function VerificationImpact({
   const baselineLat = metrics ? `${metrics.baseline_latency_us} μs` : '54.2 μs';
   const hardenedLat = metrics ? `${metrics.hardened_latency_us} μs` : '23.1 μs';
 
-  // Roofline Chart data for H100
+  // Roofline Chart data for Hopper H100 SXM5
   const rooflineData = {
     labels: ['1', '2', '4', '8', '14.2', '32', '64'],
     datasets: [
@@ -30,10 +51,10 @@ export default function VerificationImpact({
       {
         label: 'Aegis Hardened Triton',
         data: [null, null, null, null, 418.5, null, null],
-        backgroundColor: '#00F29B',
-        borderColor: '#00F29B',
-        pointRadius: 7,
-        pointHoverRadius: 9
+        backgroundColor: '#76B900',
+        borderColor: '#76B900',
+        pointRadius: 6,
+        pointHoverRadius: 8
       }
     ]
   };
@@ -44,175 +65,158 @@ export default function VerificationImpact({
   };
 
   return (
-    <aside className="verification-impact-sidebar">
-      {/* Top Section Header */}
-      <div className="impact-top-header">
-        <div className="impact-title-group">
-          <ShieldCheck size={16} className="text-green" />
-          <span className="impact-title-text text-green">HACKATHON VERIFICATION & IMPACT</span>
+    <aside className="verification-sidebar">
+      {/* Sidebar Header */}
+      <div className="sidebar-top-header">
+        <div className="sidebar-title-group">
+          <ShieldCheck size={16} className="text-nvidia" />
+          <span className="sidebar-title">VERIFICATION & HARDWARE IMPACT</span>
         </div>
         <button 
-          className="btn-judges-overview"
+          className="btn-judges-badge"
           onClick={onOpenJudgesOverview}
         >
-          Judges Overview
+          <Sparkles size={12} className="text-amber inline mr-1" />
+          Judges Brief
         </button>
       </div>
 
-      {/* Card 1: Kernel Reliability Invariant */}
-      <div className="stitch-card reliability-card">
-        <div className="card-header-row">
-          <span className="card-title-text">KERNEL RELIABILITY INVARIANT</span>
-          <span className="stitch-pill pill-cyan-hollow">SDC Immune</span>
+      {/* Card 1: Formal Invariant Reliability */}
+      <div className="impact-card card-invariant">
+        <div className="impact-card-header">
+          <span className="impact-card-title">MATHEMATICAL INVARIANT VERIFIED</span>
+          <span className="badge-nvidia-sm">SDC Immune</span>
         </div>
 
-        <div className="gauge-and-stats-row">
-          {/* Circular Donut Gauge */}
-          <div className="radial-donut-wrap">
-            <svg className="radial-svg" width="84" height="84" viewBox="0 0 84 84">
+        <div className="invariant-visual-row">
+          {/* Radial Donut Gauge */}
+          <div className="radial-donut-box">
+            <svg className="radial-donut-svg" width="86" height="86" viewBox="0 0 86 86">
               <circle
-                cx="42"
-                cy="42"
+                cx="43"
+                cy="43"
                 r="36"
                 stroke="rgba(255,255,255,0.08)"
                 strokeWidth="7"
                 fill="none"
               />
               <circle
-                cx="42"
-                cy="42"
+                cx="43"
+                cy="43"
                 r="36"
-                stroke="url(#green-glow-gradient)"
+                stroke="#76B900"
                 strokeWidth="7"
                 fill="none"
                 strokeDasharray="226.2"
                 strokeDashoffset="0"
                 strokeLinecap="round"
               />
-              <defs>
-                <linearGradient id="green-glow-gradient" x1="0" y1="0" x2="84" y2="84" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#00F29B" />
-                  <stop offset="1" stopColor="#06B6D4" />
-                </linearGradient>
-              </defs>
             </svg>
-            <div className="radial-donut-center">
-              <span className="donut-pct text-green">100%</span>
-              <span className="donut-label text-dim">SAFE</span>
+            <div className="donut-center-text">
+              <span className="donut-val text-nvidia">100%</span>
+              <span className="donut-sub">PASS</span>
             </div>
           </div>
 
-          {/* Stats Text */}
-          <div className="reliability-stats-col">
-            <div className="passed-counter-row">
-              <span className="counter-big">500 / 500</span>
-            </div>
-            <div className="counter-sub text-muted">Differential Permutations Passed</div>
-            <div className="counter-chips-row">
-              <span className="chip-check text-green">
-                <Check size={12} className="inline mr-1" /> 0 Crashes
+          {/* Verification Counts */}
+          <div className="invariant-stats-column">
+            <div className="stat-big-number">500 / 500</div>
+            <div className="stat-label">Differential Shapes Passed</div>
+            <div className="stat-tags-row">
+              <span className="tag-check">
+                <Check size={12} className="text-nvidia inline mr-1" /> 0 Crashes
               </span>
-              <span className="chip-check text-green">
-                <Check size={12} className="inline mr-1" /> 0 SDC Drift
+              <span className="tag-check">
+                <Check size={12} className="text-nvidia inline mr-1" /> 0 SDC Drift
               </span>
             </div>
           </div>
         </div>
 
-        {/* Dual Sub-Cards */}
-        <div className="reliability-subcards-grid">
-          <div className="rel-subcard rel-subcard-red">
-            <span className="subcard-label text-dim">PyTorch Baseline:</span>
-            <span className="subcard-val text-red font-semibold">Failed at seq#17</span>
+        {/* Dual Sub-Metrics */}
+        <div className="invariant-sub-grid">
+          <div className="sub-box sub-vulnerable">
+            <span className="sub-box-label">PyTorch CUDA:</span>
+            <span className="sub-box-val text-coral">SIGSEGV at seq#17</span>
           </div>
-
-          <div className="rel-subcard rel-subcard-green">
-            <span className="subcard-label text-dim">Aegis Hardened:</span>
-            <span className="subcard-val text-green font-semibold">Differential Error 0</span>
+          <div className="sub-box sub-immune">
+            <span className="sub-box-label">Aegis Hardened:</span>
+            <span className="sub-box-val text-nvidia">Differential Error 0.0</span>
           </div>
         </div>
       </div>
 
-      {/* Card 2: Performance & Hardware Metrics */}
-      <div className="stitch-card performance-card">
-        {/* Navigation Tabs */}
-        <div className="perf-tabs-row">
+      {/* Card 2: Performance & Roofline Benchmarks */}
+      <div className="impact-card card-performance">
+        <div className="perf-tabs-bar">
           <button 
-            className={`perf-tab-btn ${activePerfTab === 'speedup' ? 'active-perf-tab' : ''}`}
+            className={`perf-tab-btn ${activePerfTab === 'speedup' ? 'active' : ''}`}
             onClick={() => setActivePerfTab('speedup')}
           >
             Speedup ({speedupVal})
           </button>
           <button 
-            className={`perf-tab-btn ${activePerfTab === 'roofline' ? 'active-perf-tab' : ''}`}
+            className={`perf-tab-btn ${activePerfTab === 'roofline' ? 'active' : ''}`}
             onClick={() => setActivePerfTab('roofline')}
           >
-            H100 Roofline
+            Hopper Roofline
           </button>
           <button 
-            className={`perf-tab-btn ${activePerfTab === 'sram' ? 'active-perf-tab' : ''}`}
+            className={`perf-tab-btn ${activePerfTab === 'sram' ? 'active' : ''}`}
             onClick={() => setActivePerfTab('sram')}
           >
             SRAM Savings
           </button>
-          <button 
-            className={`perf-tab-btn ${activePerfTab === 'sm90' ? 'active-perf-tab' : ''}`}
-            onClick={() => setActivePerfTab('sm90')}
-          >
-            Hopper SM90
-          </button>
         </div>
 
-        {activePerfTab === 'speedup' || activePerfTab === 'sram' || activePerfTab === 'sm90' ? (
-          <div className="perf-main-body">
-            {/* Speedup Metric Big Row */}
-            <div className="speedup-hero-row">
-              <div className="speedup-val-text">
-                <span className="speedup-number">{speedupVal}</span>
-                <span className="speedup-label text-white">FASTER SPEEDUP</span>
+        {activePerfTab === 'speedup' || activePerfTab === 'sram' ? (
+          <div className="perf-body-content">
+            <div className="speedup-display-row">
+              <div className="speedup-main-val">
+                <span className="speedup-digits text-nvidia">{speedupVal}</span>
+                <span className="speedup-label">EXECUTION SPEEDUP</span>
               </div>
-              <span className="stitch-pill pill-green-solid">-57.4% Time</span>
+              <span className="badge-nvidia-solid">-57.4% Latency</span>
             </div>
 
-            {/* Progress Bars */}
-            <div className="latency-bars-stack">
-              <div className="latency-bar-group">
-                <div className="latency-bar-label-row">
-                  <span className="text-muted">PyTorch v2.3 Baseline</span>
-                  <span className="font-mono text-red font-semibold">{baselineLat}</span>
+            {/* Latency Comparison Bars */}
+            <div className="latency-bars-container">
+              <div className="bar-row">
+                <div className="bar-labels">
+                  <span className="text-secondary">PyTorch v2.3 Baseline</span>
+                  <span className="text-coral font-mono font-bold">{baselineLat}</span>
                 </div>
-                <div className="bar-track">
-                  <div className="bar-fill bar-fill-red" style={{ width: '100%' }}></div>
+                <div className="bar-bg">
+                  <div className="bar-fill-coral" style={{ width: '100%' }}></div>
                 </div>
               </div>
 
-              <div className="latency-bar-group">
-                <div className="latency-bar-label-row">
-                  <span className="text-white font-medium">Aegis Hardened Triton</span>
-                  <span className="font-mono text-green font-semibold">{hardenedLat}</span>
+              <div className="bar-row">
+                <div className="bar-labels">
+                  <span className="text-primary font-semibold">Aegis Hardened Triton</span>
+                  <span className="text-nvidia font-mono font-bold">{hardenedLat}</span>
                 </div>
-                <div className="bar-track">
-                  <div className="bar-fill bar-fill-green" style={{ width: '42.6%' }}></div>
+                <div className="bar-bg">
+                  <div className="bar-fill-nvidia" style={{ width: '42.6%' }}></div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom Memory Savings */}
-            <div className="sram-savings-footer">
-              <span className="text-muted">SRAM Fusion Savings:</span>
-              <span className="text-green font-mono font-semibold">1.42 GB → 0.82 GB (-42%)</span>
+            <div className="sram-metric-strip">
+              <span className="text-tertiary">SRAM Fusion Memory:</span>
+              <span className="text-nvidia font-mono font-bold">1.42 GB → 0.82 GB (-42%)</span>
             </div>
           </div>
         ) : (
-          <div className="roofline-container-stitch">
+          <div className="roofline-graph-wrapper">
             <Line
               data={rooflineData}
               options={{
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                  x: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-                  y: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } }
+                  x: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                  y: { ticks: { color: '#64748B', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
                 },
                 plugins: {
                   legend: { display: false }
@@ -223,47 +227,40 @@ export default function VerificationImpact({
         )}
       </div>
 
-      {/* Card 3: TPM2.0 Signed Attestation */}
-      <div className="stitch-card attestation-card">
-        <div className="card-header-row">
+      {/* Card 3: Cryptographic Attestation & Export PR */}
+      <div className="impact-card card-attestation">
+        <div className="impact-card-header">
           <div className="flex items-center gap-2">
-            <Lock size={13} className="text-green" />
-            <span className="card-title-text">TPM2.0 SIGNED ATTESTATION</span>
+            <Lock size={14} className="text-nvidia" />
+            <span className="impact-card-title">SHA-256 SIGNED ATTESTATION</span>
           </div>
-          <span className="stitch-pill pill-green-hollow">Hardware Proven</span>
+          <span className="badge-nvidia-sm">Hardware Proven</span>
         </div>
 
-        {/* Telemetry Monospace Box */}
-        <div className="attestation-code-block font-mono text-xs">
-          <div className="attest-row">
-            <span className="attest-key text-cyan">SIG:</span>
-            <span className="attest-val text-dim">0x8df4927f8a12...e3b0c44298fc1c14</span>
+        <div className="attestation-meta-box font-mono">
+          <div className="meta-line">
+            <span className="meta-key">CERT_ID:</span>
+            <span className="meta-val text-nvidia">0x7f56b9fe02089399</span>
           </div>
-          <div className="attest-row">
-            <span className="attest-key text-dim">ROOT:</span>
-            <span className="attest-val text-white">Nebius-NV-H100-PROVER-US-EAST</span>
+          <div className="meta-line">
+            <span className="meta-key">PROVER:</span>
+            <span className="meta-val text-primary">Nebius-NV-H100-PROVER</span>
           </div>
-          <div className="attest-row flex justify-between">
-            <div>
-              <span className="attest-key text-dim">TARGET:</span>
-              <span className="attest-val text-cyan">vllm-project/vllm #8041</span>
-            </div>
-            <span className="text-green font-bold">CI: PASSED</span>
+          <div className="meta-line">
+            <span className="meta-key">TARGET:</span>
+            <span className="meta-val text-azure">vllm-project/vllm #8041</span>
           </div>
         </div>
 
-        {/* Export PR CTA Button */}
         <button 
-          className="btn-export-pr"
+          className="btn-export-verified-pr"
           onClick={handleExportClick}
         >
-          <div className="btn-export-inner">
-            <Zap size={15} className="fill-current text-white" />
-            <span className="export-btn-label">EXPORT VERIFIED PR TO VLLM UPSTREAM</span>
-          </div>
+          <Zap size={15} className="fill-current inline mr-2 text-obsidian" />
+          <span>EXPORT VERIFIED PR TO VLLM</span>
         </button>
-        <p className="export-subtext text-center text-dim text-xs">
-          Automatically opens verified upstream PR with reproducible Hopper H100 test logs.
+        <p className="attestation-footer-note">
+          Generates production Pull Request with reproducible Hopper H100 test logs and differential attestation hash.
         </p>
       </div>
     </aside>
