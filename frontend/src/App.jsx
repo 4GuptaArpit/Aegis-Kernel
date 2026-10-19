@@ -29,6 +29,7 @@ export default function App() {
   const [metrics, setMetrics] = useState(null);
   const [attestation, setAttestation] = useState('0x7f56b9fe02089399');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeWorkbenchTab, setActiveWorkbenchTab] = useState('collider'); // 'collider', 'silicon', 'code', 'telemetry'
 
   const addLog = (text, type = 'info') => {
     const timestamp = new Date().toLocaleTimeString();
@@ -129,76 +130,140 @@ export default function App() {
       />
 
       <div className="aegis-workbench-container">
-        {/* Cinematic Red vs Blue Cyber Proving Arena */}
-        <RedBlueArena 
-          currentStage={currentStage}
-          isRunning={isRunning}
-          selectedFixture={selectedFixture}
-          metrics={metrics}
-          redData={redData}
-          blueData={blueData}
-        />
-
-        {/* Main 2-Column Hardware Engineering Arena */}
-        <div className="workbench-grid-layout">
-          {/* Left Column: Die Topology, SIMT Warp Matrix, Code Diff, Terminal */}
-          <div className="workbench-col-left">
-            {/* 132-SM Holographic Silicon Die */}
-            <HopperDieTopology 
-              currentStage={currentStage} 
-              isRunning={isRunning} 
-              onSelectSm={setSelectedSm}
-              selectedSm={selectedSm}
-            />
-
-            {/* 32-Thread SIMT Warp 0 Matrix */}
-            <WarpVisualizer 
-              selectedFixture={selectedFixture} 
-              isRunning={isRunning} 
-              currentStage={currentStage} 
-            />
-
-            {/* AST Kernel Diff & PTX Disassembly */}
-            <CodeDiffInspector 
-              selectedFixture={selectedFixture} 
-              blueData={blueData} 
-            />
-
-            {/* Live Terminal Telemetry */}
-            <TerminalWindow 
-              logs={logs} 
-              onClear={handleClearLogs} 
-            />
+        {/* Spatial Workbench Stage Navigation Bar */}
+        <div className="workbench-stage-nav-bar font-mono">
+          <div className="stage-nav-tabs">
+            <button 
+              className={`stage-nav-btn ${activeWorkbenchTab === 'collider' ? 'active' : ''}`}
+              onClick={() => { sound.playClick(); setActiveWorkbenchTab('collider'); }}
+            >
+              <span className="nav-tag-num">01</span>
+              <span>Red vs Blue Collider & Delta</span>
+            </button>
+            <button 
+              className={`stage-nav-btn ${activeWorkbenchTab === 'silicon' ? 'active' : ''}`}
+              onClick={() => { sound.playClick(); setActiveWorkbenchTab('silicon'); }}
+            >
+              <span className="nav-tag-num">02</span>
+              <span>132-SM Die & 32-Warp Matrix</span>
+            </button>
+            <button 
+              className={`stage-nav-btn ${activeWorkbenchTab === 'code' ? 'active' : ''}`}
+              onClick={() => { sound.playClick(); setActiveWorkbenchTab('code'); }}
+            >
+              <span className="nav-tag-num">03</span>
+              <span>AST Diff & PTX Disassembly</span>
+            </button>
+            <button 
+              className={`stage-nav-btn ${activeWorkbenchTab === 'telemetry' ? 'active' : ''}`}
+              onClick={() => { sound.playClick(); setActiveWorkbenchTab('telemetry'); }}
+            >
+              <span className="nav-tag-num">04</span>
+              <span>Nsight Profiler & Memory Waterfall</span>
+            </button>
           </div>
 
-          {/* Right Column: Nsight Telemetry, Memory Waterfall, Delta, Verification Hub */}
-          <div className="workbench-col-right">
-            {/* Real-Time Nsight Compute Profiler HUD */}
-            <NsightTelemetryHud 
-              metrics={metrics} 
-              selectedHardware={selectedHardware} 
-            />
-
-            {/* Hopper H100 Silicon Memory Hierarchy Waterfall */}
-            <SiliconMemoryWaterfall 
-              metrics={metrics} 
-              selectedHardware={selectedHardware} 
-            />
-
-            {/* Empirical Hardening Delta */}
-            <MicDropDelta 
-              metrics={metrics} 
-              selectedFixture={selectedFixture} 
-            />
-
-            {/* Formal Invariant Verification & Attestation Hub */}
-            <VerificationImpact 
-              metrics={metrics} 
-              selectedFixture={selectedFixture}
-              onOpenPrModal={() => setIsModalOpen(true)}
-              onOpenJudgesOverview={() => setIsModalOpen(true)}
-            />
+          <div className="stage-nav-telemetry">
+            <span className="nav-telemetry-badge">
+              <span className="pulse-indicator bg-nvidia inline-block mr-1"></span>
+              {currentStage === 'IDLE' ? 'PROVING INSTRUMENT ARMED' : `STAGE: ${currentStage}`}
+            </span>
           </div>
+        </div>
+
+        {/* Dynamic Spatial Workbench Content View */}
+        <div className="workbench-spacious-view">
+          {/* TAB 1: RED VS BLUE COLLIDER & MIC-DROP DELTA */}
+          {activeWorkbenchTab === 'collider' && (
+            <div className="tab-view-container tab-view-fade">
+              <RedBlueArena 
+                currentStage={currentStage}
+                isRunning={isRunning}
+                selectedFixture={selectedFixture}
+                metrics={metrics}
+                redData={redData}
+                blueData={blueData}
+              />
+
+              <div className="spacious-two-col">
+                <MicDropDelta 
+                  metrics={metrics} 
+                  selectedFixture={selectedFixture} 
+                />
+                <VerificationImpact 
+                  metrics={metrics} 
+                  selectedFixture={selectedFixture}
+                  onOpenPrModal={() => setIsModalOpen(true)}
+                  onOpenJudgesOverview={() => setIsModalOpen(true)}
+                />
+              </div>
+
+              <TerminalWindow 
+                logs={logs} 
+                onClear={handleClearLogs} 
+              />
+            </div>
+          )}
+
+          {/* TAB 2: SILICON DIE & 32-WARP EXECUTION MATRIX */}
+          {activeWorkbenchTab === 'silicon' && (
+            <div className="tab-view-container tab-view-fade">
+              <div className="spacious-two-col-grid">
+                <HopperDieTopology 
+                  currentStage={currentStage} 
+                  isRunning={isRunning} 
+                  onSelectSm={setSelectedSm}
+                  selectedSm={selectedSm}
+                />
+                <WarpVisualizer 
+                  selectedFixture={selectedFixture} 
+                  isRunning={isRunning} 
+                  currentStage={currentStage} 
+                />
+              </div>
+
+              <NsightTelemetryHud 
+                metrics={metrics} 
+                selectedHardware={selectedHardware} 
+              />
+            </div>
+          )}
+
+          {/* TAB 3: CODE DIFF & PTX DISASSEMBLY */}
+          {activeWorkbenchTab === 'code' && (
+            <div className="tab-view-container tab-view-fade">
+              <CodeDiffInspector 
+                selectedFixture={selectedFixture} 
+                blueData={blueData} 
+              />
+              <TerminalWindow 
+                logs={logs} 
+                onClear={handleClearLogs} 
+              />
+            </div>
+          )}
+
+          {/* TAB 4: NSIGHT TELEMETRY & SILICON MEMORY WATERFALL */}
+          {activeWorkbenchTab === 'telemetry' && (
+            <div className="tab-view-container tab-view-fade">
+              <NsightTelemetryHud 
+                metrics={metrics} 
+                selectedHardware={selectedHardware} 
+              />
+              <div className="spacious-two-col">
+                <SiliconMemoryWaterfall 
+                  metrics={metrics} 
+                  selectedHardware={selectedHardware} 
+                />
+                <VerificationImpact 
+                  metrics={metrics} 
+                  selectedFixture={selectedFixture}
+                  onOpenPrModal={() => setIsModalOpen(true)}
+                  onOpenJudgesOverview={() => setIsModalOpen(true)}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
