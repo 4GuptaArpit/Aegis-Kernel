@@ -2526,8 +2526,376 @@ body {
 }
 
 /* ==========================================================================
-   17. WORKBENCH GRID LAYOUT
+   18. EXECUTIVE COMMAND BAR COCKPIT HEADER
    ========================================================================== */
+.exec-cockpit-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: rgba(8, 11, 18, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-medium);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.exec-top-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.exec-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exec-brand-shield {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(118, 185, 0, 0.12);
+  border: 1px solid var(--accent-nvidia);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(118, 185, 0, 0.25);
+}
+
+.exec-brand-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.exec-brand-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  background: rgba(118, 185, 0, 0.15);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(118, 185, 0, 0.35);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.exec-brand-sub {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* Hardware Dropdown */
+.exec-hw-dropdown-container {
+  position: relative;
+}
+
+.exec-hw-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 11px;
+}
+
+.exec-hw-btn:hover {
+  border-color: var(--accent-nvidia);
+}
+
+.chevron-icon {
+  color: var(--text-tertiary);
+  transition: transform 0.15s ease;
+}
+
+.chevron-icon.open {
+  transform: rotate(180deg);
+}
+
+.exec-hw-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 240px;
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.exec-hw-menu-item {
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.exec-hw-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.exec-hw-menu-item.selected {
+  background: rgba(118, 185, 0, 0.15);
+  border: 1px solid rgba(118, 185, 0, 0.3);
+}
+
+/* Operator Tabs */
+.exec-workload-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.exec-tab-btn {
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.exec-tab-btn:hover {
+  border-color: var(--border-medium);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.exec-tab-btn.active {
+  background: rgba(118, 185, 0, 0.08);
+  border-color: var(--accent-nvidia);
+  box-shadow: 0 0 14px rgba(118, 185, 0, 0.2);
+}
+
+.tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+}
+
+.tab-dot.dot-active {
+  background: var(--accent-nvidia);
+  box-shadow: 0 0 8px var(--accent-nvidia);
+}
+
+.tab-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tab-speedup {
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+.tab-fault-sub {
+  font-size: 9.5px;
+}
+
+/* Right Actions */
+.exec-action-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exec-icon-btn {
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.exec-icon-btn:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.exec-btn-ghost {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.exec-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.exec-run-cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-nvidia);
+  color: var(--accent-obsidian);
+  border: none;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 18px rgba(118, 185, 0, 0.4);
+  transition: all 0.15s ease;
+}
+
+.exec-run-cta:hover:not(:disabled) {
+  background: #84cf00;
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(118, 185, 0, 0.6);
+}
+
+.exec-run-cta.running {
+  background: var(--bg-surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--accent-nvidia);
+  box-shadow: none;
+}
+
+/* Bottom Control Ribbon */
+.exec-control-ribbon {
+  display: grid;
+  grid-template-columns: 46% 54%;
+  gap: 16px;
+  align-items: center;
+  padding: 7px 24px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.ribbon-slider-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slider-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+}
+
+.badge-boundary-alert {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.alert-ragged {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--accent-coral);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.alert-clean {
+  background: rgba(118, 185, 0, 0.15);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(118, 185, 0, 0.3);
+}
+
+.slider-track-wrap {
+  width: 100%;
+}
+
+.exec-hardware-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.exec-hardware-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-nvidia);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent-nvidia);
+  border: 2px solid #FFFFFF;
+}
+
+/* Stepper Section in Ribbon */
+.ribbon-stepper-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.ribbon-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.step-badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.step-active .step-badge {
+  background: var(--accent-azure);
+  color: var(--accent-obsidian);
+  box-shadow: 0 0 10px var(--accent-azure);
+}
+
+.step-completed .step-badge {
+  background: rgba(118, 185, 0, 0.2);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(118, 185, 0, 0.3);
+}
+
+.step-pending .step-badge,
+.step-idle .step-badge {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-tertiary);
+}
+
+.step-laser-arrow {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 8px;
+}
+
 .aegis-workbench-container {
   max-width: 1560px;
   margin: 0 auto;

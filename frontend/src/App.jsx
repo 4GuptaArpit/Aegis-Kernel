@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
-import TensorStressController from './components/TensorStressController';
-import WorkloadSelector from './components/WorkloadSelector';
-import PipelineNarrative from './components/PipelineNarrative';
+import ExecutiveCommandBar from './components/ExecutiveCommandBar';
 import HopperDieTopology from './components/HopperDieTopology';
 import WarpVisualizer from './components/WarpVisualizer';
 import CodeDiffInspector from './components/CodeDiffInspector';
@@ -19,6 +16,7 @@ export default function App() {
   const [selectedHardware, setSelectedHardware] = useState('NVIDIA Hopper H100 SXM5');
   const [selectedFixture, setSelectedFixture] = useState('swiglu');
   const [selectedSm, setSelectedSm] = useState(14);
+  const [seqLen, setSeqLen] = useState(1023);
   const [isRunning, setIsRunning] = useState(false);
   const [currentStage, setCurrentStage] = useState('IDLE');
   const [progress, setProgress] = useState(0);
@@ -52,7 +50,7 @@ export default function App() {
     setBlueData(null);
     setMetrics(null);
 
-    addLog(`[INIT] Engaging Aegis-Kernel Proving Workbench for [${selectedFixture.toUpperCase()}] on [${selectedHardware}]`, 'info');
+    addLog(`[INIT] Engaging Aegis-Kernel Silicon Workbench for [${selectedFixture.toUpperCase()}] on [${selectedHardware}]`, 'info');
 
     const eventSource = new EventSource(
       `http://localhost:8000/api/v1/execute/${selectedFixture}?hardware_target=${encodeURIComponent(selectedHardware)}`
@@ -110,40 +108,27 @@ export default function App() {
 
   return (
     <div className="aegis-app-wrapper">
-      {/* Top Navigation Bar */}
-      <Header 
+      {/* High-Density Integrated Executive Cockpit Header */}
+      <ExecutiveCommandBar 
         selectedHardware={selectedHardware}
         onSelectHardware={setSelectedHardware}
+        selectedFixture={selectedFixture}
+        onSelectFixture={setSelectedFixture}
+        isRunning={isRunning}
+        currentStage={currentStage}
+        progress={progress}
+        onRun={handleLaunchProvingGround}
+        seqLen={seqLen}
+        onSeqLenChange={(val) => {
+          setSeqLen(val);
+          addLog(`[SLIDER] Dynamic sequence length set to ${val} tokens`, 'info');
+        }}
         onOpenPitch={() => setIsModalOpen(true)}
         onOpenPrModal={() => setIsModalOpen(true)}
       />
 
+      {/* Main Fullscreen Silicon Proving Workbench */}
       <div className="aegis-workbench-container">
-        {/* Interactive Adversarial Tensor Stress Controller */}
-        <TensorStressController 
-          selectedFixture={selectedFixture}
-          onStressChange={(val) => {
-            addLog(`Interactive sequence boundary scrubbed to: ${val} tokens`, 'info');
-          }}
-        />
-
-        {/* Neural Operator Benchmark Selector */}
-        <WorkloadSelector 
-          selectedFixture={selectedFixture} 
-          onSelectFixture={setSelectedFixture}
-          isRunning={isRunning}
-        />
-
-        {/* Closed-Loop Proving Pipeline & Master Run Button */}
-        <PipelineNarrative 
-          currentStage={currentStage} 
-          isRunning={isRunning} 
-          progress={progress}
-          onRun={handleLaunchProvingGround}
-          selectedFixture={selectedFixture}
-        />
-
-        {/* Main Monolithic Silicon Proving Workbench Grid */}
         <div className="workbench-grid-layout">
           {/* Left Column: Die Topology, SIMT Warp Matrix, Code/PTX Diff, Terminal */}
           <div className="workbench-col-left">
