@@ -2,41 +2,42 @@
 
 :root {
   /* ==========================================================================
-     CLEANROOM TITANIUM LABORATORY PALETTE (Dieter Rams & Stripe Press Inspired)
+     CYBER-PHYSICAL QUANTUM SUPERCOMPUTER PALETTE (GA-GA THEME)
      ========================================================================== */
-  --bg-canvas: #F4F6F9;
-  --bg-surface: #FFFFFF;
-  --bg-surface-raised: #F8FAFC;
-  --bg-surface-glass: rgba(255, 255, 255, 0.92);
-  --bg-editor: #0A0F1D;
-  --bg-editor-subtle: #F1F5F9;
+  --bg-void: #03060D;
+  --bg-surface: rgba(8, 14, 26, 0.82);
+  --bg-surface-raised: rgba(13, 22, 40, 0.88);
+  --bg-surface-glass: rgba(6, 11, 22, 0.88);
+  --bg-editor: #040812;
 
-  --border-subtle: rgba(15, 23, 42, 0.08);
-  --border-medium: rgba(15, 23, 42, 0.16);
-  --border-focus: rgba(5, 150, 105, 0.5);
+  --border-subtle: rgba(0, 255, 136, 0.12);
+  --border-medium: rgba(0, 255, 136, 0.25);
+  --border-cyan: rgba(0, 240, 255, 0.3);
+  --border-coral: rgba(255, 0, 85, 0.4);
 
-  /* Surgical Laboratory Accents */
-  --accent-nvidia: #059669;
-  --accent-nvidia-light: #10B981;
-  --accent-nvidia-glow: rgba(5, 150, 105, 0.15);
-  --accent-azure: #2563EB;
-  --accent-azure-glow: rgba(37, 99, 235, 0.15);
-  --accent-coral: #E11D48;
-  --accent-coral-glow: rgba(225, 29, 72, 0.15);
-  --accent-amber: #D97706;
-  --accent-obsidian: #0A0F1D;
+  /* High-Energy Laser Accents */
+  --accent-nvidia: #00FF88;
+  --accent-nvidia-glow: rgba(0, 255, 136, 0.45);
+  --accent-cyan: #00F0FF;
+  --accent-cyan-glow: rgba(0, 240, 255, 0.4);
+  --accent-coral: #FF0055;
+  --accent-coral-glow: rgba(255, 0, 85, 0.45);
+  --accent-amber: #FFB800;
+  --accent-amber-glow: rgba(255, 184, 0, 0.4);
+  --accent-obsidian: #03060D;
 
-  /* High-Contrast Laboratory Typography */
-  --text-primary: #0A0F1D;
-  --text-secondary: #334155;
+  /* Luminous Typography */
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
   --text-tertiary: #64748B;
-  --text-white: #FFFFFF;
+  --text-dim: #475569;
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace, Consolas, Courier;
 
-  --shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03);
-  --shadow-elevated: 0 8px 24px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --glow-emerald: 0 0 24px rgba(0, 255, 136, 0.25);
+  --glow-cyan: 0 0 24px rgba(0, 240, 255, 0.25);
+  --glow-coral: 0 0 24px rgba(255, 0, 85, 0.3);
 }
 
 * {
@@ -46,32 +47,36 @@
 }
 
 body {
-  background-color: var(--bg-canvas);
+  background-color: var(--bg-void);
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
-  background-size: 24px 24px;
+    radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(255, 0, 85, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(0, 240, 255, 0.06) 0%, transparent 50%),
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar Customization */
+/* Custom Quantum Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.04); }
-::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.18); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(15, 23, 42, 0.32); }
+::-webkit-scrollbar-track { background: rgba(3, 6, 13, 0.7); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-nvidia); box-shadow: 0 0 8px var(--accent-nvidia); }
 
-/* Utility Classes */
-.text-nvidia { color: var(--accent-nvidia); }
-.text-azure { color: var(--accent-azure); }
-.text-coral { color: var(--accent-coral); }
-.text-amber { color: var(--accent-amber); }
+/* Typography & Utility Tokens */
+.text-nvidia { color: var(--accent-nvidia); text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+.text-cyan { color: var(--accent-cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+.text-coral { color: var(--accent-coral); text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+.text-amber { color: var(--accent-amber); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .text-tertiary { color: var(--text-tertiary); }
+.text-dim { color: var(--text-dim); }
 .text-obsidian { color: var(--accent-obsidian); }
 .font-mono { font-family: var(--font-mono); }
 .font-bold { font-weight: 700; }
@@ -84,7 +89,7 @@ body {
 }
 
 .aegis-workbench-container {
-  max-width: 1560px;
+  max-width: 1580px;
   margin: 0 auto;
   width: 100%;
   padding: 16px 24px 28px 24px;
@@ -95,7 +100,7 @@ body {
 
 .workbench-grid-layout {
   display: grid;
-  grid-template-columns: 53% 47%;
+  grid-template-columns: 52% 48%;
   gap: 16px;
   align-items: start;
 }
@@ -113,17 +118,17 @@ body {
 }
 
 /* ==========================================================================
-   1. EXECUTIVE COMMAND BAR (CLEANROOM INSTRUMENT HEADER)
+   1. EXECUTIVE COMMAND BAR (COCKPIT HEADER)
    ========================================================================== */
 .exec-cockpit-header {
   position: sticky;
   top: 0;
   z-index: 80;
   background: var(--bg-surface-glass);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border-medium);
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), inset 0 -1px 0 rgba(0, 255, 136, 0.15);
   display: flex;
   flex-direction: column;
 }
@@ -133,49 +138,51 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 10px 24px;
-  gap: 14px;
-  border-bottom: 1px solid var(--border-subtle);
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .exec-brand-lockup {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .exec-brand-shield {
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
-  background: rgba(5, 150, 105, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 255, 136, 0.12);
   border: 1px solid var(--accent-nvidia);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.15);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.35);
 }
 
 .exec-brand-title {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--text-primary);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
 .exec-brand-badge {
   font-size: 9.5px;
   font-weight: 800;
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.12);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(5, 150, 105, 0.3);
-  padding: 2px 6px;
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  padding: 2px 7px;
   border-radius: 4px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
 }
 
 .exec-brand-sub {
   font-size: 10.5px;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   display: block;
 }
 
@@ -189,23 +196,24 @@ body {
   align-items: center;
   gap: 8px;
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-medium);
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   cursor: pointer;
   color: var(--text-primary);
   font-size: 11px;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .exec-hw-btn:hover {
-  border-color: var(--border-medium);
-  background: #FFFFFF;
+  border-color: var(--accent-nvidia);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
 }
 
 .chevron-icon {
   color: var(--text-tertiary);
-  transition: transform 0.15s ease;
+  transition: transform 0.2s ease;
 }
 
 .chevron-icon.open {
@@ -216,61 +224,61 @@ body {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  width: 250px;
-  background: #FFFFFF;
+  width: 260px;
+  background: #060B16;
   border: 1px solid var(--border-medium);
   border-radius: 6px;
-  padding: 5px;
-  box-shadow: var(--shadow-elevated);
+  padding: 6px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 136, 0.15);
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .exec-hw-menu-item {
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .exec-hw-menu-item:hover {
-  background: var(--bg-surface-raised);
+  background: rgba(0, 255, 136, 0.08);
 }
 
 .exec-hw-menu-item.selected {
-  background: rgba(5, 150, 105, 0.08);
-  border: 1px solid rgba(5, 150, 105, 0.25);
+  background: rgba(0, 255, 136, 0.15);
+  border: 1px solid rgba(0, 255, 136, 0.35);
 }
 
 /* Operator Tabs */
 .exec-workload-tabs {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .exec-tab-btn {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-raised);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 6px 14px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1px;
+  gap: 2px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .exec-tab-btn:hover {
   border-color: var(--border-medium);
-  background: var(--bg-surface-raised);
+  transform: translateY(-1px);
 }
 
 .exec-tab-btn.active {
-  background: rgba(5, 150, 105, 0.06);
+  background: rgba(0, 255, 136, 0.1);
   border-color: var(--accent-nvidia);
-  box-shadow: 0 0 0 1px var(--accent-nvidia);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.3), inset 0 0 8px rgba(0, 255, 136, 0.1);
 }
 
 .tab-dot {
@@ -282,7 +290,7 @@ body {
 
 .tab-dot.dot-active {
   background: var(--accent-nvidia);
-  box-shadow: 0 0 6px var(--accent-nvidia);
+  box-shadow: 0 0 10px var(--accent-nvidia);
 }
 
 .tab-name {
@@ -298,7 +306,6 @@ body {
 
 .tab-fault-sub {
   font-size: 9.5px;
-  color: var(--text-tertiary);
 }
 
 /* Right Actions */
@@ -309,71 +316,70 @@ body {
 }
 
 .exec-icon-btn {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-raised);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-secondary);
   border-radius: 6px;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .exec-icon-btn:hover {
-  border-color: var(--border-medium);
-  color: var(--text-primary);
+  border-color: var(--accent-nvidia);
+  color: var(--accent-nvidia);
 }
 
 .exec-btn-ghost {
   display: flex;
   align-items: center;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-medium);
   color: var(--text-primary);
   font-size: 11.5px;
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .exec-btn-ghost:hover {
-  background: var(--bg-surface-raised);
-  border-color: var(--border-medium);
+  background: rgba(0, 255, 136, 0.08);
+  border-color: var(--accent-nvidia);
 }
 
 .exec-run-cta {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--accent-nvidia);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, #00FF88 0%, #00CC6A 100%);
+  color: #03060D;
   border: none;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 800;
-  padding: 8px 16px;
+  padding: 9px 20px;
   border-radius: 6px;
   cursor: pointer;
-  letter-spacing: 0.4px;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
-  transition: all 0.15s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
 }
 
 .exec-run-cta:hover:not(:disabled) {
-  background: #047857;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0, 255, 136, 0.85);
 }
 
 .exec-run-cta.running {
   background: var(--bg-surface-raised);
   color: var(--text-primary);
   border: 1px solid var(--accent-nvidia);
-  box-shadow: none;
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.3);
 }
 
 /* Bottom Control Ribbon */
@@ -382,42 +388,44 @@ body {
   grid-template-columns: 46% 54%;
   gap: 16px;
   align-items: center;
-  padding: 7px 24px;
-  background: #F8FAFC;
-  border-top: 1px solid var(--border-subtle);
+  padding: 8px 24px;
+  background: rgba(3, 7, 16, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .ribbon-slider-section {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .slider-meta-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 10.5px;
 }
 
 .badge-boundary-alert {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 1px 6px;
+  padding: 2px 7px;
   border-radius: 3px;
 }
 
 .alert-ragged {
-  background: rgba(225, 29, 72, 0.1);
+  background: rgba(255, 0, 85, 0.15);
   color: var(--accent-coral);
-  border: 1px solid rgba(225, 29, 72, 0.25);
+  border: 1px solid rgba(255, 0, 85, 0.4);
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
 }
 
 .alert-clean {
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(5, 150, 105, 0.25);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
 }
 
 .slider-track-wrap {
@@ -427,21 +435,21 @@ body {
 .exec-hardware-slider {
   -webkit-appearance: none;
   width: 100%;
-  height: 4px;
-  background: #E2E8F0;
-  border-radius: 2px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
 }
 
 .exec-hardware-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--accent-nvidia);
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.4);
+  box-shadow: 0 0 14px var(--accent-nvidia);
   border: 2px solid #FFFFFF;
 }
 
@@ -450,57 +458,307 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 6px;
 }
 
 .ribbon-step-pill {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 9.5px;
+  gap: 6px;
+  font-size: 10px;
   font-weight: 700;
 }
 
 .step-badge {
-  padding: 2px 7px;
+  padding: 3px 9px;
   border-radius: 4px;
 }
 
 .step-active .step-badge {
-  background: var(--accent-azure);
-  color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  background: var(--accent-cyan);
+  color: var(--accent-obsidian);
+  box-shadow: 0 0 14px var(--accent-cyan);
 }
 
 .step-completed .step-badge {
-  background: rgba(5, 150, 105, 0.12);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(5, 150, 105, 0.25);
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
 }
 
 .step-pending .step-badge,
 .step-idle .step-badge {
-  background: rgba(15, 23, 42, 0.04);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-tertiary);
 }
 
 .step-laser-arrow {
-  color: rgba(15, 23, 42, 0.2);
+  color: rgba(0, 255, 136, 0.3);
   font-size: 8px;
 }
 
 /* ==========================================================================
-   2. SILICON DIE TOPOLOGY (CLEANROOM TSMC 4N SUBSTRATE)
+   2. CINEMATIC RED vs BLUE PROVING ARENA (GA-GA FEATURE)
    ========================================================================== */
-.die-topology-chassis {
+.cyber-arena-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.arena-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arena-badge-live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--accent-nvidia);
+}
+
+.live-radar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-nvidia);
+  box-shadow: 0 0 10px var(--accent-nvidia);
+  animation: pulse-radar 1.5s infinite;
+}
+
+@keyframes pulse-radar {
+  0% { transform: scale(0.9); box-shadow: 0 0 4px var(--accent-nvidia); }
+  50% { transform: scale(1.2); box-shadow: 0 0 16px var(--accent-nvidia); }
+  100% { transform: scale(0.9); box-shadow: 0 0 4px var(--accent-nvidia); }
+}
+
+.arena-telemetry-tag {
+  font-size: 10px;
+  color: var(--accent-cyan);
+}
+
+.arena-split-stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.adversary-wing {
+  background: var(--bg-surface-raised);
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: var(--shadow-subtle);
+  transition: all 0.3s ease;
+}
+
+.wing-red {
+  border: 1px solid var(--border-coral);
+  box-shadow: 0 0 20px rgba(255, 0, 85, 0.08);
+}
+
+.wing-red.active-combat {
+  box-shadow: 0 0 32px rgba(255, 0, 85, 0.35);
+  border-color: var(--accent-coral);
+}
+
+.wing-blue {
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.08);
+}
+
+.wing-blue.active-defense {
+  box-shadow: 0 0 32px rgba(0, 255, 136, 0.35);
+  border-color: var(--accent-nvidia);
+}
+
+.wing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wing-title-lockup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wing-title {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.wing-status-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.badge-red {
+  background: rgba(255, 0, 85, 0.15);
+  color: var(--accent-coral);
+  border: 1px solid var(--accent-coral);
+}
+
+.badge-green {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-nvidia);
+  border: 1px solid var(--accent-nvidia);
+}
+
+.wing-content-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-metric-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.exploit-waveform-box, .invariant-code-box {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10.5px;
+}
+
+.exploit-waveform-box {
+  border: 1px solid rgba(255, 0, 85, 0.25);
+}
+
+.invariant-code-box {
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.waveform-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.fault-trigger-alert {
+  color: #FFA3BA;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.immunity-verified-alert {
+  color: #A7F3D0;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Center Collision Reactor */
+.arena-collision-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.collider-reactor {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.core-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.core-ring-outer {
+  border: 2px dashed rgba(0, 255, 136, 0.5);
+  animation: rotate-cw 8s linear infinite;
+}
+
+.core-ring-inner {
+  inset: 6px;
+  border: 2px dashed rgba(0, 240, 255, 0.5);
+  animation: rotate-ccw 5s linear infinite;
+}
+
+@keyframes rotate-cw {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate-ccw {
+  100% { transform: rotate(-360deg); }
+}
+
+.core-center-node {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(8, 16, 32, 0.95);
+  border: 1px solid var(--accent-nvidia);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.5);
+  z-index: 2;
+}
+
+.collider-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.collider-delta-badge {
+  font-size: 10px;
+  font-weight: 800;
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-nvidia);
+  border: 1px solid var(--accent-nvidia);
+  padding: 2px 7px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+/* ==========================================================================
+   3. HOLOGRAPHIC 132-SM SILICON DIE
+   ========================================================================== */
+.holographic-die-chassis {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--glow-emerald);
 }
 
 .die-header-strip {
@@ -512,19 +770,35 @@ body {
 .die-title-lockup {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.die-icon-halo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(0, 255, 136, 0.12);
+  border: 1px solid var(--accent-nvidia);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .die-title {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  color: var(--text-primary);
+  font-size: 12px;
+  letter-spacing: 0.8px;
 }
 
-.die-gpc-tag {
+.die-gpc-pill {
   font-size: 9.5px;
-  color: var(--text-tertiary);
+  color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.die-subtext {
+  font-size: 10.5px;
 }
 
 .die-status-pills {
@@ -536,390 +810,439 @@ body {
 .die-pill {
   font-size: 9.5px;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .pill-fault {
-  background: rgba(225, 29, 72, 0.1);
+  background: rgba(255, 0, 85, 0.15);
   color: var(--accent-coral);
-  border: 1px solid rgba(225, 29, 72, 0.3);
+  border: 1px solid var(--accent-coral);
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.4);
 }
 
 .pill-healed {
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(5, 150, 105, 0.3);
+  border: 1px solid var(--accent-nvidia);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
 }
 
 .pill-idle {
-  background: rgba(37, 99, 235, 0.08);
-  color: var(--accent-azure);
-  border: 1px solid rgba(37, 99, 235, 0.2);
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.3);
 }
 
 .pulse-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
 }
 
 .bg-coral { background-color: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral); }
 .bg-nvidia { background-color: var(--accent-nvidia); box-shadow: 0 0 6px var(--accent-nvidia); }
-.bg-azure { background-color: var(--accent-azure); box-shadow: 0 0 6px var(--accent-azure); }
+.bg-azure { background-color: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
 
-/* HBM3e Interconnect Ribbon */
-.hbm-bus-interconnect {
+/* Memory Highway */
+.hbm-highway-container {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #F8FAFC;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 5px 8px;
-  font-size: 9px;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 10px;
 }
 
-.hbm-stack {
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--text-tertiary);
+.hbm-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.hbm-crossbar {
+.hbm-chip-node {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.highway-crossbar {
   flex: 1;
-  text-align: center;
+  position: relative;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  overflow: hidden;
 }
 
-.bus-flow-text {
+.crossbar-laser-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.25), transparent);
+  animation: laser-sweep 2.5s infinite;
+}
+
+@keyframes laser-sweep {
+  100% { left: 200%; }
+}
+
+.crossbar-label-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.4px;
 }
 
-/* 132 SM Physical Die Grid */
-.sm-die-grid {
+/* 132-SM Holographic Grid */
+.holographic-sm-grid {
   display: grid;
   grid-template-columns: repeat(22, 1fr);
-  gap: 3px;
-  background: #F1F5F9;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 8px;
+  gap: 4px;
+  background: #02050B;
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
-.sm-die-unit {
+.sm-core-cell {
   aspect-ratio: 1;
-  border-radius: 2px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 7.5px;
+  font-size: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
+  position: relative;
 }
 
-.sm-die-unit:hover {
+.sm-core-cell:hover {
   transform: scale(1.2);
   z-index: 5;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .sm-idle {
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-tertiary);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .sm-fault {
   background: var(--accent-coral);
   color: #FFFFFF;
   font-weight: 800;
-  box-shadow: 0 0 8px rgba(225, 29, 72, 0.5);
-  animation: pulse-sm-fault 1.2s infinite;
+  box-shadow: 0 0 16px var(--accent-coral);
+  animation: sm-fault-throb 1s infinite;
 }
 
 .sm-healed {
-  background: rgba(5, 150, 105, 0.18);
+  background: rgba(0, 255, 136, 0.2);
   border: 1px solid var(--accent-nvidia);
   color: var(--accent-nvidia);
-  font-weight: 700;
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.3);
 }
 
 .sm-selected {
-  outline: 2px solid var(--text-primary);
+  outline: 2px solid #FFFFFF;
   outline-offset: 1px;
 }
 
-@keyframes pulse-sm-fault {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+@keyframes sm-fault-throb {
+  0%, 100% { opacity: 1; box-shadow: 0 0 16px var(--accent-coral); }
+  50% { opacity: 0.4; box-shadow: 0 0 4px var(--accent-coral); }
 }
 
-.die-footer-strip {
+.die-footer-telemetry {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-top: 2px;
+  justify-content: space-between;
 }
 
-.die-legend-item {
+.legend-strip {
+  display: flex;
+  gap: 12px;
+}
+
+.legend-node {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.die-box-sample {
+.node-box {
   width: 8px;
   height: 8px;
   border-radius: 2px;
 }
 
-.bg-die-idle { background: #FFFFFF; border: 1px solid var(--border-subtle); }
-.bg-die-fault { background: var(--accent-coral); }
-.bg-die-healed { background: var(--accent-nvidia); }
+.box-idle { background: rgba(255, 255, 255, 0.1); }
+.box-fault { background: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral); }
+.box-healed { background: var(--accent-nvidia); box-shadow: 0 0 6px var(--accent-nvidia); }
 
 /* ==========================================================================
-   3. SIMT WARP 0 MATRIX VISUALIZER
+   4. QUANTUM SIMT WARP 0 MATRIX
    ========================================================================== */
-.warp-visualizer-card {
+.warp-quantum-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 14px 18px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--glow-emerald);
 }
 
-.warp-header-row {
+.warp-top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.warp-title-group {
+.warp-title-lockup {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.warp-title-block {
+.warp-halo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(0, 255, 136, 0.12);
+  border: 1px solid var(--accent-nvidia);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .warp-title {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  color: var(--text-primary);
+  font-size: 12px;
+  letter-spacing: 0.8px;
 }
 
-.warp-sub {
-  font-size: 10px;
-  color: var(--text-tertiary);
+.warp-arch-tag {
+  font-size: 9.5px;
+  color: var(--accent-cyan);
 }
 
-.warp-mode-toggle {
+.warp-subtitle {
+  font-size: 10.5px;
+}
+
+.warp-switch-cluster {
   display: flex;
-  gap: 5px;
+  gap: 6px;
 }
 
-.warp-mode-btn {
+.warp-switch-btn {
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-secondary);
   font-size: 10.5px;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
-.warp-mode-btn.active.btn-mode-vuln {
-  background: rgba(225, 29, 72, 0.1);
+.warp-switch-btn.active-vuln {
+  background: rgba(255, 0, 85, 0.15);
   border-color: var(--accent-coral);
   color: var(--accent-coral);
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
 }
 
-.warp-mode-btn.active.btn-mode-safe {
-  background: rgba(5, 150, 105, 0.1);
+.warp-switch-btn.active-safe {
+  background: rgba(0, 255, 136, 0.15);
   border-color: var(--accent-nvidia);
   color: var(--accent-nvidia);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
 }
 
-/* 32-Lane Thread Matrix */
-.warp-lanes-matrix {
+/* 32 Quantum Thread Lanes */
+.warp-threads-matrix {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
-  gap: 4px;
+  gap: 5px;
 }
 
-.lane-cell {
+.quantum-thread-lane {
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 5px;
-  padding: 6px 2px;
+  padding: 8px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
 }
 
-.lane-cell:hover {
-  transform: translateY(-1px);
-  border-color: var(--border-medium);
+.quantum-thread-lane:hover {
+  transform: translateY(-2px);
+  border-color: #FFFFFF;
 }
 
-.lane-valid {
-  background: rgba(5, 150, 105, 0.08);
-  border-color: rgba(5, 150, 105, 0.25);
+.lane-active {
+  background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.3);
   color: var(--accent-nvidia);
 }
 
-.lane-fault {
-  background: rgba(225, 29, 72, 0.12);
+.lane-fault-pulse {
+  background: rgba(255, 0, 85, 0.2);
   border-color: var(--accent-coral);
   color: var(--accent-coral);
-  animation: pulse-coral 1.5s infinite;
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.5);
+  animation: sm-fault-throb 1.2s infinite;
 }
 
-.lane-masked {
-  background: rgba(217, 119, 6, 0.1);
-  border-color: rgba(217, 119, 6, 0.3);
-  color: var(--accent-amber);
+.lane-masked-shield {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.35);
+  color: var(--accent-cyan);
 }
 
 .lane-selected {
-  outline: 2px solid var(--text-primary);
+  outline: 2px solid #FFFFFF;
   outline-offset: 1px;
 }
 
-.lane-id-text {
+.lane-index {
   font-size: 9.5px;
-  font-family: var(--font-mono);
   font-weight: 700;
 }
 
-.lane-status-indicator {
-  font-size: 10px;
+.lane-status-icon {
+  font-size: 9px;
 }
 
-.warp-legend-row {
+.warp-status-legend {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 3px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  gap: 16px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.legend-item {
+.legend-entry {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
-.legend-swatch {
+.swatch-quantum {
   width: 9px;
   height: 9px;
   border-radius: 2px;
 }
 
-.swatch-valid { background: var(--accent-nvidia); }
-.swatch-fault { background: var(--accent-coral); }
-.swatch-masked { background: var(--accent-amber); }
+.swatch-active { background: var(--accent-nvidia); box-shadow: 0 0 6px var(--accent-nvidia); }
+.swatch-fault { background: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral); }
+.swatch-masked { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
 
-.warp-boundary-tag {
-  margin-left: auto;
+.warp-boundary-counter {
   font-size: 10px;
-  color: var(--accent-azure);
-  background: rgba(37, 99, 235, 0.08);
-  padding: 2px 6px;
+  color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  padding: 2px 7px;
   border-radius: 4px;
 }
 
-/* Lane Inspector Detail Panel */
-.lane-inspector-panel {
-  background: #F8FAFC;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 10px 12px;
+/* Thread Inspector HUD */
+.thread-inspector-hud {
+  background: #02050C;
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.8);
 }
 
-.inspector-top-row {
+.inspector-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.inspector-lane-badge {
+.lane-badge {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11.5px;
+  gap: 6px;
+  font-size: 12px;
 }
 
-.status-pill-lane {
-  font-size: 9px;
+.lane-verdict-pill {
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 
-.pill-valid { background: rgba(5, 150, 105, 0.15); color: var(--accent-nvidia); }
-.pill-fault { background: rgba(225, 29, 72, 0.15); color: var(--accent-coral); }
-.pill-masked { background: rgba(217, 119, 6, 0.15); color: var(--accent-amber); }
+.pill-valid { background: rgba(0, 255, 136, 0.15); color: var(--accent-nvidia); }
+.pill-fault { background: rgba(255, 0, 85, 0.2); color: var(--accent-coral); }
+.pill-masked { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); }
 
-.inspector-grid {
+.inspector-telemetry-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px 14px;
+  gap: 6px 16px;
 }
 
-.inspector-item {
+.telemetry-item {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .item-label {
-  font-size: 9px;
-  color: var(--text-tertiary);
+  font-size: 9.5px;
 }
 
-.item-val {
-  font-size: 10.5px;
+.item-value {
+  font-size: 11px;
 }
 
 /* ==========================================================================
-   4. SEMANTIC CODE & PTX DISASSEMBLY INSPECTOR
+   5. CODE DIFF & PTX DISASSEMBLY INSPECTOR
    ========================================================================== */
 .diff-master-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .diff-header-bar {
   background: var(--bg-surface-raised);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 10px 16px;
+  padding: 10px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -934,13 +1257,13 @@ body {
 .diff-title {
   font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .diff-mode-tabs {
   display: flex;
-  gap: 3px;
+  gap: 4px;
 }
 
 .diff-tab-btn {
@@ -949,23 +1272,21 @@ body {
   color: var(--text-tertiary);
   font-size: 10.5px;
   font-weight: 700;
-  padding: 3px 7px;
+  padding: 3px 8px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s ease;
 }
 
 .diff-tab-btn.active {
-  background: #FFFFFF;
+  background: rgba(0, 255, 136, 0.12);
   color: var(--accent-nvidia);
-  border-color: var(--border-subtle);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  border-color: rgba(0, 255, 136, 0.35);
 }
 
 .diff-badges-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 10.5px;
 }
 
@@ -982,7 +1303,7 @@ body {
 .diff-panes-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  divide-x: 1px solid var(--border-subtle);
+  divide-x: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .diff-pane {
@@ -992,30 +1313,30 @@ body {
 }
 
 .pane-filename-strip {
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
 .pane-tag {
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 2px 5px;
-  border-radius: 3px;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .tag-coral {
-  background: rgba(225, 29, 72, 0.2);
-  color: #FDA4AF;
+  background: rgba(255, 0, 85, 0.2);
+  color: var(--accent-coral);
 }
 
 .tag-nvidia {
-  background: rgba(5, 150, 105, 0.25);
-  color: #6EE7B7;
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--accent-nvidia);
 }
 
 .pane-right-actions {
@@ -1028,50 +1349,50 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #CBD5E1;
   font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .btn-copy-code:hover {
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .code-editor-viewport {
-  padding: 8px 0;
+  padding: 10px 0;
   font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.55;
+  font-size: 11.5px;
+  line-height: 1.6;
   overflow-x: auto;
 }
 
 .code-line-row {
   display: flex;
-  padding: 2px 12px;
-  gap: 10px;
+  padding: 2px 14px;
+  gap: 12px;
 }
 
 .line-vuln-highlight {
-  background: rgba(225, 29, 72, 0.15);
+  background: rgba(255, 0, 85, 0.15);
   border-left: 2px solid var(--accent-coral);
 }
 
 .line-secure-highlight {
-  background: rgba(5, 150, 105, 0.18);
+  background: rgba(0, 255, 136, 0.15);
   border-left: 2px solid var(--accent-nvidia);
 }
 
 .line-num {
   color: #64748B;
-  width: 16px;
+  width: 18px;
   text-align: right;
   user-select: none;
-  font-size: 10px;
+  font-size: 10.5px;
 }
 
 .line-content {
@@ -1080,122 +1401,121 @@ body {
 
 .code-text.comment { color: #64748B; font-style: italic; }
 .code-text.code { color: #E2E8F0; }
-.code-text.vuln { color: #FDA4AF; font-weight: 600; }
-.code-text.secure { color: #6EE7B7; font-weight: 600; }
+.code-text.vuln { color: #FFA3BA; font-weight: 600; }
+.code-text.secure { color: #A7F3D0; font-weight: 600; }
 
 .line-annotation {
-  font-size: 10px;
-  padding: 2px 5px;
-  border-radius: 3px;
+  font-size: 10.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
   margin-top: 3px;
   display: inline-block;
 }
 
 .vuln-annotation {
-  background: rgba(225, 29, 72, 0.25);
+  background: rgba(255, 0, 85, 0.25);
   color: #FFE4E6;
 }
 
 .secure-annotation {
-  background: rgba(5, 150, 105, 0.3);
+  background: rgba(0, 255, 136, 0.25);
   color: #D1FAE5;
 }
 
 /* ==========================================================================
-   5. STUDIO TERMINAL WINDOW
+   6. STUDIO TERMINAL WINDOW
    ========================================================================== */
 .terminal-master-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .terminal-header-strip {
   background: var(--bg-surface-raised);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 8px 14px;
+  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .terminal-title-left {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .terminal-title {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .terminal-host-tag {
-  font-size: 9.5px;
-  color: var(--accent-azure);
+  font-size: 10px;
+  color: var(--accent-cyan);
   font-family: var(--font-mono);
 }
 
 .terminal-filters-row {
   display: flex;
-  gap: 3px;
+  gap: 4px;
 }
 
 .term-filter-pill {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-tertiary);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .term-filter-pill.pill-active {
-  background: #FFFFFF;
-  border-color: var(--border-subtle);
-  color: var(--text-primary);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.3);
+  color: var(--accent-nvidia);
 }
 
 .terminal-actions-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .terminal-search-box {
   display: flex;
   align-items: center;
-  gap: 5px;
-  background: #FFFFFF;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  padding: 2px 6px;
+  border-radius: 6px;
+  padding: 3px 8px;
 }
 
 .term-search-input {
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 10.5px;
+  font-size: 11px;
   outline: none;
-  width: 95px;
+  width: 110px;
 }
 
 .term-btn {
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1204,27 +1524,27 @@ body {
 
 .term-btn:hover {
   color: var(--text-primary);
-  border-color: var(--border-medium);
+  border-color: var(--accent-nvidia);
 }
 
 .terminal-viewport {
   background: var(--bg-editor);
-  padding: 10px 14px;
-  min-height: 150px;
-  max-height: 220px;
+  padding: 12px 16px;
+  min-height: 170px;
+  max-height: 240px;
   overflow-y: auto;
   font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.55;
+  font-size: 11.5px;
+  line-height: 1.6;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .terminal-empty-state {
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 12px 0;
 }
 
 .terminal-line {
@@ -1233,28 +1553,28 @@ body {
 }
 
 .line-alert {
-  color: #FDA4AF;
-  background: rgba(225, 29, 72, 0.12);
-  padding: 2px 5px;
-  border-radius: 3px;
+  color: #FFA3BA;
+  background: rgba(255, 0, 85, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .line-success {
-  color: #6EE7B7;
+  color: #86EFAC;
 }
 
 /* ==========================================================================
-   6. NSIGHT TELEMETRY HUD
+   7. NSIGHT TELEMETRY HUD
    ========================================================================== */
 .nsight-hud-container {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 12px 16px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow: var(--shadow-subtle);
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .hud-title-bar {
@@ -1266,45 +1586,45 @@ body {
 .hud-title-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .hud-title {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .hud-arch-pill {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.12);
   color: var(--accent-nvidia);
-  border: 1px solid rgba(5, 150, 105, 0.25);
-  padding: 1px 6px;
-  border-radius: 3px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 
 .hud-live-tag {
-  font-size: 9.5px;
-  color: var(--text-tertiary);
+  font-size: 10px;
+  color: var(--text-secondary);
 }
 
 .hud-metrics-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
 .hud-metric-box {
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 7px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 9px 10px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .hud-metric-top {
@@ -1314,51 +1634,50 @@ body {
 }
 
 .hud-metric-label {
-  font-size: 9px;
+  font-size: 9.5px;
   color: var(--text-tertiary);
   font-weight: 600;
 }
 
 .hud-metric-status {
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 2px;
-  letter-spacing: 0.3px;
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 
 .status-nvidia {
-  background: rgba(5, 150, 105, 0.12);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
 }
 
 .status-azure {
-  background: rgba(37, 99, 235, 0.12);
-  color: var(--accent-azure);
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--accent-cyan);
 }
 
 .hud-metric-val {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
 }
 
 .hud-metric-sub {
-  font-size: 8.5px;
+  font-size: 9px;
   color: var(--text-secondary);
 }
 
 /* ==========================================================================
-   7. HOPPER SILICON MEMORY HIERARCHY WATERFALL
+   8. HOPPER SILICON MEMORY HIERARCHY WATERFALL
    ========================================================================== */
 .silicon-waterfall-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 14px 18px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: var(--shadow-subtle);
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .waterfall-header-row {
@@ -1379,39 +1698,39 @@ body {
 }
 
 .waterfall-title {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .waterfall-sub {
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--text-tertiary);
 }
 
 .waterfall-tiers-stack {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .tier-row-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .tier-box {
   width: 100%;
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .tier-top-row {
@@ -1421,80 +1740,79 @@ body {
 }
 
 .tier-name {
-  font-size: 11px;
+  font-size: 11.5px;
 }
 
 .tier-specs {
-  font-size: 9.5px;
+  font-size: 10px;
 }
 
 .tier-comparison-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  font-size: 10px;
+  gap: 10px;
+  font-size: 10.5px;
 }
 
 .tier-side {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  padding: 5px 7px;
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 8px;
+  border-radius: 5px;
 }
 
 .tier-arrow-connector {
   color: var(--accent-nvidia);
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .waterfall-footer-summary {
   display: flex;
   justify-content: space-between;
-  font-size: 10.5px;
-  padding-top: 6px;
-  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* ==========================================================================
-   8. MIC-DROP HARDENING DELTA
+   9. MIC-DROP HARDENING DELTA
    ========================================================================== */
 .delta-master-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 14px 18px;
-  box-shadow: var(--shadow-subtle);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .delta-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .delta-title-lockup {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .delta-title {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .delta-pill {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 4px;
   font-family: var(--font-mono);
 }
@@ -1502,27 +1820,27 @@ body {
 .delta-comparison-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .delta-pane {
   background: var(--bg-surface-raised);
-  border-radius: 8px;
-  padding: 10px 12px;
+  border-radius: 10px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .pane-vulnerable {
-  border: 1px solid rgba(225, 29, 72, 0.2);
-  background: rgba(225, 29, 72, 0.02);
+  border: 1px solid var(--border-coral);
+  background: rgba(255, 0, 85, 0.04);
 }
 
 .pane-hardened {
-  border: 1px solid rgba(5, 150, 105, 0.25);
-  background: rgba(5, 150, 105, 0.02);
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 255, 136, 0.04);
 }
 
 .pane-top-header {
@@ -1532,47 +1850,47 @@ body {
 }
 
 .pane-title {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
 }
 
 .pane-sub {
-  font-size: 9.5px;
+  font-size: 10px;
   color: var(--text-tertiary);
   margin-top: 1px;
 }
 
 .badge-coral {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 800;
-  background: rgba(225, 29, 72, 0.1);
+  background: rgba(255, 0, 85, 0.2);
   color: var(--accent-coral);
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 
 .badge-nvidia {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 800;
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.2);
   color: var(--accent-nvidia);
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
 }
 
 .pane-metrics-table {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .metric-row {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 11.5px;
   padding: 2px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .metric-label {
@@ -1580,20 +1898,20 @@ body {
 }
 
 .pane-verdict-box {
-  border-radius: 5px;
-  padding: 6px 8px;
-  font-size: 10.5px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
   line-height: 1.4;
 }
 
 .verdict-coral {
-  background: rgba(225, 29, 72, 0.08);
-  color: #BE123C;
+  background: rgba(255, 0, 85, 0.1);
+  color: #FFA3BA;
 }
 
 .verdict-nvidia {
-  background: rgba(5, 150, 105, 0.08);
-  color: #047857;
+  background: rgba(0, 255, 136, 0.1);
+  color: #A7F3D0;
 }
 
 .delta-center-divider {
@@ -1603,81 +1921,80 @@ body {
 }
 
 .speedup-circle {
-  width: 58px;
-  height: 58px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: rgba(8, 16, 32, 0.95);
   border: 2px solid var(--accent-nvidia);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px rgba(5, 150, 105, 0.2);
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.4);
 }
 
 .speedup-val {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--accent-nvidia);
   font-family: var(--font-mono);
 }
 
 .speedup-unit {
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 800;
   color: var(--text-secondary);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
 /* ==========================================================================
-   9. VERIFICATION & IMPACT SIDEBAR
+   10. VERIFICATION & IMPACT SIDEBAR
    ========================================================================== */
 .verification-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .sidebar-top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 1px;
 }
 
 .sidebar-title-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .sidebar-title {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--accent-nvidia);
 }
 
 .btn-judges-badge {
-  background: rgba(217, 119, 6, 0.1);
-  border: 1px solid rgba(217, 119, 6, 0.25);
+  background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.3);
   color: var(--accent-amber);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 3px 9px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .impact-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 14px 16px;
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: var(--shadow-subtle);
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .impact-card-header {
@@ -1687,19 +2004,19 @@ body {
 }
 
 .impact-card-title {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-primary);
 }
 
 .badge-nvidia-sm {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  background: rgba(5, 150, 105, 0.1);
+  background: rgba(0, 255, 136, 0.15);
   color: var(--accent-nvidia);
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
   font-family: var(--font-mono);
 }
 
@@ -1707,13 +2024,13 @@ body {
 .invariant-visual-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 }
 
 .radial-donut-box {
   position: relative;
-  width: 76px;
-  height: 76px;
+  width: 84px;
+  height: 84px;
 }
 
 .donut-center-text {
@@ -1726,13 +2043,13 @@ body {
 }
 
 .donut-val {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   font-family: var(--font-mono);
 }
 
 .donut-sub {
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 800;
   color: var(--text-tertiary);
 }
@@ -1740,29 +2057,29 @@ body {
 .invariant-stats-column {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .stat-big-number {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--text-primary);
   font-family: var(--font-mono);
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-secondary);
 }
 
 .stat-tags-row {
   display: flex;
-  gap: 8px;
-  margin-top: 2px;
+  gap: 10px;
+  margin-top: 3px;
 }
 
 .tag-check {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--accent-nvidia);
   font-family: var(--font-mono);
@@ -1771,26 +2088,26 @@ body {
 .invariant-sub-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 
 .sub-box {
   background: var(--bg-surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .sub-box-label {
-  font-size: 9.5px;
+  font-size: 10px;
   color: var(--text-tertiary);
 }
 
 .sub-box-val {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   font-family: var(--font-mono);
 }
@@ -1798,76 +2115,77 @@ body {
 /* Performance Tabs */
 .perf-tabs-bar {
   display: flex;
-  border-bottom: 1px solid var(--border-subtle);
-  gap: 4px;
-  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 6px;
+  padding-bottom: 8px;
 }
 
 .perf-tab-btn {
   background: transparent;
   border: none;
   color: var(--text-tertiary);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .perf-tab-btn.active {
   background: var(--bg-surface-raised);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(0, 255, 136, 0.3);
 }
 
 .speedup-display-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .speedup-digits {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   font-family: var(--font-mono);
 }
 
 .speedup-label {
-  font-size: 9.5px;
+  font-size: 10.5px;
   font-weight: 800;
   color: var(--text-secondary);
-  letter-spacing: 0.6px;
-  margin-left: 6px;
+  letter-spacing: 0.8px;
+  margin-left: 8px;
 }
 
 .badge-nvidia-solid {
   background: var(--accent-nvidia);
-  color: #FFFFFF;
-  font-size: 10.5px;
+  color: #03060D;
+  font-size: 11px;
   font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
   font-family: var(--font-mono);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
 
 .latency-bars-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .bar-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  margin-bottom: 3px;
+  font-size: 11.5px;
+  margin-bottom: 4px;
 }
 
 .bar-bg {
   width: 100%;
   height: 6px;
-  background: #E2E8F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -1875,105 +2193,107 @@ body {
 .bar-fill-coral {
   height: 100%;
   background: var(--accent-coral);
+  box-shadow: 0 0 8px var(--accent-coral);
 }
 
 .bar-fill-nvidia {
   height: 100%;
   background: var(--accent-nvidia);
+  box-shadow: 0 0 8px var(--accent-nvidia);
 }
 
 .sram-metric-strip {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .roofline-graph-wrapper {
-  height: 145px;
+  height: 155px;
   position: relative;
 }
 
 /* Attestation Card */
 .attestation-meta-box {
-  background: #F8FAFC;
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  padding: 8px 10px;
+  background: #02050B;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 6px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  font-size: 10.5px;
+  gap: 4px;
+  font-size: 11px;
 }
 
 .meta-line {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .meta-key {
   color: var(--text-tertiary);
-  width: 60px;
+  width: 65px;
 }
 
 .btn-export-verified-pr {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-nvidia);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, #00FF88 0%, #00CC6A 100%);
+  color: #03060D;
   border: none;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 800;
-  padding: 9px;
+  padding: 11px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
 }
 
 .btn-export-verified-pr:hover {
-  background: #047857;
   transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(0, 255, 136, 0.7);
 }
 
 .attestation-footer-note {
-  font-size: 10px;
+  font-size: 10.5px;
   color: var(--text-tertiary);
   text-align: center;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 /* ==========================================================================
-   10. GLOBAL FOOTER
+   11. GLOBAL FOOTER
    ========================================================================== */
 .aegis-footer {
   margin-top: auto;
-  border-top: 1px solid var(--border-subtle);
-  background: #FFFFFF;
-  padding: 12px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(3, 7, 16, 0.95);
+  padding: 14px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 11px;
+  font-size: 11.5px;
 }
 
 .footer-cluster-info {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--text-tertiary);
 }
 
 .footer-sep {
-  color: rgba(15, 23, 42, 0.15);
+  color: rgba(255, 255, 255, 0.15);
 }
 
 .footer-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .footer-link {
@@ -1983,7 +2303,7 @@ body {
 }
 
 .footer-link:hover {
-  color: var(--text-primary);
+  color: var(--accent-nvidia);
 }
 
 .footer-copyright {
@@ -1991,14 +2311,14 @@ body {
 }
 
 /* ==========================================================================
-   11. ATTESTATION & PULL REQUEST MODAL
+   12. ATTESTATION & PULL REQUEST MODAL
    ========================================================================== */
 .modal-overlay-scrim {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -2007,21 +2327,21 @@ body {
 }
 
 .modal-dialog-box {
-  background: #FFFFFF;
+  background: #060B18;
   border: 1px solid var(--border-medium);
-  border-radius: 12px;
+  border-radius: 14px;
   width: 100%;
-  max-width: 820px;
+  max-width: 840px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.9), 0 0 32px rgba(0, 255, 136, 0.15);
   overflow: hidden;
 }
 
 .modal-header-strip {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2034,13 +2354,13 @@ body {
 }
 
 .modal-heading {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .modal-subheading {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-secondary);
 }
 
@@ -2053,15 +2373,15 @@ body {
 }
 
 .modal-dismiss-btn:hover {
-  color: var(--text-primary);
+  color: var(--accent-nvidia);
 }
 
 .modal-tab-bar {
   display: flex;
-  padding: 6px 14px;
-  gap: 6px;
-  background: var(--bg-surface-raised);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 8px 16px;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .modal-segment-btn {
@@ -2071,89 +2391,88 @@ body {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .modal-segment-btn.segment-active {
-  background: #FFFFFF;
-  color: var(--text-primary);
-  border-color: var(--border-subtle);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--accent-nvidia);
+  border-color: rgba(0, 255, 136, 0.3);
 }
 
 .modal-body-scroll {
-  padding: 14px 18px;
+  padding: 16px 20px;
   overflow-y: auto;
   flex: 1;
 }
 
 .pr-markdown-preview {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.6;
   white-space: pre-wrap;
-  color: #0F172A;
-  background: #F8FAFC;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border-subtle);
+  color: #CBD5E1;
+  background: #02050C;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cert-json-preview {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.5;
-  color: var(--accent-azure);
-  background: #F8FAFC;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border-subtle);
+  color: var(--accent-cyan);
+  background: #02050C;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 240, 255, 0.25);
   overflow-x: auto;
 }
 
 .modal-actions-footer {
-  padding: 10px 18px;
-  background: var(--bg-surface-raised);
-  border-top: 1px solid var(--border-subtle);
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 10px;
 }
 
 .btn-modal-action {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
-  border-radius: 5px;
-  font-size: 11.5px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .btn-action-copy {
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text-primary);
 }
 
 .btn-action-copy:hover {
-  background: #F1F5F9;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .btn-action-download {
   background: var(--accent-nvidia);
-  color: #FFFFFF;
+  color: #03060D;
   border: none;
 }
 
 .btn-action-download:hover {
-  background: #047857;
+  background: #84cf00;
 }
 
 /* ==========================================================================
@@ -2163,8 +2482,12 @@ body {
   .workbench-grid-layout {
     grid-template-columns: 1fr;
   }
-  .sm-die-grid {
-    grid-template-columns: repeat(11, 1fr);
+  .arena-split-stage {
+    grid-template-columns: 1fr;
+  }
+  .sm-core-cell {
+    aspect-ratio: auto;
+    height: 14px;
   }
 }
 
@@ -2184,7 +2507,7 @@ body {
   .hud-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .warp-lanes-matrix {
+  .warp-threads-matrix {
     grid-template-columns: repeat(8, 1fr);
   }
 }

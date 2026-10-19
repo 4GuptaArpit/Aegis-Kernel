@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Cpu, AlertTriangle, ShieldCheck, Zap, Database } from 'lucide-react';
+import { Cpu, AlertTriangle, ShieldCheck, Zap, Database, Layers } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function HopperDieTopology({ currentStage, isRunning, onSelectSm, selectedSm }) {
-  // Hopper GH100 has 132 active SMs across 8 GPCs
   const TOTAL_SMS = 132;
   const FAULTING_SM = 14;
 
@@ -16,57 +15,87 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
   };
 
   return (
-    <div className="die-topology-chassis">
+    <div className="holographic-die-chassis">
+      {/* Top Holographic Scanline Bar */}
       <div className="die-header-strip">
         <div className="die-title-lockup">
-          <Cpu size={14} className="text-nvidia" />
-          <span className="die-title font-mono">NVIDIA GH100 SILICON DIE TOPOLOGY // 132 SMs</span>
-          <span className="die-gpc-tag font-mono">8 GPCs · 4nm TSMC 4N · 80B Transistors</span>
+          <div className="die-icon-halo">
+            <Cpu size={16} className="text-nvidia" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="die-title font-mono font-bold">NVIDIA GH100 SILICON DIE TOPOLOGY</span>
+              <span className="die-gpc-pill font-mono">132 SMs · 8 GPCs · TSMC 4N</span>
+            </div>
+            <span className="die-subtext text-tertiary">Real-Time Core Interconnect & Warp Dispatch Grid</span>
+          </div>
         </div>
 
         <div className="die-status-pills font-mono">
           {isFaultStage && (
-            <span className="die-pill pill-fault">
+            <span className="die-pill pill-fault animate-pulse">
               <span className="pulse-dot bg-coral"></span>
-              SM 14: MEMORY PAGE TRAP
+              CRITICAL: SM 14 MMU PAGE TRAP
             </span>
           )}
           {isHealedStage && (
             <span className="die-pill pill-healed">
               <span className="pulse-dot bg-nvidia"></span>
-              132/132 SMs: COALESCED PASS
+              ALL 132 SMs: ZERO-PENALTY PREDICATION
             </span>
           )}
           {!isFaultStage && !isHealedStage && (
             <span className="die-pill pill-idle">
               <span className="pulse-dot bg-azure"></span>
-              132 SMs ARMED
+              132 SMs DISPATCH READY
             </span>
           )}
         </div>
       </div>
 
-      {/* Memory Bus Ribbon: HBM3e Interconnects */}
-      <div className="hbm-bus-interconnect font-mono">
-        <div className="hbm-stack">HBM3e STACK 0 [417 GB/s]</div>
-        <div className="hbm-stack">HBM3e STACK 1 [417 GB/s]</div>
-        <div className="hbm-crossbar">
-          <span className={`bus-flow-text ${isFaultStage ? 'text-coral' : 'text-nvidia'}`}>
-            ◄ 50MB L2 CROSSBAR INTERCONNECT (3.35 TB/s HIGHWAY) ►
-          </span>
+      {/* Holographic Circuit Traces & HBM3e Memory Highway */}
+      <div className="hbm-highway-container font-mono">
+        <div className="hbm-bank bank-left">
+          <div className="hbm-chip-node">
+            <span className="text-azure">HBM3e #0</span>
+            <span className="text-tertiary text-xs">834 GB/s</span>
+          </div>
+          <div className="hbm-chip-node">
+            <span className="text-azure">HBM3e #1</span>
+            <span className="text-tertiary text-xs">834 GB/s</span>
+          </div>
         </div>
-        <div className="hbm-stack">HBM3e STACK 2 [417 GB/s]</div>
-        <div className="hbm-stack">HBM3e STACK 3 [417 GB/s]</div>
+
+        <div className={`highway-crossbar ${isRunning ? 'highway-active' : ''}`}>
+          <div className="crossbar-laser-beam"></div>
+          <div className="crossbar-label-strip">
+            <span className="text-azure">◄◄ 50MB HIGH-SPEED L2 CACHE CROSSBAR (3.35 TB/s HIGHWAY) ►►</span>
+            <span className={`crossbar-status ${isFaultStage ? 'text-coral' : 'text-nvidia'}`}>
+              {isFaultStage ? 'BUS PANIC: UNALIGNED TRANSACTION HALTED' : 'WARP STREAM: 128-BIT COALESCED'}
+            </span>
+          </div>
+        </div>
+
+        <div className="hbm-bank bank-right">
+          <div className="hbm-chip-node">
+            <span className="text-azure">HBM3e #2</span>
+            <span className="text-tertiary text-xs">834 GB/s</span>
+          </div>
+          <div className="hbm-chip-node">
+            <span className="text-azure">HBM3e #3</span>
+            <span className="text-tertiary text-xs">834 GB/s</span>
+          </div>
+        </div>
       </div>
 
-      {/* Physical 132 SM Die Matrix (11 columns x 12 rows) */}
-      <div className="sm-die-grid">
+      {/* 3D-Styled 132-SM Physical Silicon Die Grid */}
+      <div className="holographic-sm-grid">
         {Array.from({ length: TOTAL_SMS }, (_, idx) => {
           const isFaulty = idx === FAULTING_SM && isFaultStage;
           const isSelected = selectedSm === idx;
           const isHealed = isHealedStage;
 
-          let smClass = 'sm-die-unit font-mono';
+          let smClass = 'sm-core-cell font-mono';
           if (isSelected) smClass += ' sm-selected';
           if (isFaulty) smClass += ' sm-fault';
           else if (isHealed) smClass += ' sm-healed';
@@ -77,30 +106,37 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
               key={idx}
               className={smClass}
               onClick={() => handleSmClick(idx)}
-              title={`Streaming Multiprocessor SM_${idx}: ${isFaulty ? 'Bus Fault - SIGSEGV 139' : (isHealed ? 'SRAM Fused - 100% Occupancy' : 'Standby')}`}
+              title={`SM_${idx}: ${isFaulty ? 'Bus Fault - SIGSEGV 139' : (isHealed ? 'SRAM Fused - 100% Occupancy' : 'Standby Core')}`}
             >
-              <span className="sm-label">{idx}</span>
+              <span className="sm-idx">{idx}</span>
+              {isFaulty && <span className="sm-alert-dot"></span>}
             </div>
           );
         })}
       </div>
 
       {/* Live Die Telemetry Strip */}
-      <div className="die-footer-strip font-mono text-xs">
-        <div className="die-legend-item">
-          <span className="die-box-sample bg-die-idle"></span>
-          <span className="text-secondary">Standby SM</span>
+      <div className="die-footer-telemetry font-mono text-xs">
+        <div className="legend-strip">
+          <div className="legend-node">
+            <span className="node-box box-idle"></span>
+            <span className="text-tertiary">Active SM Core</span>
+          </div>
+          <div className="legend-node">
+            <span className="node-box box-fault"></span>
+            <span className="text-coral font-bold">SM 14 OOB Trap</span>
+          </div>
+          <div className="legend-node">
+            <span className="node-box box-healed"></span>
+            <span className="text-nvidia font-bold">Triton Predicated Shield</span>
+          </div>
         </div>
-        <div className="die-legend-item">
-          <span className="die-box-sample bg-die-fault"></span>
-          <span className="text-coral">SM 14 Illegal Access Crash</span>
-        </div>
-        <div className="die-legend-item">
-          <span className="die-box-sample bg-die-healed"></span>
-          <span className="text-nvidia">Hardware Predicated Fused Invariant</span>
-        </div>
-        <div className="die-clock-readout ml-auto text-azure">
-          Core Clock: 1,980 MHz · Voltage: 0.85V
+
+        <div className="die-clock-cluster ml-auto">
+          <span className="text-tertiary">Hopper Engine Clock:</span>
+          <span className="text-nvidia font-bold">1,980 MHz</span>
+          <span className="text-tertiary">· TMA Latency:</span>
+          <span className="text-azure font-bold">18 Cycles</span>
         </div>
       </div>
     </div>

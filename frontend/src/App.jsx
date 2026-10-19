@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ExecutiveCommandBar from './components/ExecutiveCommandBar';
+import RedBlueArena from './components/RedBlueArena';
 import HopperDieTopology from './components/HopperDieTopology';
 import WarpVisualizer from './components/WarpVisualizer';
 import CodeDiffInspector from './components/CodeDiffInspector';
@@ -50,7 +51,7 @@ export default function App() {
     setBlueData(null);
     setMetrics(null);
 
-    addLog(`[INIT] Engaging Aegis-Kernel Silicon Workbench for [${selectedFixture.toUpperCase()}] on [${selectedHardware}]`, 'info');
+    addLog(`[INIT] Engaging Aegis-Kernel Autonomous Proving Collider for [${selectedFixture.toUpperCase()}] on [${selectedHardware}]`, 'info');
 
     const eventSource = new EventSource(
       `http://localhost:8000/api/v1/execute/${selectedFixture}?hardware_target=${encodeURIComponent(selectedHardware)}`
@@ -74,7 +75,7 @@ export default function App() {
           setCurrentStage('SANDBOX_FAIL');
           sound.playAlert();
           setRedData(data.red_attack);
-          addLog(`[CRIMSON SILICON TRAP] SM 14 OOB Read tripped: Exit Code ${data.red_attack.exit_code}`, 'alert');
+          addLog(`[CRIMSON EXPLOIT] SM 14 OOB Read tripped: Exit Code ${data.red_attack.exit_code}`, 'alert');
           addLog(data.red_attack.stack_trace, 'alert');
         } else if (data.stage === 'BLUE_SYNTHESIS') {
           setCurrentStage('BLUE_SYNTHESIS');
@@ -108,7 +109,7 @@ export default function App() {
 
   return (
     <div className="aegis-app-wrapper">
-      {/* High-Density Integrated Executive Cockpit Header */}
+      {/* Executive Command Cockpit */}
       <ExecutiveCommandBar 
         selectedHardware={selectedHardware}
         onSelectHardware={setSelectedHardware}
@@ -127,12 +128,22 @@ export default function App() {
         onOpenPrModal={() => setIsModalOpen(true)}
       />
 
-      {/* Main Fullscreen Silicon Proving Workbench */}
       <div className="aegis-workbench-container">
+        {/* Cinematic Red vs Blue Cyber Proving Arena */}
+        <RedBlueArena 
+          currentStage={currentStage}
+          isRunning={isRunning}
+          selectedFixture={selectedFixture}
+          metrics={metrics}
+          redData={redData}
+          blueData={blueData}
+        />
+
+        {/* Main 2-Column Hardware Engineering Arena */}
         <div className="workbench-grid-layout">
-          {/* Left Column: Die Topology, SIMT Warp Matrix, Code/PTX Diff, Terminal */}
+          {/* Left Column: Die Topology, SIMT Warp Matrix, Code Diff, Terminal */}
           <div className="workbench-col-left">
-            {/* 132-SM Silicon Die Topology */}
+            {/* 132-SM Holographic Silicon Die */}
             <HopperDieTopology 
               currentStage={currentStage} 
               isRunning={isRunning} 
