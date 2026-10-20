@@ -139,6 +139,9 @@ export default function App() {
             >
               <span className="nav-tag-num">01</span>
               <span>Red vs Blue Collider & Delta</span>
+              <span className="nav-tab-badge badge-tag-red">
+                {currentStage === 'SANDBOX_FAIL' ? '💥 SIGSEGV TRAPPED' : 'LIVE CONFRONT'}
+              </span>
             </button>
             <button 
               className={`stage-nav-btn ${activeWorkbenchTab === 'silicon' ? 'active' : ''}`}
@@ -146,6 +149,7 @@ export default function App() {
             >
               <span className="nav-tag-num">02</span>
               <span>132-SM Die & 32-Warp Matrix</span>
+              <span className="nav-tab-badge badge-tag-cyan">132 SMs · 4N</span>
             </button>
             <button 
               className={`stage-nav-btn ${activeWorkbenchTab === 'code' ? 'active' : ''}`}
@@ -153,6 +157,7 @@ export default function App() {
             >
               <span className="nav-tag-num">03</span>
               <span>AST Diff & PTX Disassembly</span>
+              <span className="nav-tab-badge badge-tag-nvidia">@p0 PREDICATED</span>
             </button>
             <button 
               className={`stage-nav-btn ${activeWorkbenchTab === 'telemetry' ? 'active' : ''}`}
@@ -160,6 +165,7 @@ export default function App() {
             >
               <span className="nav-tag-num">04</span>
               <span>Nsight Profiler & Memory Waterfall</span>
+              <span className="nav-tab-badge badge-tag-gold">418.5 TFLOPS</span>
             </button>
           </div>
 

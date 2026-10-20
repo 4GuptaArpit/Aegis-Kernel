@@ -753,18 +753,59 @@ body {
   margin-top: 2px;
 }
 
-/* Center Collision Reactor */
+/* Center Collision Reactor & Electromagnetic Particle Lines */
 .arena-collision-core {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  padding: 0 10px;
+}
+
+.quantum-particle-beam {
+  position: absolute;
+  top: 50%;
+  width: 90px;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0.2;
+  transition: all 0.4s ease;
+}
+
+.beam-left {
+  right: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 85, 0.8));
+}
+
+.beam-right {
+  left: 100%;
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.8), transparent);
+}
+
+.beam-firing-red {
+  opacity: 1;
+  height: 3px;
+  box-shadow: 0 0 12px var(--accent-coral);
+  animation: beam-pulse 1s infinite alternate;
+}
+
+.beam-firing-blue {
+  opacity: 1;
+  height: 3px;
+  box-shadow: 0 0 12px var(--accent-nvidia);
+  animation: beam-pulse 1s infinite alternate;
+}
+
+@keyframes beam-pulse {
+  0% { transform: scaleY(0.8); opacity: 0.6; }
+  100% { transform: scaleY(1.5); opacity: 1; }
 }
 
 .collider-reactor {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -777,14 +818,22 @@ body {
 }
 
 .core-ring-outer {
-  border: 2px dashed rgba(0, 255, 136, 0.5);
-  animation: rotate-cw 8s linear infinite;
+  border: 2px dashed rgba(0, 255, 136, 0.6);
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.25);
+  animation: rotate-cw 7s linear infinite;
+}
+
+.core-ring-middle {
+  inset: 5px;
+  border: 1px dotted rgba(255, 0, 85, 0.5);
+  animation: rotate-ccw 9s linear infinite;
 }
 
 .core-ring-inner {
-  inset: 6px;
-  border: 2px dashed rgba(0, 240, 255, 0.5);
-  animation: rotate-ccw 5s linear infinite;
+  inset: 10px;
+  border: 2px dashed rgba(0, 240, 255, 0.7);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  animation: rotate-cw 4s linear infinite;
 }
 
 @keyframes rotate-cw {
@@ -796,17 +845,127 @@ body {
 }
 
 .core-center-node {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: rgba(8, 16, 32, 0.95);
-  border: 1px solid var(--accent-nvidia);
+  border: 1.5px solid var(--accent-nvidia);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 16px rgba(0, 255, 136, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6), inset 0 0 8px rgba(0, 255, 136, 0.3);
   z-index: 2;
 }
+
+.adversary-scanline-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 85, 0.2), transparent);
+  animation: scan-sweep 3s infinite linear;
+}
+
+.healer-scanline-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+  animation: scan-sweep 3s infinite linear 1.5s;
+}
+
+@keyframes scan-sweep {
+  0% { left: -60%; }
+  100% { left: 160%; }
+}
+
+.nav-tab-badge {
+  font-size: 8.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.4px;
+}
+
+.badge-tag-red {
+  background: rgba(255, 0, 85, 0.2);
+  color: var(--accent-coral);
+  border: 1px solid rgba(255, 0, 85, 0.4);
+}
+
+.badge-tag-cyan {
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.badge-tag-nvidia {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--accent-nvidia);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+.badge-tag-gold {
+  background: rgba(255, 184, 0, 0.2);
+  color: var(--accent-amber);
+  border: 1px solid rgba(255, 184, 0, 0.4);
+}
+
+.latency-cycle-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cycle-steps-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.step-node {
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-tertiary);
+  transition: all 0.2s ease;
+}
+
+.step-node.node-active {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px currentColor;
+}
+
+.tier-box-selected {
+  outline: 2px solid var(--accent-nvidia);
+  box-shadow: 0 0 18px rgba(0, 255, 136, 0.3);
+  transform: translateY(-1px);
+}
+
+.tier-hint-badge {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--text-secondary);
+}
+
+.tier-status-pill {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+.pill-coral { background: rgba(255, 0, 85, 0.15); color: var(--accent-coral); border: 1px solid rgba(255, 0, 85, 0.35); }
+.pill-azure { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.35); }
+.pill-nvidia { background: rgba(0, 255, 136, 0.15); color: var(--accent-nvidia); border: 1px solid rgba(0, 255, 136, 0.35); }
 
 .collider-label {
   font-size: 10px;

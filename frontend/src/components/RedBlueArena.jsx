@@ -1,20 +1,41 @@
-import React from 'react';
-import { Flame, Shield, Zap, AlertOctagon, CheckCircle2, ArrowRight, Activity, Terminal } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Flame, Shield, Zap, AlertOctagon, CheckCircle2, ArrowRight, Activity, Terminal, Sparkles, Orbit } from 'lucide-react';
 
 export default function RedBlueArena({ currentStage, isRunning, selectedFixture, metrics, redData, blueData }) {
   const isRedActive = currentStage === 'RED_ATTACK' || currentStage === 'SANDBOX_FAIL';
   const isBlueActive = currentStage === 'BLUE_SYNTHESIS' || currentStage === 'VERIFYING';
   const isComplete = currentStage === 'COMPLETE';
 
+  // Live particle streams generator
+  const [particles, setParticles] = useState([]);
+  
+  useEffect(() => {
+    if (isRunning) {
+      const interval = setInterval(() => {
+        setParticles(prev => [
+          ...prev.slice(-18),
+          { id: Math.random(), side: isRedActive ? 'red' : 'blue', x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 }
+        ]);
+      }, 250);
+      return () => clearInterval(interval);
+    } else {
+      setParticles([]);
+    }
+  }, [isRunning, isRedActive]);
+
   return (
-    <div className="cyber-arena-card">
+    <div className={`cyber-arena-card ${isRunning ? 'arena-in-proving' : ''}`}>
+      {/* Background Energy Grid Scanlines */}
+      <div className="arena-grid-overlay"></div>
+
       <div className="arena-top-bar">
         <div className="arena-badge-live">
           <span className="live-radar-dot"></span>
           <span>AUTONOMOUS CYBER PROVING ARENA // CLOSED-LOOP RED vs BLUE</span>
         </div>
-        <div className="arena-telemetry-tag font-mono">
-          {isRunning ? `COLLIDER STATUS: ${currentStage}` : 'COLLIDER STATUS: ARMED & READY'}
+        <div className="arena-telemetry-tag font-mono flex items-center gap-2">
+          {isRunning && <span className="particle-beacon bg-cyan animate-ping"></span>}
+          <span>{isRunning ? `COLLIDER STATUS: ${currentStage}` : 'COLLIDER STATUS: ARMED & READY'}</span>
         </div>
       </div>
 
@@ -27,7 +48,7 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
               <span className="wing-title font-mono font-bold">RED AGENT: NEMOTRON 3 ULTRA</span>
             </div>
             <span className="wing-status-badge badge-red font-mono">
-              {isRedActive ? 'ATTACKING KERNEL' : 'ADVERSARY ARMED'}
+              {isRedActive ? '🔥 ATTACKING KERNEL' : 'ADVERSARY ARMED'}
             </span>
           </div>
 
@@ -46,7 +67,7 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
             </div>
 
             {/* Simulated Live Exploit Waveform */}
-            <div className="exploit-waveform-box font-mono">
+            <div className="exploit-waveform-box font-mono relative overflow-hidden">
               <div className="waveform-header">
                 <span className="text-coral">PATHOLOGICAL PAYLOAD GENERATOR</span>
                 <span className="text-tertiary text-xs">seq_len=1023 (Tail warp % 32 != 0)</span>
@@ -60,17 +81,24 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
                 <AlertOctagon size={13} className="text-coral inline mr-1" />
                 <span>UNPROTECTED RAW POINTER TRIPPED HARDWARE BUS PANIC</span>
               </div>
+              {/* Scanline light bar */}
+              <div className="adversary-scanline-beam"></div>
             </div>
           </div>
         </div>
 
         {/* CENTER COLLISION CORE / NEBIUS SANDBOX */}
         <div className="arena-collision-core">
+          {/* Electromagnetic Particle Burst Lines */}
+          <div className={`quantum-particle-beam beam-left ${isRedActive ? 'beam-firing-red' : ''}`}></div>
+          <div className={`quantum-particle-beam beam-right ${isBlueActive || isComplete ? 'beam-firing-blue' : ''}`}></div>
+
           <div className={`collider-reactor ${isRunning ? 'reactor-pulsing' : ''}`}>
             <div className="core-ring core-ring-outer"></div>
+            <div className="core-ring core-ring-middle"></div>
             <div className="core-ring core-ring-inner"></div>
             <div className="core-center-node">
-              <Zap size={20} className={isComplete ? 'text-emerald' : (isRedActive ? 'text-coral' : 'text-nvidia')} />
+              <Zap size={22} className={isComplete ? 'text-emerald animate-pulse' : (isRedActive ? 'text-coral animate-bounce' : 'text-nvidia')} />
             </div>
           </div>
           <div className="collider-label font-mono">
@@ -90,7 +118,7 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
               <span className="wing-title font-mono font-bold">BLUE AGENT: NEMOTRON 70B + TRITON</span>
             </div>
             <span className="wing-status-badge badge-green font-mono">
-              {isComplete ? 'INVARIANT VERIFIED' : (isBlueActive ? 'SYNTHESIZING PATCH' : 'IMMUNE HEALER READY')}
+              {isComplete ? '🛡️ INVARIANT VERIFIED' : (isBlueActive ? '⚡ SYNTHESIZING PATCH' : 'IMMUNE HEALER READY')}
             </span>
           </div>
 
@@ -109,7 +137,7 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
             </div>
 
             {/* Synthesized Triton Invariant Box */}
-            <div className="invariant-code-box font-mono">
+            <div className="invariant-code-box font-mono relative overflow-hidden">
               <div className="waveform-header">
                 <span className="text-emerald">SYNTHESIZED TRITON INVARIANT</span>
                 <span className="text-tertiary text-xs">Zero-penalty tail warp clamp</span>
@@ -123,6 +151,8 @@ export default function RedBlueArena({ currentStage, isRunning, selectedFixture,
                 <CheckCircle2 size={13} className="text-emerald inline mr-1" />
                 <span>FORMALLY IMMUNE TO OUT-OF-BOUNDS BUS CORRUPTION</span>
               </div>
+              {/* Scanline light bar */}
+              <div className="healer-scanline-beam"></div>
             </div>
           </div>
         </div>

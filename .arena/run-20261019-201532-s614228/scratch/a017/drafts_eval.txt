@@ -1,0 +1,5 @@
+
+Draft 1: Multi-Viewport Pan-and-Zoom Canvas (Virtual Silicon Die Explorer). Focus on spatial canvas navigation like Figma/Miro with minimap. Strong on visual immersion, weak on direct comparison.
+Draft 2: Unified Command Deck with Responsive Collapsible Panes (Desktop Dock Layout). Focus on IDE/Bloomberg terminal docks. Strong on high information density, risk of feeling like a generic IDE.
+Draft 3: Master-Detail Spatial Proving Ground with Contextual Focus Modes (Stage Navigator + Executive Quick-Look Modal + Synchronized Proving Loop). Strongest: maintains uncluttered breathing room, features rich particle/reactor aesthetics, provides deep interactive parameters, and explicitly links Hopper GH100 hardware internals.
+Selected: Draft 3.

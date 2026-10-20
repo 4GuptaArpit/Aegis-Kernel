@@ -1,0 +1,6 @@
+# Complete Analysis of Requirements & Constraints:
+- Hard constraints:
+  - Format: markdown file at E:\HACKATHON\NEBIUS X NVIDIA\.arena\run-20261019-201532-s614228\r0\a019.md
+  - Exact reply line: DONE a019 <number of words>
+  - Must address all 5 explicit requirements & 4 evaluation criteria.
+  - No hand-wavy summaries: Provide concrete architectural design, layout specifications, component hierarchy, interactive state machine, design system tokens, CSS design, and complete file diffs/implementations.
