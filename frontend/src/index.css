@@ -2856,3 +2856,28 @@ body {
     gap: 8px;
   }
 }
+
+/* ==========================================================================
+   A11Y: WCAG AA / AAA PREFERS-REDUCED-MOTION CONTRACT
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .pulse-indicator,
+  .laser-beam,
+  .radar-sweep,
+  .radar-sweep-bar,
+  .matrix-scanner-bar,
+  .scanline-overlay,
+  .hbm-pulse-particle {
+    animation: none !important;
+    opacity: 0.8 !important;
+  }
+}

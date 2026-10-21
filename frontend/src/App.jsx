@@ -158,9 +158,13 @@ export default function App() {
 
       <div className="aegis-workbench-container" id="workbench-main">
         {/* Spatial Workbench Stage Navigation Bar */}
-        <div className="workbench-stage-nav-bar font-mono">
-          <div className="stage-nav-tabs">
+        <nav className="workbench-stage-nav-bar font-mono" aria-label="Proving Ground Stages">
+          <div className="stage-nav-tabs" role="tablist">
             <button 
+              role="tab"
+              aria-selected={activeWorkbenchTab === 'collider'}
+              aria-controls="panel-stage-1"
+              id="tab-stage-1"
               className={`stage-nav-btn ${activeWorkbenchTab === 'collider' ? 'active' : ''}`}
               onClick={() => { sound.playClick(); setActiveWorkbenchTab('collider'); }}
             >
@@ -171,6 +175,10 @@ export default function App() {
               </span>
             </button>
             <button 
+              role="tab"
+              aria-selected={activeWorkbenchTab === 'silicon'}
+              aria-controls="panel-stage-2"
+              id="tab-stage-2"
               className={`stage-nav-btn ${activeWorkbenchTab === 'silicon' ? 'active' : ''}`}
               onClick={() => { sound.playClick(); setActiveWorkbenchTab('silicon'); }}
             >
@@ -179,6 +187,10 @@ export default function App() {
               <span className="nav-tab-badge badge-tag-cyan">132 SMs · 4N</span>
             </button>
             <button 
+              role="tab"
+              aria-selected={activeWorkbenchTab === 'code'}
+              aria-controls="panel-stage-3"
+              id="tab-stage-3"
               className={`stage-nav-btn ${activeWorkbenchTab === 'code' ? 'active' : ''}`}
               onClick={() => { sound.playClick(); setActiveWorkbenchTab('code'); }}
             >
@@ -187,6 +199,10 @@ export default function App() {
               <span className="nav-tab-badge badge-tag-nvidia">@p0 PREDICATED</span>
             </button>
             <button 
+              role="tab"
+              aria-selected={activeWorkbenchTab === 'telemetry'}
+              aria-controls="panel-stage-4"
+              id="tab-stage-4"
               className={`stage-nav-btn ${activeWorkbenchTab === 'telemetry' ? 'active' : ''}`}
               onClick={() => { sound.playClick(); setActiveWorkbenchTab('telemetry'); }}
             >
@@ -197,18 +213,18 @@ export default function App() {
           </div>
 
           <div className="stage-nav-telemetry">
-            <span className="nav-telemetry-badge">
+            <span className="nav-telemetry-badge" role="status" aria-live="polite">
               <span className="pulse-indicator bg-nvidia inline-block mr-1"></span>
               {currentStage === 'IDLE' ? 'PROVING INSTRUMENT ARMED' : `STAGE: ${currentStage}`}
             </span>
           </div>
-        </div>
+        </nav>
 
         {/* Dynamic Spatial Workbench Content View */}
-        <div className="workbench-spacious-view">
+        <main className="workbench-spacious-view" role="region" aria-label="Workbench Stage Content">
           {/* TAB 1: RED VS BLUE COLLIDER & MIC-DROP DELTA */}
           {activeWorkbenchTab === 'collider' && (
-            <div className="tab-view-container tab-view-fade">
+            <section className="tab-view-container tab-view-fade" id="panel-stage-1" role="tabpanel" aria-labelledby="tab-stage-1">
               <RedBlueArena 
                 currentStage={currentStage}
                 isRunning={isRunning}
@@ -235,12 +251,12 @@ export default function App() {
                 logs={logs} 
                 onClear={handleClearLogs} 
               />
-            </div>
+            </section>
           )}
 
           {/* TAB 2: SILICON DIE & 32-WARP EXECUTION MATRIX */}
           {activeWorkbenchTab === 'silicon' && (
-            <div className="tab-view-container tab-view-fade">
+            <section className="tab-view-container tab-view-fade" id="panel-stage-2" role="tabpanel" aria-labelledby="tab-stage-2">
               <div className="spacious-two-col-grid">
                 <HopperDieTopology 
                   currentStage={currentStage} 
@@ -259,12 +275,12 @@ export default function App() {
                 metrics={metrics} 
                 selectedHardware={selectedHardware} 
               />
-            </div>
+            </section>
           )}
 
           {/* TAB 3: CODE DIFF & PTX DISASSEMBLY */}
           {activeWorkbenchTab === 'code' && (
-            <div className="tab-view-container tab-view-fade">
+            <section className="tab-view-container tab-view-fade" id="panel-stage-3" role="tabpanel" aria-labelledby="tab-stage-3">
               <CodeDiffInspector 
                 selectedFixture={selectedFixture} 
                 blueData={blueData} 
@@ -273,12 +289,12 @@ export default function App() {
                 logs={logs} 
                 onClear={handleClearLogs} 
               />
-            </div>
+            </section>
           )}
 
           {/* TAB 4: NSIGHT TELEMETRY & SILICON MEMORY WATERFALL */}
           {activeWorkbenchTab === 'telemetry' && (
-            <div className="tab-view-container tab-view-fade">
+            <section className="tab-view-container tab-view-fade" id="panel-stage-4" role="tabpanel" aria-labelledby="tab-stage-4">
               <NsightTelemetryHud 
                 metrics={metrics} 
                 selectedHardware={selectedHardware} 
@@ -295,9 +311,9 @@ export default function App() {
                   onOpenJudgesOverview={() => setIsModalOpen(true)}
                 />
               </div>
-            </div>
+            </section>
           )}
-        </div>
+        </main>
       </div>
 
       {/* Global Footer */}

@@ -35,12 +35,12 @@ export default function Header({
     <header className="aegis-header">
       {/* Brand & Identity */}
       <div className="header-brand-group">
-        <div className="brand-logo-gem">
+        <div className="brand-logo-gem" aria-hidden="true">
           <Shield size={18} className="text-nvidia" />
         </div>
         <div className="brand-title-wrap">
           <div className="brand-name-row">
-            <span className="brand-title">AEGIS // KERNEL</span>
+            <h1 className="brand-title text-base font-bold tracking-wider m-0 p-0">AEGIS // KERNEL</h1>
             <span className="hackathon-tag">NEBIUS × NVIDIA GLOBAL '26</span>
           </div>
           <span className="brand-sub">Autonomous Adversarial GPU Invariant & Kernel Proving Ground</span>
@@ -54,23 +54,30 @@ export default function Header({
           <button 
             className="hw-selector-trigger" 
             onClick={() => setHwDropdownOpen(!hwDropdownOpen)}
+            aria-haspopup="listbox"
+            aria-expanded={hwDropdownOpen}
+            aria-label="Target GPU Architecture Selector"
             title="Switch Target GPU Architecture"
           >
-            <Cpu size={14} className="text-nvidia" />
+            <Cpu size={14} className="text-nvidia" aria-hidden="true" />
             <div className="hw-info-text">
               <span className="hw-name">{currentHw.label}</span>
               <span className="hw-spec">{currentHw.spec}</span>
             </div>
-            <ChevronDown size={13} className={`hw-chevron ${hwDropdownOpen ? 'open' : ''}`} />
+            <ChevronDown size={13} className={`hw-chevron ${hwDropdownOpen ? 'open' : ''}`} aria-hidden="true" />
           </button>
 
           {hwDropdownOpen && (
-            <div className="hw-dropdown-menu">
+            <div className="hw-dropdown-menu" role="listbox" aria-label="Available GPU Architectures">
               {hardwareOptions.map((opt) => (
                 <div 
                   key={opt.id}
+                  role="option"
+                  aria-selected={opt.id === selectedHardware}
+                  tabIndex={0}
                   className={`hw-dropdown-item ${opt.id === selectedHardware ? 'selected' : ''}`}
                   onClick={() => handleSelectHw(opt.id)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSelectHw(opt.id); } }}
                 >
                   <div className="hw-item-title">{opt.label}</div>
                   <div className="hw-item-spec">{opt.spec}</div>
@@ -102,26 +109,29 @@ export default function Header({
         <button 
           className="audio-btn" 
           onClick={handleToggleSound}
+          aria-label={isMuted ? "Unmute Audio Synthesis" : "Mute Audio Synthesis"}
           title={isMuted ? "Unmute Audio Synthesis" : "Mute Audio Synthesis"}
         >
-          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-nvidia" />}
+          {isMuted ? <VolumeX size={15} aria-hidden="true" /> : <Volume2 size={15} className="text-nvidia" aria-hidden="true" />}
         </button>
 
         <button 
           className="btn-header-secondary"
           onClick={onOpenPitch}
+          aria-label="Open Hackathon Judges Presentation"
           title="Open Hackathon Judges Presentation"
         >
-          <Sparkles size={14} className="text-amber" />
+          <Sparkles size={14} className="text-amber" aria-hidden="true" />
           <span>Judges Pitch</span>
         </button>
 
         <button 
           className="btn-header-primary"
           onClick={onOpenPrModal}
+          aria-label="Export Verified Upstream Pull Request"
           title="Export Verified Upstream PR"
         >
-          <GitPullRequest size={14} />
+          <GitPullRequest size={14} aria-hidden="true" />
           <span>Export PR</span>
         </button>
       </div>
