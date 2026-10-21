@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pipeBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#040812"/>
+      <stop offset="100%" stop-color="#080E1A"/>
+    </linearGradient>
+    <filter id="boxGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1100" height="240" rx="12" fill="url(#pipeBg)" stroke="rgba(0, 255, 136, 0.2)" stroke-width="1.5"/>
+
+  <!-- Step 1: Tavily Oracle -->
+  <g transform="translate(30, 40)">
+    <rect width="180" height="155" rx="8" fill="rgba(0, 240, 255, 0.05)" stroke="rgba(0, 240, 255, 0.3)" stroke-width="1"/>
+    <rect x="12" y="12" width="28" height="20" rx="4" fill="rgba(0, 240, 255, 0.2)"/>
+    <text x="26" y="26" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#00F0FF" text-anchor="middle">01</text>
+    <text x="48" y="27" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF">TAVILY ORACLE</text>
+    <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" fill="#94A3B8">Hardware Intel</text>
+    <text x="14" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748B">• SM_90a/100 specs</text>
+    <text x="14" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748B">• 128-bit vector alignment</text>
+    <text x="14" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748B">• PTX ISA advisories</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 220 115 L 245 115" stroke="#00FF88" stroke-width="2" marker-end="url(#arrow)"/>
+  <polygon points="245,110 255,115 245,120" fill="#00FF88"/>
+
+  <!-- Step 2: Red Adversary -->
+  <g transform="translate(265, 40)">
+    <rect width="180" height="155" rx="8" fill="rgba(255, 0, 85, 0.06)" stroke="rgba(255, 0, 85, 0.35)" stroke-width="1"/>
+    <rect x="12" y="12" width="28" height="20" rx="4" fill="rgba(255, 0, 85, 0.25)"/>
+    <text x="26" y="26" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#FF0055" text-anchor="middle">02</text>
+    <text x="48" y="27" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF">RED ADVERSARY</text>
+    <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" fill="#94A3B8">Nemotron 3 Ultra</text>
+    <text x="14" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FF8099">• Ragged seq fuzzing</text>
+    <text x="14" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FF8099">• Unaligned strides</text>
+    <text x="14" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FF8099">• Extreme logit drift</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <polygon points="455,110 465,115 455,120" fill="#FF0055"/>
+
+  <!-- Step 3: Nebius Sandbox Crash -->
+  <g transform="translate(475, 40)">
+    <rect width="180" height="155" rx="8" fill="rgba(255, 184, 0, 0.06)" stroke="rgba(255, 184, 0, 0.35)" stroke-width="1"/>
+    <rect x="12" y="12" width="28" height="20" rx="4" fill="rgba(255, 184, 0, 0.25)"/>
+    <text x="26" y="26" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#FFB800" text-anchor="middle">03</text>
+    <text x="48" y="27" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF">NEBIUS SANDBOX</text>
+    <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" fill="#94A3B8">Deterministic Crash</text>
+    <text x="14" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFD166">• Exit Code 139 (SIGSEGV)</text>
+    <text x="14" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFD166">• Bus Memory Panic</text>
+    <text x="14" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFD166">• Empirical Proof of Fault</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <polygon points="665,110 675,115 665,120" fill="#00FF88"/>
+
+  <!-- Step 4: Nemotron Blue -->
+  <g transform="translate(685, 40)">
+    <rect width="180" height="155" rx="8" fill="rgba(0, 255, 136, 0.06)" stroke="rgba(0, 255, 136, 0.35)" stroke-width="1"/>
+    <rect x="12" y="12" width="28" height="20" rx="4" fill="rgba(0, 255, 136, 0.25)"/>
+    <text x="26" y="26" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#00FF88" text-anchor="middle">04</text>
+    <text x="48" y="27" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF">NEMOTRON BLUE</text>
+    <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" fill="#94A3B8">Kernel Synthesis</text>
+    <text x="14" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#80FFBF">• @p0 Predicated Masking</text>
+    <text x="14" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#80FFBF">• SRAM Tiling in Triton</text>
+    <text x="14" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="#80FFBF">• 0-penalty tail clamps</text>
+  </g>
+
+  <!-- Arrow 4 -->
+  <polygon points="875,110 885,115 875,120" fill="#00FF88"/>
+
+  <!-- Step 5: Dual Invariant Attestation -->
+  <g transform="translate(895, 40)">
+    <rect width="175" height="155" rx="8" fill="rgba(0, 255, 136, 0.12)" stroke="#00FF88" stroke-width="1.5" filter="url(#boxGlow)"/>
+    <rect x="12" y="12" width="28" height="20" rx="4" fill="rgba(0, 255, 136, 0.3)"/>
+    <text x="26" y="26" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#00FF88" text-anchor="middle">05</text>
+    <text x="48" y="27" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF">DUAL ATTESTATION</text>
+    <text x="14" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" fill="#00FF88">100% Validated</text>
+    <text x="14" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFFFFF">• 500/500 Differential</text>
+    <text x="14" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFFFFF">• 2.35x Peak Speedup</text>
+    <text x="14" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00FF88">SHA-256 Attestation PR</text>
+  </g>
+</svg>
