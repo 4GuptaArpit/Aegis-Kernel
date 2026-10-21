@@ -1,27 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Flame, Shield, Zap, AlertOctagon, CheckCircle2, ArrowRight, Activity, Terminal, Sparkles, Orbit } from 'lucide-react';
+import React from 'react';
+import { Flame, Shield, Zap, AlertOctagon, CheckCircle2, ArrowRight, Activity, Terminal } from 'lucide-react';
 
 export default function RedBlueArena({ currentStage, isRunning, selectedFixture, metrics, redData, blueData }) {
   const isRedActive = currentStage === 'RED_ATTACK' || currentStage === 'SANDBOX_FAIL';
   const isBlueActive = currentStage === 'BLUE_SYNTHESIS' || currentStage === 'VERIFYING';
   const isComplete = currentStage === 'COMPLETE';
-
-  // Live particle streams generator
-  const [particles, setParticles] = useState([]);
-  
-  useEffect(() => {
-    if (isRunning) {
-      const interval = setInterval(() => {
-        setParticles(prev => [
-          ...prev.slice(-18),
-          { id: Math.random(), side: isRedActive ? 'red' : 'blue', x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 }
-        ]);
-      }, 250);
-      return () => clearInterval(interval);
-    } else {
-      setParticles([]);
-    }
-  }, [isRunning, isRedActive]);
 
   return (
     <div className={`cyber-arena-card ${isRunning ? 'arena-in-proving' : ''}`}>
