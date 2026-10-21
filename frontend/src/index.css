@@ -511,6 +511,7 @@ body {
 
 .slider-track-wrap {
   width: 100%;
+  touch-action: none;
 }
 
 .exec-hardware-slider {
@@ -521,6 +522,7 @@ body {
   border-radius: 3px;
   outline: none;
   cursor: pointer;
+  touch-action: none;
 }
 
 .exec-hardware-slider::-webkit-slider-thumb {
@@ -2761,8 +2763,54 @@ body {
 }
 
 @media (max-width: 860px) {
+  .exec-top-strip {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .exec-brand-sub {
+    display: none;
+  }
+  .exec-hw-dropdown-container {
+    width: 100%;
+  }
+  .exec-hw-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .exec-action-strip {
+    width: 100%;
+    justify-content: space-between;
+  }
   .exec-control-ribbon {
     grid-template-columns: 1fr;
+    padding: 8px 14px;
+    gap: 10px;
+  }
+  .ribbon-slider-section {
+    width: 100%;
+  }
+  .ribbon-stepper-section {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px;
+  }
+  .workbench-stage-nav-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px;
+  }
+  .stage-nav-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .stage-nav-btn {
+    flex: 1 1 calc(50% - 6px);
+    justify-content: center;
+  }
+  .stage-nav-telemetry {
+    text-align: center;
   }
   .diff-panes-split {
     grid-template-columns: 1fr;
@@ -2778,5 +2826,13 @@ body {
   }
   .warp-threads-matrix {
     grid-template-columns: repeat(8, 1fr);
+  }
+  .spacious-two-col,
+  .spacious-two-col-grid {
+    grid-template-columns: 1fr;
+  }
+  .hbm-highway-container {
+    flex-direction: column;
+    gap: 8px;
   }
 }
