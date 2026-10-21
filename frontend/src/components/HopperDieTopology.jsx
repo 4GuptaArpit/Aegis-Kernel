@@ -32,6 +32,10 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
         </div>
 
         <div className="die-status-pills font-mono">
+          <span className="die-pill pill-interactive-prompt">
+            <span className="pulse-dot bg-nvidia"></span>
+            CLICK ANY SM TO DRILL DOWN
+          </span>
           {isFaultStage && (
             <span className="die-pill pill-fault animate-pulse">
               <span className="pulse-dot bg-coral"></span>

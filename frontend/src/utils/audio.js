@@ -2,7 +2,7 @@
 class SoundEngine {
   constructor() {
     this.ctx = null;
-    this.muted = false;
+    this.muted = typeof window !== 'undefined' ? localStorage.getItem('aegis_sound_muted') === 'true' : false;
   }
 
   init() {
@@ -19,6 +19,9 @@ class SoundEngine {
 
   toggleMute() {
     this.muted = !this.muted;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('aegis_sound_muted', this.muted ? 'true' : 'false');
+    }
     return this.muted;
   }
 
