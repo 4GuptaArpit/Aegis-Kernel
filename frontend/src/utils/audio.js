@@ -71,8 +71,16 @@ class SoundEngine {
     } catch (_) {}
   }
 
+  playLaunch() {
+    this.playEngage();
+  }
+
   // Emerald crystalline chime on 100% Invariant verification
   playVictory() {
+    this.playSuccess();
+  }
+
+  playSuccess() {
     if (this.muted) return;
     try {
       this.init();
@@ -101,6 +109,10 @@ class SoundEngine {
   }
 
   // Subtle alert drone on Red sandbox crash (Exit 139)
+  playAlert() {
+    this.playCrashAlert();
+  }
+
   playCrashAlert() {
     if (this.muted) return;
     try {
