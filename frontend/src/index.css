@@ -53,13 +53,33 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(255, 0, 85, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(0, 240, 255, 0.06) 0%, transparent 50%),
-    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(255, 0, 85, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+    linear-gradient(rgba(0, 255, 136, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.07) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Accessibility Skip Link */
+.skip-nav-link {
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  background: var(--accent-nvidia);
+  color: var(--accent-obsidian);
+  font-weight: 800;
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+  text-decoration: none;
+}
+
+.skip-nav-link:focus {
+  top: 12px;
 }
 
 /* Custom Quantum Scrollbar */

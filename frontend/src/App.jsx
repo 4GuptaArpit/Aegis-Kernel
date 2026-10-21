@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExecutiveCommandBar from './components/ExecutiveCommandBar';
 import RedBlueArena from './components/RedBlueArena';
 import HopperDieTopology from './components/HopperDieTopology';
@@ -30,6 +30,33 @@ export default function App() {
   const [attestation, setAttestation] = useState('0x7f56b9fe02089399');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeWorkbenchTab, setActiveWorkbenchTab] = useState('collider'); // 'collider', 'silicon', 'code', 'telemetry'
+
+  // Global Keyboard Shortcuts (1-4 for stages, Space for Proving Ground, M for Mute)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Don't intercept if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.key === '1') {
+        sound.playClick();
+        setActiveWorkbenchTab('collider');
+      } else if (e.key === '2') {
+        sound.playClick();
+        setActiveWorkbenchTab('silicon');
+      } else if (e.key === '3') {
+        sound.playClick();
+        setActiveWorkbenchTab('code');
+      } else if (e.key === '4') {
+        sound.playClick();
+        setActiveWorkbenchTab('telemetry');
+      } else if (e.key === ' ' && !isRunning) {
+        e.preventDefault();
+        handleLaunchProvingGround();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isRunning, selectedFixture, selectedHardware]);
 
   const addLog = (text, type = 'info') => {
     const timestamp = new Date().toLocaleTimeString();
@@ -129,7 +156,7 @@ export default function App() {
         onOpenPrModal={() => setIsModalOpen(true)}
       />
 
-      <div className="aegis-workbench-container">
+      <div className="aegis-workbench-container" id="workbench-main">
         {/* Spatial Workbench Stage Navigation Bar */}
         <div className="workbench-stage-nav-bar font-mono">
           <div className="stage-nav-tabs">

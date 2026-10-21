@@ -92,8 +92,16 @@ export default function WarpVisualizer({ selectedFixture, isRunning, currentStag
           return (
             <div
               key={i}
+              tabIndex={0}
+              role="button"
+              aria-label={`Thread Lane ${i}: ${isValid ? 'Valid' : (isFaulty ? 'OOB Fault' : 'Predicated')}`}
               className={cellClass}
               onClick={() => handleSelectLane(i)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowRight' && i < 31) handleSelectLane(i + 1);
+                else if (e.key === 'ArrowLeft' && i > 0) handleSelectLane(i - 1);
+                else if (e.key === 'Enter' || e.key === ' ') handleSelectLane(i);
+              }}
               title={`Thread Lane ${i}: ${isValid ? 'Active Valid Load' : (isFaulty ? 'Out-of-Bounds Memory Violation' : 'Hardware Predicated Masked')}`}
             >
               <span className="lane-index">T{i}</span>
