@@ -40,10 +40,12 @@ export default function Header({
         </div>
         <div className="brand-title-wrap">
           <div className="brand-name-row">
-            <h1 className="brand-title text-base font-bold tracking-wider m-0 p-0">AEGIS // KERNEL</h1>
-            <span className="hackathon-tag">NEBIUS × NVIDIA GLOBAL '26</span>
+            <h1 className="brand-title text-base font-bold tracking-wider m-0 p-0">AEGIS-KERNEL</h1>
           </div>
-          <span className="brand-sub">Autonomous Adversarial GPU Invariant & Kernel Proving Ground</span>
+          <div className="flex items-center gap-2 mt-0.5">
+            <span className="hackathon-tag">NEBIUS × NVIDIA GLOBAL '26</span>
+            <span className="brand-sub">· Autonomous GPU Invariant Proving Ground</span>
+          </div>
         </div>
       </div>
 

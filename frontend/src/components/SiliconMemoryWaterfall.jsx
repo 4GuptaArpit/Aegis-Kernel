@@ -66,9 +66,9 @@ export default function SiliconMemoryWaterfall({ metrics, selectedHardware }) {
             <span className="waterfall-sub">Interactive Dataflow Locality & Latency Journey to Tensor Core ALUs</span>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="waterfall-cta-group">
           <span className="badge-nvidia-sm">SM_90a Architecture</span>
-          <span className="badge-interactive-hint font-mono text-xs text-azure">Click Tier to Inspect</span>
+          <span className="badge-interactive-hint">Click Tier to Inspect</span>
         </div>
       </div>
 
@@ -96,13 +96,13 @@ export default function SiliconMemoryWaterfall({ metrics, selectedHardware }) {
                 onClick={() => setSelectedTier(idx)}
               >
                 <div className="tier-top-row">
-                  <div className="flex items-center gap-2">
-                    <span className="tier-name font-bold text-primary">{tier.name}</span>
-                    <span className="tier-hint-badge font-mono text-xs">{tier.highlightHint}</span>
+                  <div className="tier-title-cluster">
+                    <span className="tier-name">{tier.name}</span>
+                    <span className="tier-hint-badge">{tier.highlightHint}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="tier-specs font-mono text-xs text-azure">{tier.specs}</span>
-                    <span className={`tier-status-pill pill-${tier.accentColor} font-mono text-xs`}>{tier.status}</span>
+                  <div className="tier-telemetry-cluster">
+                    <span className="tier-specs">{tier.specs}</span>
+                    <span className={`tier-status-pill pill-${tier.accentColor}`}>{tier.status}</span>
                   </div>
                 </div>
 

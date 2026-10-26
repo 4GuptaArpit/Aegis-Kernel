@@ -11,6 +11,7 @@ import MicDropDelta from './components/MicDropDelta';
 import VerificationImpact from './components/VerificationImpact';
 import Footer from './components/Footer';
 import AttestationModal from './components/AttestationModal';
+import JudgesPitchModal from './components/JudgesPitchModal';
 import { sound } from './utils/audio';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
   const [metrics, setMetrics] = useState(null);
   const [attestation, setAttestation] = useState('0x7f56b9fe02089399');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPitchOpen, setIsPitchOpen] = useState(false);
   const [activeWorkbenchTab, setActiveWorkbenchTab] = useState('collider'); // 'collider', 'silicon', 'code', 'telemetry'
 
   // Global Keyboard Shortcuts (1-4 for stages, Space for Proving Ground, M for Mute)
@@ -152,7 +154,7 @@ export default function App() {
           setSeqLen(val);
           addLog(`[SLIDER] Dynamic sequence length set to ${val} tokens`, 'info');
         }}
-        onOpenPitch={() => setIsModalOpen(true)}
+        onOpenPitch={() => setIsPitchOpen(true)}
         onOpenPrModal={() => setIsModalOpen(true)}
       />
 
@@ -211,13 +213,6 @@ export default function App() {
               <span className="nav-tab-badge badge-tag-gold">418.5 TFLOPS</span>
             </button>
           </div>
-
-          <div className="stage-nav-telemetry">
-            <span className="nav-telemetry-badge" role="status" aria-live="polite">
-              <span className="pulse-indicator bg-nvidia inline-block mr-1"></span>
-              {currentStage === 'IDLE' ? 'PROVING INSTRUMENT ARMED' : `STAGE: ${currentStage}`}
-            </span>
-          </div>
         </nav>
 
         {/* Dynamic Spatial Workbench Content View */}
@@ -243,7 +238,7 @@ export default function App() {
                   metrics={metrics} 
                   selectedFixture={selectedFixture}
                   onOpenPrModal={() => setIsModalOpen(true)}
-                  onOpenJudgesOverview={() => setIsModalOpen(true)}
+                  onOpenJudgesOverview={() => setIsPitchOpen(true)}
                 />
               </div>
 
@@ -308,7 +303,7 @@ export default function App() {
                   metrics={metrics} 
                   selectedFixture={selectedFixture}
                   onOpenPrModal={() => setIsModalOpen(true)}
-                  onOpenJudgesOverview={() => setIsModalOpen(true)}
+                  onOpenJudgesOverview={() => setIsPitchOpen(true)}
                 />
               </div>
             </section>
@@ -326,6 +321,13 @@ export default function App() {
         fixtureId={selectedFixture}
         hardwareTarget={selectedHardware}
         attestationHash={attestation}
+      />
+
+      {/* Judges Pitch & Executive Bento Modal */}
+      <JudgesPitchModal 
+        isOpen={isPitchOpen}
+        onClose={() => setIsPitchOpen(false)}
+        onLaunchDemo={handleLaunchProvingGround}
       />
     </div>
   );

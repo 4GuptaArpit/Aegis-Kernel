@@ -73,32 +73,34 @@ export default function ExecutiveCommandBar({
 
   return (
     <header className="exec-cockpit-header">
-      {/* Top Strip: Brand, Workload Tabs, Actions */}
+      {/* ROW 1: TOP GLOBAL HEADER */}
       <div className="exec-top-strip">
-        {/* Brand Lockup */}
+        {/* Brand Identity */}
         <div className="exec-brand-lockup">
           <div className="exec-brand-shield">
             <Shield size={18} className="text-nvidia" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="exec-brand-title">AEGIS // KERNEL</span>
-              <span className="exec-brand-badge font-mono">NEBIUS × NVIDIA GLOBAL '26</span>
-            </div>
-            <span className="exec-brand-sub">Autonomous GPU Invariant & Kernel Proving Workbench</span>
+          <div className="flex items-center gap-2">
+            <h1 className="exec-brand-title">AEGIS-KERNEL</h1>
+            <span className="exec-brand-badge font-mono">NEBIUS × NVIDIA GLOBAL '26</span>
           </div>
         </div>
 
-        {/* Center: Hardware Target Selector */}
+        {/* Center: Target GPU Hardware */}
         <div className="exec-hw-dropdown-container">
           <button 
             className="exec-hw-btn font-mono"
             onClick={() => setHwDropdownOpen(!hwDropdownOpen)}
+            title="Switch GPU Architecture"
           >
-            <Cpu size={14} className="text-nvidia" />
-            <span className="text-primary font-bold">{currentHw.label}</span>
-            <span className="text-azure text-xs">({currentHw.spec})</span>
-            <ChevronDown size={13} className={`chevron-icon ${hwDropdownOpen ? 'open' : ''}`} />
+            <Cpu size={14} className="text-nvidia flex-shrink-0" />
+            <div className="exec-hw-text-col">
+              <span className="text-primary font-bold">{currentHw.label}</span>
+              <span className="text-azure text-xs">({currentHw.spec})</span>
+            </div>
+            <div className="exec-hw-chevron-box">
+              <ChevronDown size={14} className={`chevron-icon ${hwDropdownOpen ? 'open' : ''}`} />
+            </div>
           </button>
 
           {hwDropdownOpen && (
@@ -117,29 +119,7 @@ export default function ExecutiveCommandBar({
           )}
         </div>
 
-        {/* Operator Switcher Tabs */}
-        <div className="exec-workload-tabs font-mono">
-          {workloads.map((wl) => {
-            const isActive = selectedFixture === wl.id;
-            return (
-              <button
-                key={wl.id}
-                className={`exec-tab-btn ${isActive ? 'active' : ''}`}
-                onClick={() => handleSelectWl(wl.id)}
-                disabled={isRunning}
-              >
-                <div className="flex items-center gap-1.5">
-                  <span className={`tab-dot ${isActive ? 'dot-active' : ''}`}></span>
-                  <span className="tab-name">{wl.name}</span>
-                  <span className="tab-speedup text-nvidia font-bold">{wl.speedup}</span>
-                </div>
-                <div className="tab-fault-sub text-tertiary">{wl.fault}</div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Right Action Buttons */}
+        {/* Global Utilities */}
         <div className="exec-action-strip">
           <button className="exec-icon-btn" onClick={handleToggleSound} title="Toggle Audio">
             {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} className="text-nvidia" />}
@@ -154,8 +134,38 @@ export default function ExecutiveCommandBar({
             <GitPullRequest size={13} className="text-azure inline mr-1" />
             Export PR
           </button>
+        </div>
+      </div>
 
-          {/* Master Run Button */}
+      {/* ROW 2: WORKLOAD SELECTION & RUN TRIGGER BAR */}
+      <div className="exec-workbench-action-bar">
+        {/* Left: Workload Tabs */}
+        <div className="exec-workload-cluster">
+          <span className="exec-bar-section-title font-mono text-tertiary text-xs">TARGET KERNEL:</span>
+          <div className="exec-workload-tabs font-mono">
+            {workloads.map((wl) => {
+              const isActive = selectedFixture === wl.id;
+              return (
+                <button
+                  key={wl.id}
+                  className={`exec-tab-btn ${isActive ? 'active' : ''}`}
+                  onClick={() => handleSelectWl(wl.id)}
+                  disabled={isRunning}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className={`tab-dot ${isActive ? 'dot-active' : ''}`}></span>
+                    <span className="tab-name">{wl.name}</span>
+                    <span className="tab-speedup text-nvidia font-bold">{wl.speedup}</span>
+                  </div>
+                  <div className="tab-fault-sub text-tertiary">{wl.fault}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right: Master Proving Ground Run Button */}
+        <div className="exec-run-cta-wrap">
           <button 
             className={`exec-run-cta ${isRunning ? 'running' : ''}`}
             onClick={onRun}
@@ -163,12 +173,12 @@ export default function ExecutiveCommandBar({
           >
             {isRunning ? (
               <>
-                <Loader2 size={15} className="animate-spin text-white" />
+                <Loader2 size={16} className="animate-spin text-white" />
                 <span>PROVING ({progress}%)...</span>
               </>
             ) : (
               <>
-                <Play size={15} className="fill-current text-obsidian" />
+                <Play size={16} className="fill-current text-obsidian" />
                 <span>RUN PROVING GROUND</span>
               </>
             )}
@@ -176,23 +186,23 @@ export default function ExecutiveCommandBar({
         </div>
       </div>
 
-      {/* Bottom Strip: Integrated Tensor Stress Slider + 5-Stage Laser Stepper */}
+      {/* ROW 3: Integrated Tensor Stress Slider + 5-Stage Laser Stepper */}
       <div className="exec-control-ribbon font-mono">
         {/* Left: Sequence Length Slider Control */}
         <div className="ribbon-slider-section">
           <div className="slider-meta-row">
-            <span className="text-tertiary text-xs">DYNAMIC SEQUENCE LENGTH:</span>
-            <span className="text-primary font-bold text-xs">{seqLen} TOKENS</span>
-            <span className={`badge-boundary-alert ${isRagged ? 'alert-ragged' : 'alert-clean'}`}>
+            <span className="slider-title-label text-tertiary text-xs whitespace-nowrap">DYNAMIC SEQUENCE LENGTH:</span>
+            <span className="slider-value-tokens text-primary font-bold text-xs whitespace-nowrap font-mono">{seqLen} TOKENS</span>
+            <span className={`badge-boundary-alert ${isRagged ? 'alert-ragged' : 'alert-clean'} whitespace-nowrap`}>
               {isRagged ? (
                 <>
                   <AlertTriangle size={11} className="inline mr-1 text-coral" />
-                  RAGGED BOUNDARY (Tail: {tailThreads}/32 Lanes Trapped)
+                  RAGGED BOUNDARY (Tail: {tailThreads}/32 Lanes)
                 </>
               ) : (
                 <>
                   <ShieldCheck size={11} className="inline mr-1 text-nvidia" />
-                  WARP ALIGNED (128-bit Coalesced)
+                  WARP ALIGNED (128-bit Clean)
                 </>
               )}
             </span>
@@ -207,7 +217,18 @@ export default function ExecutiveCommandBar({
               value={seqLen} 
               onChange={(e) => onSeqLenChange(parseInt(e.target.value, 10))}
               className="exec-hardware-slider"
+              aria-label="Dynamic Sequence Length Slider"
             />
+          </div>
+
+          <div className="slider-explanation-bar text-2xs text-secondary flex items-center justify-between">
+            <span className="text-azure flex items-center gap-1">
+              <span className="pulse-indicator bg-azure inline-block"></span>
+              <span><strong>Hardware SIMT Invariant:</strong> GPU warps process tensors in 32-thread chunks.</span>
+            </span>
+            <span className="text-tertiary">
+              Drag slider to inject unaligned ragged tokens & stress test boundary predication in real-time
+            </span>
           </div>
         </div>
 

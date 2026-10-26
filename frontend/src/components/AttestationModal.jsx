@@ -45,20 +45,66 @@ export default function AttestationModal({
       ? (prData ? `${prData.title}\n\n${prData.body}` : '') 
       : (attestationData ? JSON.stringify(attestationData, null, 2) : '');
     
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (!textToCopy) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch(() => fallbackCopy(textToCopy));
+    } else {
+      fallbackCopy(textToCopy);
+    }
   };
 
-  const handleDownloadJson = () => {
+  const fallbackCopy = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Fallback copy failed', e);
+    }
+    document.body.removeChild(textArea);
+  };
+
+  const handleDownload = () => {
     sound.playClick();
-    if (!attestationData) return;
-    const blob = new Blob([JSON.stringify(attestationData, null, 2)], { type: 'application/json' });
+    let content = '';
+    let filename = '';
+    let mimeType = '';
+
+    if (activeTab === 'pr') {
+      if (!prData) return;
+      content = `# ${prData.title}\n\n${prData.body}\n\n## Synthesized Triton Kernel Patch\n\`\`\`python\n${prData.patch_code || ''}\n\`\`\``;
+      filename = `PULL_REQUEST_${fixtureId.toUpperCase()}.md`;
+      mimeType = 'text/markdown';
+    } else {
+      if (!attestationData) return;
+      content = JSON.stringify(attestationData, null, 2);
+      filename = `aegis_kernel_attestation_${fixtureId}.audit.json`;
+      mimeType = 'application/json';
+    }
+
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `aegis_kernel_attestation_${fixtureId}.audit.json`;
+    a.download = filename;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
@@ -146,14 +192,14 @@ export default function AttestationModal({
 
         {/* Modal Footer */}
         <div className="modal-actions-footer">
-          <button className="btn-modal-action btn-action-copy" onClick={handleDownloadJson}>
+          <button className="btn-modal-action btn-action-copy" onClick={handleDownload} title={activeTab === 'pr' ? "Download PR Markdown" : "Download JSON Certificate"}>
             <Download size={13} />
-            <span>Download .audit.json</span>
+            <span>{activeTab === 'pr' ? 'Download PullRequest.md' : 'Download .audit.json'}</span>
           </button>
 
-          <button className="btn-modal-action btn-action-download" onClick={handleCopy}>
+          <button className="btn-modal-action btn-action-download" onClick={handleCopy} title="Copy Content to Clipboard">
             {copied ? <Check size={13} /> : <Copy size={13} />}
-            <span>{copied ? 'Copied to Clipboard!' : 'Copy to Clipboard'}</span>
+            <span>{copied ? 'Copied to Clipboard!' : (activeTab === 'pr' ? 'Copy PR Markdown' : 'Copy Certificate JSON')}</span>
           </button>
         </div>
       </div>
