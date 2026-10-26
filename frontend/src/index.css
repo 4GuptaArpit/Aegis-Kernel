@@ -381,14 +381,16 @@ body {
 
 .exec-hw-menu {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
-  width: 260px;
-  background: #060B16;
+  min-width: 100%;
+  width: max-content;
+  max-width: 380px;
+  background: #040814;
   border: 1px solid var(--border-medium);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 6px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 136, 0.15);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 24px rgba(0, 255, 136, 0.15);
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -396,18 +398,35 @@ body {
 }
 
 .exec-hw-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
 }
 
 .exec-hw-menu-item:hover {
   background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.2);
 }
 
 .exec-hw-menu-item.selected {
-  background: rgba(0, 255, 136, 0.15);
-  border: 1px solid rgba(0, 255, 136, 0.35);
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.35);
+}
+
+.exec-hw-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exec-hw-item-spec {
+  white-space: nowrap;
 }
 
 /* Operator Tabs */

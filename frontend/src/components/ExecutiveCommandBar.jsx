@@ -104,17 +104,25 @@ export default function ExecutiveCommandBar({
           </button>
 
           {hwDropdownOpen && (
-            <div className="exec-hw-menu">
-              {hardwareOptions.map((opt) => (
-                <div 
-                  key={opt.id}
-                  className={`exec-hw-menu-item ${opt.id === selectedHardware ? 'selected' : ''}`}
-                  onClick={() => handleSelectHw(opt.id)}
-                >
-                  <div className="font-bold text-xs text-primary">{opt.label}</div>
-                  <div className="font-mono text-tertiary text-xs">{opt.spec}</div>
-                </div>
-              ))}
+            <div className="exec-hw-menu font-mono">
+              {hardwareOptions.map((opt) => {
+                const isSelected = opt.id === selectedHardware;
+                return (
+                  <div 
+                    key={opt.id}
+                    className={`exec-hw-menu-item ${isSelected ? 'selected' : ''}`}
+                    onClick={() => handleSelectHw(opt.id)}
+                  >
+                    <div className="exec-hw-item-content">
+                      <div className="font-bold text-xs text-primary">{opt.label}</div>
+                      <div className="exec-hw-item-spec text-tertiary text-xs">{opt.spec}</div>
+                    </div>
+                    {isSelected && (
+                      <CheckCircle2 size={15} className="text-nvidia flex-shrink-0" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
