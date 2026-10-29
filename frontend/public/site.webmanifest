@@ -1,0 +1,17 @@
+{
+  "name": "Aegis-Kernel: Autonomous GPU Invariant Proving Ground",
+  "short_name": "Aegis-Kernel",
+  "description": "Autonomous Adversarial GPU Invariant & Triton Kernel Proving Workbench for Nebius Cloud and NVIDIA Hopper/Blackwell.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03060D",
+  "theme_color": "#00FF88",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

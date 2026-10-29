@@ -277,54 +277,70 @@ body {
 }
 
 .exec-brand-shield {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(0, 255, 136, 0.12);
-  border: 1px solid var(--accent-nvidia);
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.16) 0%, rgba(0, 240, 255, 0.08) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 16px rgba(0, 255, 136, 0.35);
+  box-shadow: 0 0 18px rgba(0, 255, 136, 0.35), inset 0 0 10px rgba(0, 255, 136, 0.15);
   flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.exec-brand-shield:hover {
+  border-color: var(--accent-nvidia);
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.55), inset 0 0 14px rgba(0, 255, 136, 0.25);
+  transform: translateY(-1px);
+}
+
+.exec-brand-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exec-brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .exec-brand-title {
   font-size: 16px;
   font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  text-shadow: 0 0 14px rgba(0, 255, 136, 0.35), 0 0 28px rgba(0, 255, 136, 0.15);
   white-space: nowrap;
-  line-height: 1.2;
-}
-
-.exec-brand-sub-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
 }
 
 .exec-brand-badge {
   font-size: 9px;
   font-weight: 800;
-  background: rgba(0, 255, 136, 0.12);
-  color: var(--accent-nvidia);
-  border: 1px solid rgba(0, 255, 136, 0.35);
-  padding: 1.5px 6px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.16) 0%, rgba(130, 80, 255, 0.12) 100%);
+  color: #00F0FF;
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  padding: 2px 7px;
   border-radius: 4px;
-  letter-spacing: 0.4px;
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+  letter-spacing: 0.6px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;
 }
 
 .exec-brand-sub {
-  font-size: 10.5px;
-  color: var(--text-secondary);
-  display: inline-block;
+  font-size: 9.5px;
+  color: #798da3;
+  letter-spacing: 0.3px;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 /* Hardware Dropdown */

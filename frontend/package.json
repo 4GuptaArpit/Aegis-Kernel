@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "aegis-kernel-workbench",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Autonomous Adversarial GPU Invariant & Triton Kernel Proving Ground (Nebius x NVIDIA Global AI Hackathon)",
   "type": "module",
   "scripts": {
     "dev": "vite",

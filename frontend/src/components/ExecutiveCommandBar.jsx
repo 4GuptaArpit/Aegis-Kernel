@@ -78,11 +78,14 @@ export default function ExecutiveCommandBar({
         {/* Brand Identity */}
         <div className="exec-brand-lockup">
           <div className="exec-brand-shield">
-            <Shield size={18} className="text-nvidia" />
+            <Shield size={19} className="text-nvidia" />
           </div>
-          <div className="flex items-center gap-2">
-            <h1 className="exec-brand-title">AEGIS-KERNEL</h1>
-            <span className="exec-brand-badge font-mono">NEBIUS × NVIDIA GLOBAL '26</span>
+          <div className="exec-brand-text-col">
+            <div className="exec-brand-title-row">
+              <h1 className="exec-brand-title">AEGIS-KERNEL</h1>
+              <span className="exec-brand-badge font-mono">NEBIUS × NVIDIA GLOBAL '26</span>
+            </div>
+            <span className="exec-brand-sub font-mono">Autonomous GPU Invariant & Kernel Proving Ground</span>
           </div>
         </div>
 
