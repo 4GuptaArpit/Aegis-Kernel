@@ -89,7 +89,7 @@ class Orchestrator:
             "message": "Red Agent (Nemotron 3 Ultra) synthesizing pathological boundary stress harness...",
             "run_id": run_id
         })
-        red_attack = red_agent.synthesize_attack(fixture_id)
+        red_attack = await red_agent.synthesize_attack_async(fixture_id)
         await asyncio.sleep(0.5)
 
         # Stage 3: Sandbox Red Execution (Crash / Failure)
@@ -109,7 +109,7 @@ class Orchestrator:
             "message": f"Blue Agent (Nemotron Ultra & Nano) synthesizing boundary-masked Triton kernel for {hardware_target}...",
             "run_id": run_id
         })
-        blue_patch = blue_agent.synthesize_patch(fixture_id, hardware_target)
+        blue_patch = await blue_agent.synthesize_patch_async(fixture_id, hardware_target)
         yield json.dumps({
             "stage": "BLUE_SYNTHESIS_COMPLETE",
             "progress": 85,

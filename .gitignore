@@ -35,6 +35,3 @@ backend/aegis_kernel.db
 Thumbs.db
 .vscode/
 .idea/
-
-# Internal audit reports
-BRUTAL_AUDIT_REPORT.md

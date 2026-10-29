@@ -2,9 +2,33 @@ import React, { useState } from 'react';
 import { Cpu, AlertTriangle, ShieldCheck, Zap, Database, Layers } from 'lucide-react';
 import { sound } from '../utils/audio';
 
-export default function HopperDieTopology({ currentStage, isRunning, onSelectSm, selectedSm }) {
+export default function HopperDieTopology({ currentStage, isRunning, onSelectSm, selectedSm, selectedFixture = 'swiglu' }) {
   const TOTAL_SMS = 132;
-  const FAULTING_SM = 14;
+
+  // Workload-specific faulting SM and microarchitectural hazard taxonomy
+  const FAULT_CONFIGS = {
+    swiglu: {
+      sm: 14,
+      trapLabel: 'CRITICAL: SM 14 MMU PAGE TRAP',
+      legend: 'SM 14 OOB Trap',
+      faultTitle: 'Bus Fault - SIGSEGV 139 (Unaligned Tensor Load)'
+    },
+    softmax: {
+      sm: 42,
+      trapLabel: 'CRITICAL: SM 42 SRAM BANK COLLISION',
+      legend: 'SM 42 Bank Hazard',
+      faultTitle: 'Shared Memory Stride Collision - Loss NaN Hazard'
+    },
+    rmsnorm: {
+      sm: 78,
+      trapLabel: 'CRITICAL: SM 78 WARP REDUCTION TRAP',
+      legend: 'SM 78 SDC Race',
+      faultTitle: 'Warp Reduction Race - Silent Data Corruption'
+    }
+  };
+
+  const activeFault = FAULT_CONFIGS[selectedFixture] || FAULT_CONFIGS.swiglu;
+  const FAULTING_SM = activeFault.sm;
 
   const isFaultStage = currentStage === 'SANDBOX_FAIL' || currentStage === 'RED_ATTACK';
   const isHealedStage = currentStage === 'BLUE_SYNTHESIS' || currentStage === 'VERIFYING' || currentStage === 'COMPLETE';
@@ -39,7 +63,7 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
           {isFaultStage && (
             <span className="die-pill pill-fault animate-pulse">
               <span className="pulse-dot bg-coral"></span>
-              CRITICAL: SM 14 MMU PAGE TRAP
+              {activeFault.trapLabel}
             </span>
           )}
           {isHealedStage && (
@@ -110,7 +134,7 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
               key={idx}
               className={smClass}
               onClick={() => handleSmClick(idx)}
-              title={`SM_${idx}: ${isFaulty ? 'Bus Fault - SIGSEGV 139' : (isHealed ? 'SRAM Fused - 100% Occupancy' : 'Standby Core')}`}
+              title={`SM_${idx}: ${isFaulty ? activeFault.faultTitle : (isHealed ? 'SRAM Fused - 100% Occupancy' : 'Standby Core')}`}
             >
               <span className="sm-idx">{idx}</span>
               {isFaulty && <span className="sm-alert-dot"></span>}
@@ -128,7 +152,7 @@ export default function HopperDieTopology({ currentStage, isRunning, onSelectSm,
           </div>
           <div className="legend-node">
             <span className="node-box box-fault"></span>
-            <span className="text-coral font-bold">SM 14 OOB Trap</span>
+            <span className="text-coral font-bold">{activeFault.legend}</span>
           </div>
           <div className="legend-node">
             <span className="node-box box-healed"></span>

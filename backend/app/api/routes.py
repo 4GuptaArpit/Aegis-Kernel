@@ -6,6 +6,19 @@ from app.core.recon import HARDWARE_SPECS
 
 router = APIRouter()
 
+@router.get("/health")
+async def health_check():
+    """Health check endpoint responding on /api/v1/health."""
+    return {
+        "status": "healthy",
+        "service": "aegis-kernel-proving-ground",
+        "track": "Coding and Agentic Engineering",
+        "models": {
+            "ultra": "nvidia/nemotron-3-ultra",
+            "nano": "nvidia/nemotron-nano"
+        }
+    }
+
 @router.get("/hardware-targets")
 async def get_hardware_targets():
     """Returns available GPU architectures and their memory hierarchy constraints."""

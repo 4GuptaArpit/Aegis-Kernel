@@ -258,6 +258,7 @@ export default function App() {
                   isRunning={isRunning} 
                   onSelectSm={setSelectedSm}
                   selectedSm={selectedSm}
+                  selectedFixture={selectedFixture}
                 />
                 <WarpVisualizer 
                   selectedFixture={selectedFixture} 

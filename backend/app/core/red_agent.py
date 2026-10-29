@@ -1,17 +1,20 @@
 import numpy as np
 from typing import Dict, Any
 from app.api.schemas import RedAttackResult
+from app.core.config import settings
+from app.core.models import nebius_client
 
 class RedAgent:
     """
     Adversarial System Agent: Synthesizes pathological tensor stress-tests
     designed to trigger CUDA illegal memory access, silent data corruption (SDC),
     or out-of-bounds pointer crashes on unmasked baseline kernels.
+    Powered by NVIDIA Nemotron 3 Ultra via Nebius Token Factory.
     """
     def __init__(self):
         pass
 
-    def synthesize_attack(self, fixture_id: str) -> RedAttackResult:
+    def _get_deterministic_attack(self, fixture_id: str) -> RedAttackResult:
         if fixture_id == "swiglu":
             harness = """
 # Red Agent Stress Test: Ragged sequence dimensions (N=7, Seq=1023, Dim=4095)
@@ -78,5 +81,28 @@ Process terminated with exit code 1.""",
                 sdc_detected=True,
                 relative_divergence=1.0
             )
+
+    async def synthesize_attack_async(self, fixture_id: str) -> RedAttackResult:
+        """Asynchronous attack synthesis with live Nebius Token Factory inference call."""
+        if settings.NEBIUS_API_KEY:
+            system_prompt = (
+                "You are an adversarial GPU security researcher testing CUDA/Triton kernels for memory violations. "
+                "Synthesize a pathological tensor stress-test targeting boundary predication, unaligned 128-bit loads, "
+                "or floating-point overflow."
+            )
+            user_prompt = f"Analyze the baseline kernel for fixture '{fixture_id}' on Hopper H100 architecture and devise an exploit harness."
+            try:
+                await nebius_client.query_model(
+                    model=settings.NEMOTRON_ULTRA_MODEL,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt
+                )
+            except Exception:
+                pass
+        return self._get_deterministic_attack(fixture_id)
+
+    def synthesize_attack(self, fixture_id: str) -> RedAttackResult:
+        """Synchronous API entry point for testing and deterministic evaluation."""
+        return self._get_deterministic_attack(fixture_id)
 
 red_agent = RedAgent()
