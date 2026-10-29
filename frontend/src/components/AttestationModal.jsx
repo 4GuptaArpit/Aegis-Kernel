@@ -19,10 +19,11 @@ export default function AttestationModal({
     if (isOpen && fixtureId) {
       sound.playClick();
       setLoading(true);
+      const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
       Promise.all([
-        fetch(`http://localhost:8000/api/v1/export-pr/${fixtureId}?hardware_target=${encodeURIComponent(hardwareTarget)}`)
+        fetch(`${apiBase}/api/v1/export-pr/${fixtureId}?hardware_target=${encodeURIComponent(hardwareTarget)}`)
           .then(r => r.json()),
-        fetch(`http://localhost:8000/api/v1/attestation/${fixtureId}?hardware_target=${encodeURIComponent(hardwareTarget)}`)
+        fetch(`${apiBase}/api/v1/attestation/${fixtureId}?hardware_target=${encodeURIComponent(hardwareTarget)}`)
           .then(r => r.json())
       ])
       .then(([prRes, attRes]) => {

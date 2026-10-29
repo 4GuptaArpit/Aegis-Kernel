@@ -83,8 +83,9 @@ export default function App() {
 
     addLog(`[INIT] Engaging Aegis-Kernel Autonomous Proving Collider for [${selectedFixture.toUpperCase()}] on [${selectedHardware}]`, 'info');
 
+    const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
     const eventSource = new EventSource(
-      `http://localhost:8000/api/v1/execute/${selectedFixture}?hardware_target=${encodeURIComponent(selectedHardware)}`
+      `${apiBase}/api/v1/execute/${selectedFixture}?hardware_target=${encodeURIComponent(selectedHardware)}`
     );
 
     eventSource.onmessage = (event) => {
