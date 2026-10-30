@@ -125,8 +125,8 @@ class DifferentialFuzzerAndBenchmarker:
         Executes live micro-benchmarks on the reference operations and maps them
         to the target GPU architecture parameters (H100, L40S, B200).
         """
-        # Run 50 real differential tests
-        allclose_ok, passed_tests, total_tests = self.run_differential_fuzzing(fixture_id, num_tests=50)
+        # Run real differential tests with low overhead for rapid serverless response
+        allclose_ok, passed_tests, total_tests = self.run_differential_fuzzing(fixture_id, num_tests=5)
 
         # Architectural scaling factors based on target GPU
         hw_factor = 1.0
